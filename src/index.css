@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.signIn{
+    background: linear-gradient(71.17deg, #FEAF00 19.35%, #F8D442 90.12%);
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn{
+    background:linear-gradient(71.17deg, #F8D442 19.35%, #FEAF00 90.12%); 
+}
+.btn:hover{
+    background: linear-gradient(71.17deg, #FEAF00 19.35%, #F8D442 90.12%);
+}
+
+body {
+    background: linear-gradient(to top, #fae8ff, #fae8ff 50%, #bfdbfe 100%);
+    height: 100vh;
+  }
+
+#btn{
+    cursor: pointer;
+    transition: box-shadow 0.5s ease-in-out; 
+  }
+  
+ 
+  #btn:hover {
+    box-shadow: 0 0 10px white, 0 0 20px white, 0 0 30px white, 0 0 40px black;
+  }
