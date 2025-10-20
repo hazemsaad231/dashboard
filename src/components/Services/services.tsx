@@ -25,7 +25,7 @@ export default function Services() {
 
   {/* Pagination */}
  const [current, setCurrent] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5); 
+  const [itemsPerPage, setItemsPerPage] = useState(10); 
   const lastIndex = current * itemsPerPage;
   const startIndex = lastIndex - itemsPerPage;
   const totalPages = Math.ceil(data.length / itemsPerPage);
@@ -120,7 +120,7 @@ export default function Services() {
   if (loading) return <Load />;
 
   return (
-    <div className="lg:mr-52 p-4 bg-gray-100 h-full">
+    <div className="lg:mr-52 pt-16 p-4 bg-gray-100 h-full">
       <ToastContainer limit={1} />
       <div className="flex justify-between items-center p-6">
         <h1 className="font-bold text-2xl">الخدمات</h1>
@@ -132,7 +132,7 @@ export default function Services() {
     borderRadius: "16px",
     boxShadow: "none",
     border: "none",
-    overflow: "hidden",
+    overflowY: "hidden",
    
   }} className="p-4" >
         {/* Search Bar */}
@@ -150,6 +150,7 @@ export default function Services() {
             columns={columns}
             rowHeight={100}
             hideFooter 
+            autoHeight 
           />
 
 </div>

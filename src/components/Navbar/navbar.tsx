@@ -7,6 +7,7 @@ import { Context } from "../Context/context";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { GrServices } from "react-icons/gr";
 import { TbLogs } from "react-icons/tb";
+import { RxAvatar } from "react-icons/rx";
 
 const Navbar = () => {
 
@@ -37,16 +38,9 @@ const Navbar = () => {
       >
 
         <div className="flex flex-col items-center">
-          <div className="text-center mt-4">
-            <img
-              src={userData.image}
-              alt="صورة المستخدم"
-              className="w-20 h-20 rounded-full m-auto mb-2 px-2"
-            />
-            <h1 className="font-bold text-lg">
-              {userData.firstName} {userData.lastName}
-            </h1>
-            <h3 className="text-yellow-800 font-semibold">المسؤول</h3>
+          <div className="text-center text-[#dfc96d] mt-4">
+            <h3 className="font-semibold">المسؤول</h3>
+            <RxAvatar size={80} className="m-auto mt-2" />
           </div>
 
           <ul className="flex flex-col font-semibold gap-4 mt-12 ">
@@ -207,9 +201,9 @@ const Navbar = () => {
           </button>
           <div className="flex gap-2 mt-10 cursor-pointer">
             <h2 className="font-semibold">
-              <button onClick={() => toggleNavbar}>
+              <div onClick={() => toggleNavbar}>
                 <Close />
-              </button>
+              </div>
             </h2>
           </div>
         </div>

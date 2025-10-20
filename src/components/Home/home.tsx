@@ -44,7 +44,7 @@ export default function Home() {
   return (
     <>
     <ToastContainer />
-    <div dir="rtl" className="min-h-screen bg-background p-4 lg:mr-52">
+    <div dir="rtl" className="min-h-screen bg-background p-4 pt-16 lg:mr-52">
       <h1 className="text-3xl font-bold mb-6 text-foreground">الصفحة الرئيسية</h1>
 
       {/* Stats Cards */}
