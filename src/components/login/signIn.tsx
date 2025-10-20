@@ -29,10 +29,9 @@ const onSubmait=async(data:any)=>{
         localStorage.setItem('id',response.data.id);
         console.log('id',response.data.id)
         saveDate()
-        setTimeout(()=>{
-            navigate('/dashboard')
-        },2000)
-        toast('تم تسجيل الدخول بنجاح')
+         setTimeout(() => {
+          navigate("/dashboard", {state:{message:"تم تسجيل الدخول"} });
+        }, 1000);
     } catch(error) {
         toast.error('خطأ في تسجيل الدخول')
         console.log(error)
@@ -46,7 +45,7 @@ const onSubmait=async(data:any)=>{
 <>
 <ToastContainer limit={1} />
 <div className="flex justify-center items-center h-screen bg-[#dfc96d]">
-<div className="h-max bg-white text-start rounded-xl shadow-xl p-16 w-[80%] sm:w-[80%] md:w-[50%] lg:w-[40%] xl:w-[30%]">
+<div className="bg-white p-6 text-start rounded-xl shadow-xl w-[90%] sm:w-[90%] md:w-[60%] lg:w-[50%] xl:w-[30%]">
 <div className="flex flex-col justify-center items-center">
 
     <img

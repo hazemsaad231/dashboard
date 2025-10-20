@@ -1,5 +1,8 @@
 import { PieChart, Pie, Cell, ResponsiveContainer as PieResponsiveContainer } from "recharts"
 import { Data } from "./data"
+import { useLocation, useNavigate } from "react-router-dom"
+import { useEffect } from "react"
+import { toast, ToastContainer } from "react-toastify"
 
 const pieData = [
   { name: "المجموعة أ", value: 400 },
@@ -25,7 +28,22 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 
 
 export default function Home() {
+
+
+    const location = useLocation();
+      const navigate = useNavigate();
+  
+      useEffect(() => {
+          if (location.state?.message) {
+              toast.success(location.state.message, { autoClose: 2000 }); // عرض الرسالة
+              // تفريغ الحالة بعد عرض التوست
+              navigate(location.pathname, { replace: true }); 
+          }
+      }, [location.state, navigate]);
+      
   return (
+    <>
+    <ToastContainer />
     <div dir="rtl" className="min-h-screen bg-background p-4 lg:mr-60">
       <h1 className="text-3xl font-bold mb-6 text-foreground">الصفحة الرئيسية</h1>
 
@@ -73,11 +91,7 @@ export default function Home() {
           </div>
         </div>
         </div>
-
-
-
-
       </div>
-    
+    </>
   )
 }
