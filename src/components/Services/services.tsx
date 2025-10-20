@@ -120,14 +120,21 @@ export default function Services() {
   if (loading) return <Load />;
 
   return (
-    <div className="lg:mr-60 p-4 bg-gray-100 h-full">
+    <div className="lg:mr-52 p-4 bg-gray-100 h-full">
       <ToastContainer limit={1} />
       <div className="flex justify-between items-center p-6">
         <h1 className="font-bold text-2xl">الخدمات</h1>
         <Link to="/dashboard/addUser/services"><button className="bg-black text-white p-2 rounded">إضافة خدمة</button></Link>
       </div>
 
-      <Paper className="p-4">
+      <Paper  sx={{
+    backgroundColor: "white",
+    borderRadius: "16px",
+    boxShadow: "none",
+    border: "none",
+    overflow: "hidden",
+   
+  }} className="p-4" >
         {/* Search Bar */}
         <div className="flex items-center gap-4">
           <div className="relative">
@@ -202,7 +209,7 @@ export default function Services() {
 
 {/* Delete Dialog */}
       <Dialog open={open} onClose={closeDelete} className="relative z-10">
-        <div className="fixed inset-0 flex items-center justify-center">
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto flex items-center justify-center">
           <DialogPanel className="w-max max-w-md rounded-lg bg-white px-12 py-4 shadow-lg">
             <p className="text-sm mb-4">{`هل تريد حذف هذه الخدمة` }</p>
             <div className="flex gap-4">

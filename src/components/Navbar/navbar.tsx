@@ -33,7 +33,7 @@ const Navbar = () => {
 
       {/* القائمة العادية */}
       <div
-        className={`fixed z-10 min-h-screen w-60 border-l border-gray-300  p-2 m-auto text-gray-600 hidden sm:hidden md:hidden lg:block xl:block`}
+        className={`fixed z-10 min-h-screen w-52 border-l border-gray-300  p-2 m-auto text-gray-600 hidden sm:hidden md:hidden lg:block xl:block`}
       >
 
         <div className="flex flex-col items-center">
