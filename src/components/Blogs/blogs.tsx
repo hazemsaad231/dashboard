@@ -125,22 +125,32 @@ export default function Blogs() {
         {/* Search Bar */}
         <div className="flex items-center gap-4">
           <div className="relative">
-            <input type="text" placeholder="ابحث هنا..." onChange={(e)=>search(e.target.value)} className="w-80 h-10 rounded-xl pl-4 pr-10 bg-gray-100 focus:bg-white border" />
+            <input type="text" placeholder="ابحث هنا..." onChange={(e)=>search(e.target.value)} className="w-60 md:w-80 h-10 rounded-xl pl-4 pr-10 bg-gray-100 focus:bg-white border" />
             <CiSearch size={18} className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500" />
           </div>
         </div>
 
-        <div className="w-full h-full mt-4">
-          {/* عرض كل الصفوف بدون أي pagination: */}
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            rowHeight={100}
-            hideFooter 
-            autoHeight
-          />
-
-</div>
+  <div className="w-full mt-4 overflow-x-auto md:overflow-x-visible">
+    <div className="min-w-[600px]">
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        rowHeight={100}
+        hideFooter
+        autoHeight
+        sx={{
+          '& .MuiDataGrid-scrollbarContent': {
+            width: '100% !important',
+            boxSizing: 'border-box',
+          },
+          '& .MuiDataGrid-virtualScroller': {
+            overflowY: 'auto',
+            willChange: 'transform',
+          },
+        }}
+      />
+    </div>
+  </div>
 
         {/* Pagination Controls */}
 
