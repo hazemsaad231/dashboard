@@ -1,0 +1,11 @@
+
+
+
+.area{
+    height: 20rem;
+    padding: 2rem ;
+    background-color: white;
+    text-align: center;
+    border-radius: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 8px;
+}

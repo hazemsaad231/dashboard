@@ -1,0 +1,7 @@
+
+
+th, td {
+  padding: 12px 15px; /* مسافة داخل الخلايا */
+  text-align: center;   /* نص مرتب من اليسار */
+  white-space: nowrap; /* منع الكسر داخل الخلية إذا تحب */
+}
