@@ -120,7 +120,7 @@ export default function Services() {
   if (loading) return <Load />;
 
   return (
-    <div className="lg:mr-52 pt-16 p-4 bg-gray-100 h-full">
+    <div className="lg:mr-52 pt-16 p-4 font-cairo bg-gray-100 h-full">
       <ToastContainer limit={1} />
       <div className="flex justify-between items-center p-6">
         <h1 className="font-bold text-2xl">الخدمات</h1>

@@ -44,7 +44,7 @@ export default function Home() {
   return (
     <>
     <ToastContainer />
-    <div dir="rtl" className="min-h-screen bg-background p-4 pt-16 lg:mr-52">
+    <div dir="rtl" className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 p-12 pt-16 font-cairo lg:mr-52">
       <h1 className="text-3xl font-bold mb-6 text-foreground">الصفحة الرئيسية</h1>
 
       {/* Stats Cards */}
@@ -52,7 +52,7 @@ export default function Home() {
         {Data.map((item: any, index: number) => (
           <div
             key={index}
-            className="bg-card p-6 rounded-md shadow hover:shadow-md transition-shadow"
+            className="bg-card p-6 rounded-md shadow hover:shadow-md transition-shadow bg-white"
           >
             <div className="flex items-center justify-between">
               <div className="text-right">
@@ -67,8 +67,8 @@ export default function Home() {
 
         <div className="grid grid-cols-1 gap-4">
         {/* Pie Chart */}
-        <div className="bg-card p-6 rounded-lg shadow hover:shadow-md transition-shadow">
-          <h2 className="text-xl font-semibold mb-4 text-card-foreground">العملاء حسب المصدر</h2>
+        <div className="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow">
+          <h2 className="text-xl font-semibold mb-4 text-foreground">العملاء حسب المصدر</h2>
           <div className="h-[25rem]">
             <PieResponsiveContainer width="100%" height="100%">
               <PieChart>
