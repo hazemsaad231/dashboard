@@ -8,6 +8,7 @@ import { MdDelete } from 'react-icons/md';
 import { ToastContainer, toast } from 'react-toastify';
 import { Dialog, DialogPanel } from "@headlessui/react";
 const BlogDetails = () => {
+
     const { id } = useParams();
     const [data, setData] = useState<any | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
@@ -29,8 +30,10 @@ const BlogDetails = () => {
       const getData = async () => {
         setLoading(true);
         try {
-          const response = await axios.get(`${api}/blogs`);
-          setData(response.data);
+          const response = await axios.get(`${api}/services`,{
+            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          });
+          setData(response.data.data);
         } catch (err) {
           console.error(err);
           setError('فشل في جلب بيانات الخدمة');
@@ -43,11 +46,13 @@ const BlogDetails = () => {
 
      const Delete = async () => {
         try {
-          await axios.delete(`${api}/blogs/${userId}`);
+          await axios.delete(`${api}/services/${userId}`,{
+            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          });
           toast.success('تم الحذف بنجاح');
           if (String(userId) === String(id)) {
             close();
-            navigate('/dashboard/services');
+            navigate('/dashboard/blogs');
             return;
           }
           getData();
@@ -73,7 +78,7 @@ const BlogDetails = () => {
 
   if (!item) return <div className="lg:mr-60 p-4">الخدمة غير موجودة أو تم حذفها</div>;
 
-  const parts = typeof item.text === 'string' ? item.text.split('*') : [];
+  const parts = typeof item.description === 'string' ? item.description.split('*') : [];
 
     return (
         <>
@@ -97,7 +102,7 @@ const BlogDetails = () => {
               )}
                 <div className="flex gap-6 text-green-700 cursor-pointer p-5">
                           <MdDelete size={24} onClick={() => open(item.id)} />
-                          <Link to={`/dashboard/addUser/blogs/${item.id}`}><FaEdit size={24} /></Link>
+                          <Link to={`/dashboard/addUser/services/${item.id}`}><FaEdit size={24} /></Link>
                         </div>
               </div>
         </div>

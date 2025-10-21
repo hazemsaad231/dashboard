@@ -169,7 +169,7 @@ export default function Blogs() {
           <Link to={`/dashboard/addUser/${resource}/${p.id}`} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="تعديل">
             <FaEdit size={20} />
           </Link>
-          <Link to={`/dashboard/services/${resource}/${p.id}`} className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors" title="عرض">
+          <Link to={`/dashboard/blogs/${resource}/${p.id}`} className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors" title="عرض">
             <FaEye size={20} />
           </Link>
         </div>
