@@ -35,8 +35,8 @@ const Navbar = () => {
       />
 
       {/* Desktop Sidebar */}
-      <div className="fixed z-10 min-h-screen w-52 bg-gradient-to-b from-slate-50 to-slate-100 border-l border-slate-200 p-6 text-slate-700 hidden sm:hidden md:hidden lg:block xl:block shadow-lg">
-        <div className="flex flex-col items-center h-full">
+      <div className="fixed z-10 min-h-screen w-52 bg-gradient-to-b from-slate-50 to-slate-100 border-l border-slate-200 p-6 text-slate-700 hidden sm:hidden md:hidden lg:block xl:block shadow-md">
+        <div className="flex flex-col items-center h-full ">
           <div className="mb-8 text-center">
             <div className="w-24 h-24 mx-auto mb-3 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 p-1 shadow-md">
               <div className="w-full h-full rounded-full bg-slate-100 flex items-center justify-center">
@@ -47,7 +47,7 @@ const Navbar = () => {
             <p className="text-xs text-slate-500 mt-1">مدير النظام</p>
           </div>
 
-          <ul className="flex flex-col gap-3 flex-1">
+          <ul className="flex flex-col gap-3">
             {navItems.map((item) => {
               const Icon = item.icon
               return (
@@ -55,14 +55,14 @@ const Navbar = () => {
                   <Link
                     to={item.path}
                     onClick={() => handleNavClick(item.id)}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer transition-all duration-300 ${
+                    className={`flex items-center gap-3 p-2 rounded-lg cursor-pointer transition-all duration-300 ${
                       activeItem === item.id
                         ? "bg-blue-600 text-white shadow-md scale-105"
                         : "hover:bg-slate-200 text-slate-700"
                     }`}
                   >
                     <Icon size={20} />
-                    <span className="text-sm font-medium">{item.label}</span>
+                    <span className="text-lg font-medium">{item.label}</span>
                   </Link>
                 </li>
               )

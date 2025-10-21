@@ -10,7 +10,7 @@ import { api } from "../../Api/api"
 type FormValues = {
   title: string
   description: string
-  cover_image: string
+  img: string
   type: string
 }
 
@@ -27,7 +27,7 @@ const Add_Update = () => {
       defaultValues: {
         title: "",
         description: "",
-        cover_image: "",
+        img: "",
         type: resource,
       },
     }
@@ -43,7 +43,7 @@ const Add_Update = () => {
         reset({ 
           title: data.data.title,
           description: data.data.description,
-          cover_image: data.data.cover_image,
+          img: data.data.image,
           type: resource,
            })
            console.log(data)
@@ -56,13 +56,13 @@ const Add_Update = () => {
   const onSubmit = async (formData: FormValues) => {
     try {
       if (id) {
-        await axios.put(`${api}/${resource}/${id}`, formData, {
+        await axios.put(`${api}/services/${id}`, formData, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         })
         console.log(formData)
         toast.success("تم التعديل بنجاح")
       } else {
-        await axios.post(`${api}/${resource}`, formData, {
+        await axios.post(`${api}/services`, formData, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         })
         console.log(formData)
@@ -98,9 +98,9 @@ const Add_Update = () => {
                   📷
                 </span>
                 رابط الصورة
-              </label>
+              </label> 
               <input
-                {...register("cover_image", {
+                {...register("img", {
                   required: "رابط الصورة مطلوب",
                   pattern: {
                     value: /^https?:\/\/.+/i,
@@ -110,9 +110,9 @@ const Add_Update = () => {
                 className="border-2 border-slate-200 p-3 mt-1 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 placeholder-slate-400"
                 placeholder="https://example.com/image.jpg"
               />
-              {errors.cover_image && (
+              {errors.img && (
                 <span className="text-red-500 text-sm mt-2 flex items-center gap-1">
-                  <span>⚠️</span> {errors.cover_image.message}
+                  <span>⚠️</span> {errors.img.message}
                 </span>
               )}
 

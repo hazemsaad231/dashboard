@@ -29,8 +29,10 @@ const ServiceDetails = () => {
       const getData = async () => {
         setLoading(true);
         try {
-          const response = await axios.get(`${api}/services`);
-          setData(response.data);
+          const response = await axios.get(`${api}/services`,{
+            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          });
+          setData(response.data.data);
         } catch (err) {
           console.error(err);
           setError('فشل في جلب بيانات الخدمة');
@@ -43,7 +45,9 @@ const ServiceDetails = () => {
 
      const Delete = async () => {
         try {
-          await axios.delete(`${api}/services/${userId}`);
+          await axios.delete(`${api}/services/${userId}`,{
+            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          });
           toast.success('تم الحذف بنجاح');
           if (String(userId) === String(id)) {
             close();
@@ -73,7 +77,7 @@ const ServiceDetails = () => {
 
   if (!item) return <div className="lg:mr-60 p-4">الخدمة غير موجودة أو تم حذفها</div>;
 
-  const parts = typeof item.text === 'string' ? item.text.split('*') : [];
+  const parts = typeof item.description === 'string' ? item.description.split('*') : [];
 
     return (
         <>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import Load from '../Load/load';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,215 +10,258 @@ import { MdDelete } from 'react-icons/md';
 import { api } from '../Api/api';
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
-import { Dialog, DialogPanel } from '@headlessui/react';
+import { Dialog } from '@headlessui/react';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
-
 export default function Blogs() {
-
   const { resource } = useParams();
+  const location = useLocation();
 
-  const [data, setData] = useState<any[]>([]);
+  // البيانات الأصلية والمرشّحة (للبحث)
   const [all, setAll] = useState<any[]>([]);
+  const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // حذف
   const [sel, setSel] = useState<string | number | null>(null);
   const [open, setOpen] = useState(false);
- const [current, setCurrent] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5); 
+
+  // ترقيم الصفحات
+  const [current, setCurrent] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+
   const lastIndex = current * itemsPerPage;
   const startIndex = lastIndex - itemsPerPage;
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const totalPages = Math.max(1, Math.ceil(data.length / itemsPerPage));
   const currentData = data.slice(startIndex, lastIndex);
 
+  // تحويل الحروف العربية لأشكال قياسية للتطابق بالبحث
+  const norm = (s = '') =>
+    String(s)
+      .replace(/[أإآ]/g, 'ا')
+      .replace(/ى/g, 'ي')
+      .replace(/ة/g, 'ه')
+      .replace(/\s+/g, '')
+      .toLowerCase();
+
+  // جلب البيانات
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const r = await axios.get(`${api}/services?per_page=100`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      });
+
+      const payload = r?.data?.data ?? [];
+      const arr = Array.isArray(payload)
+        ?
+          (resource ? payload.filter((it: any) => String(it.type) === String(resource)) : payload)
+        : 
+          resource
+          ? String(payload.type) === String(resource)
+            ? [payload]
+            : []
+          : [payload];
+
+      setAll(arr);
+      setData(arr);
+    } catch (err) {
+      console.error('fetch services error:', err);
+      toast.error('فشل في جلب البيانات');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     (async () => {
-      try {
-        const r = await axios.get(`${api}/${resource}`);
-        const arr = Array.isArray(r.data) ? r.data : r.data?.data || [];
-        setData(arr);
-        setAll(arr);
-      } catch (e) {
-        console.error(e);
-        toast.error('فشل في جلب البيانات');
-      } finally {
-        setLoading(false);
+      await fetchData();
+      const newItem = (location as any).state?.newItem;
+      if (newItem) {
+        setAll(prev => (prev.some(it => String(it.id ?? it._id) === String(newItem.id ?? newItem._id)) ? prev : [newItem, ...prev]));
+        setData(prev => (prev.some(it => String(it.id ?? it._id) === String(newItem.id ?? newItem._id)) ? prev : [newItem, ...prev]));
+        try { window.history.replaceState({}, document.title); } catch {}
       }
     })();
-  }, []);
+  }, [resource, location.key]);
 
-  const norm = (s = '') =>
-    String(s).replace(/[أإآا]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه').replace(/\s+/g, '').toLowerCase();
-
-  // بحث بسيط على العنوان أو المؤلف
+  // بحث بسيط
   const search = (q = '') => {
     const t = q.trim();
-    if (!t) {
-      setData(all);
-      return;
-    }
-    setData(all.filter(it => norm(`${it.title||''} ${it.author||''}`).includes(norm(t))));
+    if (!t) return setData(all);
+    setData(all.filter(it => norm(it.title ?? '')?.includes(norm(t))));
+    setCurrent(1);
   };
 
   const openDelete = (id: any) => { setSel(id); setOpen(true); };
   const closeDelete = () => { setSel(null); setOpen(false); };
 
+  // حذف عنصر
   const doDelete = async () => {
     if (!sel) return;
     try {
-      await axios.delete(`${api}/${resource}/${sel}`);
-      setData(prev => prev.filter(it => String(it.id) !== String(sel) && String(it._id) !== String(sel)));
-      toast.success('تم الحذف بنجاح');
+      await axios.delete(`${api}/${resource}/${sel}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      });
+      setAll(prev => prev.filter(it => String(it.id ?? it._id) !== String(sel)));
+      setData(prev => prev.filter(it => String(it.id ?? it._id) !== String(sel)));
+      toast.success('تم الحذف بنجاح', { autoClose: 2000 });
       closeDelete();
-    } catch (e) {
-      console.error(e);
+    } catch (err) {
+      console.error('delete error:', err);
       toast.error('حدث خطأ أثناء الحذف');
     }
   };
 
-
-  const rows = currentData.map((it, i) => ({ id: it.id ?? it._id ?? i+1, title: it.title ?? '-', img: it.img ?? it.image ?? '' }));
+  // صفوف الجدول
+  const rows = currentData.map((it, i) => ({ id: it.id ?? it._id ?? String(i + 1), title: it.title ?? '-', img: it.img ?? it.image ?? '' }));
 
   const columns: any = [
     {
-      field: 'img', headerName: 'صورة', width: 120, sortable: false, filterable: false,
-      disableColumnMenu: true, headerAlign: 'center', align: 'center',
+      field: 'img',
+      headerName: 'صورة',
+      width: 120,
+      sortable: false,
+      filterable: false,
+      disableColumnMenu: true,
+      headerAlign: 'center',
+      align: 'center',
       renderCell: (p: any) => (
-        <div className='flex justify-center items-center h-full w-full' >
-          <img src={p.value||'/placeholder.png'} alt={String(p.row.title)} style={{ width:80, height:80, objectFit:'cover', borderRadius:8, border:'1px solid #e5e7eb', padding:2 }} />
+        <div className="flex justify-center items-center h-full w-full">
+          <img
+            src={p.value || '/placeholder.png'}
+            alt={String(p.row.title)}
+            className="w-20 h-20 object-cover rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow"
+          />
         </div>
-      )
+      ),
     },
     {
-      field: 'title', headerName: 'العنوان', flex: 1, minWidth: 220,
-      headerAlign: 'center', align: 'center', disableColumnMenu: true,
+      field: 'title',
+      headerName: 'العنوان',
+      flex: 1,
+      minWidth: 220,
+      headerAlign: 'center',
+      align: 'center',
+      disableColumnMenu: true,
       renderCell: (p: any) => (
         <div className="w-full h-full flex items-center justify-center">
-          <Link to={`/dashboard/blogs/${resource}/${p.id}`} className="cursor-pointer font-bold">{p.value}</Link>
+          <Link to={`/services/${resource}/${p.id}`} className="cursor-pointer font-semibold text-slate-900 hover:text-blue-600 transition-colors truncate">
+            {p.value}
+          </Link>
         </div>
-      )
+      ),
     },
     {
-      field: 'actions', headerName: 'الإجراءات', width: 220, sortable:false, filterable:false,
-      disableColumnMenu: true, headerAlign:'center', align:'center',
+      field: 'actions',
+      headerName: 'الإجراءات',
+      width: 220,
+      sortable: false,
+      filterable: false,
+      disableColumnMenu: true,
+      headerAlign: 'center',
+      align: 'center',
       renderCell: (p: any) => (
-        <div className="flex gap-4 justify-center w-full items-center h-full">
-          <MdDelete size={20} className="cursor-pointer" onClick={() => openDelete(p.id)} />
-          <Link to={`/dashboard/addUser/blogs/${p.id}`}><FaEdit size={20} /></Link>
-          <Link to={`/dashboard/blogs/${resource}/${p.id}`}><FaEye size={20} /></Link>
+        <div className="flex gap-3 justify-center w-full items-center h-full">
+          <button onClick={() => openDelete(p.id)} className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="حذف">
+            <MdDelete size={20} />
+          </button>
+          <Link to={`/dashboard/addUser/${resource}/${p.id}`} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="تعديل">
+            <FaEdit size={20} />
+          </Link>
+          <Link to={`/dashboard/services/${resource}/${p.id}`} className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors" title="عرض">
+            <FaEye size={20} />
+          </Link>
         </div>
-      )
-    }
+      ),
+    },
   ];
-
-  if (loading) return <Load />;
 
   return (
     <>
-    <ToastContainer limit={1} />
-    
-    <div className="lg:mr-52 pt-16 p-4 bg-gradient-to-b from-slate-50 to-slate-100 h-full">
-      <div className="flex justify-between items-center p-6">
-        <h1 className="font-bold text-2xl">المدونات</h1>
-        <Link to="/dashboard/addUser/blogs"><button className="bg-black text-white p-2 rounded">إضافة مدونة</button></Link>
-      </div>
+      <ToastContainer limit={1} />
 
-      <Paper className="p-4">
-        {/* Search Bar */}
-        <div className="flex items-center gap-4">
-          <div className="relative">
-            <input type="text" placeholder="ابحث هنا..." onChange={(e)=>search(e.target.value)} className="w-60 md:w-80 h-10 rounded-xl pl-4 pr-10 bg-gray-100 focus:bg-white border" />
-            <CiSearch size={18} className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500" />
+      <div className="lg:mr-52 pt-16 p-4 bg-gradient-to-br from-slate-50 via-white to-slate-50">
+        {loading ? (
+          <Load />
+        ) : (
+          <div>
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+              <div>
+                <h1 className="font-bold text-4xl md:text-5xl text-slate-900">المدونات</h1>
+                <p className="text-slate-500 text-sm mt-1">إدارة وتنظيم جميع المدونات المتاحة</p>
+              </div>
+              <Link to="/dashboard/addUser/blogs">
+                <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-medium transition-colors shadow-sm hover:shadow-md">+ إضافة مدونة</button>
+              </Link>
+            </div>
+
+            <Paper sx={{ backgroundColor: 'white', borderRadius: '16px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', border: '1px solid #e2e8f0', overflowY: 'hidden' }} className="p-6">
+
+              <div className="flex flex-col md:flex-row items-start md:items-center gap-4 mb-6 pb-6 border-b border-slate-200">
+                <div className="relative w-full md:w-auto">
+                  <CiSearch size={20} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                  <input type="text" placeholder="ابحث عن مدونة..." onChange={(e) => search(e.target.value)} className="w-full md:w-80 h-11 rounded-lg pl-4 pr-10 bg-slate-50 border border-slate-200 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all outline-none" />
+                </div>
+              </div>
+
+              <div className="w-full overflow-x-auto">
+                <div className="min-w-[600px]">
+                  <DataGrid rows={rows} columns={columns} rowHeight={100} hideFooter autoHeight sx={{ '& .MuiDataGrid-columnHeader': { backgroundColor: '#f8fafc', borderBottom: '2px solid #e2e8f0', fontWeight: 600, color: '#334155' }, '& .MuiDataGrid-row': { borderBottom: '1px solid #e2e8f0', '&:hover': { backgroundColor: '#f8fafc' } }, '& .MuiDataGrid-scrollbarContent': { width: '100% !important', boxSizing: 'border-box' }, '& .MuiDataGrid-virtualScroller': { overflowY: 'auto', willChange: 'transform' } }} />
+                </div>
+              </div>
+
+              <div className="flex flex-col md:flex-row justify-between items-center gap-3 pt-4 border-t border-slate-200">
+                <div>
+                  <p className="text-sm text-slate-600">عرض {Math.min(lastIndex, data.length)} من أصل {data.length} خدمة</p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2">
+                    <label className="text-sm text-slate-600">عدد الصفوف :</label>
+                    <select value={itemsPerPage} onChange={(e) => { setItemsPerPage(Number(e.target.value)); setCurrent(1); }} className="border border-slate-200 rounded-lg p-2 text-sm bg-white hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all outline-none">
+                      {[5, 10, 15, 20].map(num => <option key={num} value={num}>{num}</option>)}
+                    </select>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <button onClick={() => setCurrent(current > 1 ? current - 1 : current)} disabled={current === 1} className="p-2 rounded-lg border border-slate-200 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" title="السابق">
+                      <IoIosArrowForward size={20} className="text-slate-600" />
+                    </button>
+
+                    <span className="text-sm text-slate-600 font-medium min-w-[40px] text-center">{current} / {totalPages}</span>
+
+                    <button onClick={() => setCurrent(current < totalPages ? current + 1 : current)} disabled={current === totalPages} className="p-2 rounded-lg border border-slate-200 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" title="التالي">
+                      <IoIosArrowBack size={20} className="text-slate-600" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </Paper>
+
+            <Dialog open={open} onClose={closeDelete} className="relative z-50">
+              <div className="fixed inset-0 z-50 w-72 md:w-screen m-auto overflow-y-auto flex items-center justify-center">
+                <Dialog.Panel className="w-full max-w-md rounded-xl bg-white px-6 py-8 shadow-2xl border border-slate-200 animate-in fade-in zoom-in-95 duration-200">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+                      <MdDelete className="h-6 w-6 text-red-600" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-slate-900">حذف الخدمة</h3>
+                      <p className="mt-2 text-sm text-slate-600">هل أنت متأكد من رغبتك في حذف هذه الخدمة؟ لا يمكن التراجع عن هذا الإجراء.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3 mt-6 justify-start items-center">
+                    <button onClick={closeDelete} className="px-4 py-2 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 font-medium transition-colors">إلغاء</button>
+                    <button onClick={doDelete} className="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-medium transition-colors shadow-sm">حذف</button>
+                  </div>
+                </Dialog.Panel>
+              </div>
+            </Dialog>
+
           </div>
-        </div>
-
-  <div className="w-full mt-4 overflow-x-auto md:overflow-x-visible">
-    <div className="min-w-[600px]">
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        rowHeight={100}
-        hideFooter
-        autoHeight
-        sx={{
-          '& .MuiDataGrid-scrollbarContent': {
-            width: '100% !important',
-            boxSizing: 'border-box',
-          },
-          '& .MuiDataGrid-virtualScroller': {
-            overflowY: 'auto',
-            willChange: 'transform',
-          },
-        }}
-      />
-    </div>
-  </div>
-
-        {/* Pagination Controls */}
-
- <div className="flex justify-end  gap-4 p-2">
-<div className="flex text-sm md:text-md">
-  <p className="flex items-center gap-2">
-    {/* Rows per page:  */}
-    <select
-      value={itemsPerPage}
-      onChange={(e) => {
-        setItemsPerPage(Number(e.target.value));
-        setCurrent(1); // عشان يرجع لأول صفحة بعد تغيير العدد
-      }}
-      className="border rounded p-1"
-    >
-      {[5, 10, 15, 20].map((num) => (
-        <option key={num} value={num}>
-          {num}
-        </option>
-      ))}
-    </select>
-  </p>
-</div>
-
-
-
-<div>
- <button
-                >
-                  {startIndex+1}-{lastIndex} of {data.length}
-                </button>
-</div>
-               
-
-
-<div>
-  
-              <button
-                onClick={() => setCurrent(current < totalPages ? current + 1 : current)}
-                disabled={current === totalPages}
-              >
-                <IoIosArrowForward  size={24}/>
-              </button>
-              <button
-                onClick={() => setCurrent(current > 1 ? current - 1 : current)}
-                disabled={current === 1}
-              >
-                <IoIosArrowBack size={24} />
-              </button>
-</div>  
-            </div>
-
-      </Paper>
-
-      <Dialog open={open} onClose={closeDelete} className="relative z-10">
-        <div className="fixed inset-0 flex items-center justify-center">
-          <DialogPanel className="w-max max-w-md rounded-lg bg-white px-12 py-4 shadow-lg">
-            <p className="text-sm mb-4">هل تريد حذف المدونة؟</p>
-            <div className="flex gap-4">
-              <button onClick={doDelete} className="px-3 py-1 bg-red-600 text-white rounded">حذف</button>
-              <button onClick={closeDelete} className="px-3 py-1 bg-gray-300 rounded">إغلاق</button>
-            </div>
-          </DialogPanel>
-        </div>
-      </Dialog>
-    </div>
+        )}
+      </div>
     </>
   );
 }

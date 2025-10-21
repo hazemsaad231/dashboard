@@ -60,30 +60,28 @@ const onSubmait=async(data:any)=>{
     <label htmlFor="email" className="text-start text-gray-600 font-normal">الايميل</label>
     <input type="text" placeholder="admin@example.com"
      className="border p-2 px-4 mt-1 rounded-md placeholder-gray-300 shadow outline-none"
-     {...register("email",{required:true ,pattern:/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i})}/>
-     {errors.email && <p className="text-red-500 text-start">الايميل مطلوب</p>}
+     {...register("email",{
+       required: "الايميل مطلوب",
+       pattern: {
+         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+         message: "الايميل غير صحيح"
+       }
+     })}/>
+     {errors.email && <p className="text-red-500 text-start"><span>⚠️</span> الايميل مطلوب</p>}
 
 
     <label htmlFor="pass" className="text-start text-gray-600 font-normal mt-4">كلمة المرور</label>
     <input type="text" placeholder="password"   className="border p-2 px-4 mt-1  rounded-md placeholder-gray-300 shadow outline-none"
     {...register("password",{required:true})} />
-    {errors.password && <p className="text-red-500 text-start">كلمة المرور مطلوب</p>}
+    {errors.password && <p className="text-red-500 text-start"><span>⚠️</span> كلمة المرور مطلوبه</p>}
 
 <button className="bg-[#dfc96d] hover:bg-[#8e7615] w-full text-center text-white p-2 rounded-md mt-8">تسجيل الدخول</button>
 
     </div>    
 
     </form>
-
-
-
 </div>
 
-
-
-  
-
-  
 
 </div>
 </>
@@ -91,3 +89,5 @@ const onSubmait=async(data:any)=>{
 }
 
 export default Sign;
+
+
