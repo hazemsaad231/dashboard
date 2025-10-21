@@ -100,7 +100,7 @@ export default function Blogs() {
   const doDelete = async () => {
     if (!sel) return;
     try {
-      await axios.delete(`${api}/${resource}/${sel}`, {
+      await axios.delete(`${api}/services/${sel}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       setAll(prev => prev.filter(it => String(it.id ?? it._id) !== String(sel)));

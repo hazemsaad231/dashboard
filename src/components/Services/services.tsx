@@ -23,7 +23,7 @@ export default function Services() {
   const [loading, setLoading] = useState(true);
 
   // حذف
-  const [sel, setSel] = useState<string | number | null>(null);
+  const [Id, setId] = useState<string | number | null>(null);
   const [open, setOpen] = useState(false);
 
   // ترقيم الصفحات
@@ -63,6 +63,8 @@ export default function Services() {
             : []
           : [payload];
 
+          console.log('fetched services:', arr);
+
       setAll(arr);
       setData(arr);
     } catch (err) {
@@ -93,18 +95,18 @@ export default function Services() {
     setCurrent(1);
   };
 
-  const openDelete = (id: any) => { setSel(id); setOpen(true); };
-  const closeDelete = () => { setSel(null); setOpen(false); };
+  const openDelete = (id: any) => { setId(id); setOpen(true); };
+  const closeDelete = () => { setId(null); setOpen(false); };
 
   // حذف عنصر
   const doDelete = async () => {
-    if (!sel) return;
+    if (!Id) return;
     try {
-      await axios.delete(`${api}/${resource}/${sel}`, {
+      await axios.delete(`${api}/${resource}/${Id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
-      setAll(prev => prev.filter(it => String(it.id ?? it._id) !== String(sel)));
-      setData(prev => prev.filter(it => String(it.id ?? it._id) !== String(sel)));
+      setAll(prev => prev.filter(it => String(it.id ?? it._id) !== String(Id)));
+      setData(prev => prev.filter(it => String(it.id ?? it._id) !== String(Id)));
       toast.success('تم الحذف بنجاح', { autoClose: 2000 });
       closeDelete();
     } catch (err) {
@@ -114,11 +116,11 @@ export default function Services() {
   };
 
   // صفوف الجدول
-  const rows = currentData.map((it, i) => ({ id: it.id ?? it._id ?? String(i + 1), title: it.title ?? '-', img: it.img ?? it.image ?? '' }));
+  const rows = currentData.map((it, i) => ({ id: it.id ?? it._id ?? String(i + 1), title: it.title ?? '-', img: it.image ?? it.image ?? '' }));
 
   const columns: any = [
     {
-      field: 'img',
+      field: 'image',
       headerName: 'صورة',
       width: 120,
       sortable: false,
@@ -265,3 +267,4 @@ export default function Services() {
     </>
   );
 }
+
