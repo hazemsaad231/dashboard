@@ -6,7 +6,7 @@ import AddUser from './components/Add/UpdateUser/addUser'
 import Profile from './components/Profile/profile'
 import Master1 from './components/Routing/master1'
 import Master2 from './components/Routing/master2'
-import Sign from './components/login/signIn'
+import Sign from './components/login/login'
 import PrivateRoute from './components/Routing/protuct'
 import Blogs from './components/Blogs/blogs'
 import ServiceDetails from './components/Services/serviceDetails'
@@ -48,7 +48,6 @@ function App() {
 
   return (
     <>
-    
   <RouterProvider router={route} ></RouterProvider>
      
     </>

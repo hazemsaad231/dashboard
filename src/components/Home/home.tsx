@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { PieChart, Pie, Cell, ResponsiveContainer as PieResponsiveContainer } from "recharts";
 import { Data } from "../Home/data";
@@ -39,7 +39,7 @@ export default function Home() {
 
   return (
     <>
-      <ToastContainer />
+    <ToastContainer autoClose={2000} limit={1} />
       <div className="bg-gradient-to-b from-slate-50 to-slate-100 p-3 pt-16 lg:mr-52">
         <h1 className="text-3xl font-bold mb-6 text-foreground">نظرة عامة</h1>
 

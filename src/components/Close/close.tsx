@@ -16,7 +16,7 @@ const close = ()=>{
     <>
        <button
         onClick={open}
-        className="w-max m-auto flex items-center justify-center gap-2 p-3 rounded-lg bg-red-500 hover:bg-red-600 text-white transition-colors duration-200 font-medium text-sm">
+        className="w-max m-auto z-50 flex items-center justify-center gap-2 p-3 rounded-lg bg-red-500 hover:bg-red-600 text-white transition-colors duration-200 font-medium text-sm">
             
               تسجيل الخروج
             </button>
@@ -37,7 +37,7 @@ const close = ()=>{
               <div className='flex gap-2'>
                 <Link
                   to="/"
-                  className=" bg-red-700 rounded-lg p-1 text-white"
+                  className=" bg-red-600 rounded-lg p-1 text-white"
                   onClick={()=>
                     localStorage.removeItem('token')
                   }
@@ -47,7 +47,7 @@ const close = ()=>{
 
                 <Link
                   to=""
-                  className=" bg-green-700 rounded-lg p-1 text-white"
+                  className=" bg-blue-600 rounded-lg p-1 text-white"
                   onClick={close}
                 >
                   إلغاء

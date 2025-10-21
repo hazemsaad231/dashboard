@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -40,7 +40,7 @@ const onSubmait=async(data:any)=>{
     return(
 
 <>
-<ToastContainer limit={1} />
+<ToastContainer autoClose={2000} limit={1} />
 <div className="flex justify-center items-center h-screen bg-[#dfc96d]">
 <div className="bg-white p-6 text-start rounded-xl shadow-xl w-[90%] sm:w-[90%] md:w-[60%] lg:w-[50%] xl:w-[30%]">
 <div className="flex flex-col justify-center items-center">

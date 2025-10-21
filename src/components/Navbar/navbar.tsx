@@ -30,7 +30,7 @@ const Navbar = () => {
     <>
       {/* Mobile Menu Button */}
       <TiThMenu
-        className="absolute top-4 right-4 text-2xl cursor-pointer sm:block md:block lg:hidden xl:hidden  z-50 text-blue-600 hover:text-blue-700 transition-colors duration-200"
+        className="absolute top-4 left-4 text-2xl cursor-pointer sm:block md:block lg:hidden xl:hidden  z-10 text-blue-600 hover:text-blue-700 transition-colors duration-200"
         onClick={toggleNavbar}
       />
 
@@ -77,7 +77,7 @@ const Navbar = () => {
 
       {/* Mobile Sidebar */}
       <div
-        className={`fixed z-50 w-full bg-gradient-to-b from-blue-600 to-blue-700 text-white h-screen shadow-2xl transform transition-transform duration-300 ease-in-out ${
+        className={`fixed z-40 w-full bg-gradient-to-b from-blue-600 to-blue-700 text-white h-screen shadow-2xl transform transition-transform duration-300 ease-in-out ${
           isNavbarVisible ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -119,8 +119,20 @@ const Navbar = () => {
             })}
           </ul>
 
-          <div className="pt-4 border-t border-blue-500">
-            <Close />
+          <div className="mt-4 pt-4 border-t border-blue-400">
+            <button
+        
+        className="w-max m-auto z-50 flex items-center justify-center gap-2 p-3 rounded-lg bg-red-500 hover:bg-red-600 text-white transition-colors duration-200 font-medium text-sm">
+            
+            <Link
+                  to="/"
+                  onClick={()=>
+                    localStorage.removeItem('token')
+                  }
+                >
+                  تسجيل الخروج
+                </Link>
+            </button>
           </div>
         </div>
       </div>

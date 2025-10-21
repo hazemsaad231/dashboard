@@ -10,7 +10,7 @@ import { api } from "../../Api/api"
 type FormValues = {
   title: string
   description: string
-  img: string
+  cover_image: string
   type: string
 }
 
@@ -27,7 +27,7 @@ const Add_Update = () => {
       defaultValues: {
         title: "",
         description: "",
-        img: "",
+        cover_image: "",
         type: resource,
       },
     }
@@ -43,9 +43,10 @@ const Add_Update = () => {
         reset({ 
           title: data.data.title,
           description: data.data.description,
-          img: data.data.img,
+          cover_image: data.data.cover_image,
           type: resource,
            })
+           console.log(data)
       } catch (error) {
         console.error(error)
       }
@@ -58,11 +59,13 @@ const Add_Update = () => {
         await axios.put(`${api}/${resource}/${id}`, formData, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         })
+        console.log(formData)
         toast.success("تم التعديل بنجاح")
       } else {
         await axios.post(`${api}/${resource}`, formData, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         })
+        console.log(formData)
         toast.success("تم الإضافة بنجاح")
       }
       setTimeout(() => navigate(`/dashboard/${resource}/${resource}`), 800)
@@ -97,7 +100,7 @@ const Add_Update = () => {
                 رابط الصورة
               </label>
               <input
-                {...register("img", {
+                {...register("cover_image", {
                   required: "رابط الصورة مطلوب",
                   pattern: {
                     value: /^https?:\/\/.+/i,
@@ -107,11 +110,12 @@ const Add_Update = () => {
                 className="border-2 border-slate-200 p-3 mt-1 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 placeholder-slate-400"
                 placeholder="https://example.com/image.jpg"
               />
-              {errors.img && (
+              {errors.cover_image && (
                 <span className="text-red-500 text-sm mt-2 flex items-center gap-1">
-                  <span>⚠️</span> {errors.img.message}
+                  <span>⚠️</span> {errors.cover_image.message}
                 </span>
               )}
+
             </div>
 
             <div className="flex flex-col">
@@ -186,5 +190,3 @@ const Add_Update = () => {
 }
 
 export default Add_Update
-
-
