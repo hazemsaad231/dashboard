@@ -32,7 +32,7 @@ const close = ()=>{
                 
               </DialogTitle>
               <p className='text-md font-semibold mb-6'>
-              Are you sure you want to log out?
+                هل أنت متأكد من تسجيل الخروج؟
               </p>
               <div className='flex gap-2'>
                 <Link
@@ -42,7 +42,7 @@ const close = ()=>{
                     localStorage.removeItem('token')
                   }
                 >
-                  Log out
+                  تسجيل الخروج
                 </Link>
 
                 <Link
@@ -50,7 +50,7 @@ const close = ()=>{
                   className=" bg-green-700 rounded-lg p-1 text-white"
                   onClick={close}
                 >
-                  close
+                  إلغاء
                 </Link>
               </div>
             </DialogPanel>

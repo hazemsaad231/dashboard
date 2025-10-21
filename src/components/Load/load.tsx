@@ -1,18 +1,19 @@
-import { Hourglass } from 'react-loader-spinner'
+import { Rings } from 'react-loader-spinner'
 const Load = ()=>{
 
 
     return(
 
         <div className="flex justify-center items-center h-screen">
-        <Hourglass
-            visible={true}
-            height="80"
-            width="80"
-            ariaLabel="hourglass-loading"
-            wrapperStyle={{}}
-            colors={['#306cce', '#72a1ed']}
-            />
+        <Rings
+  visible={true}
+  height="80"
+  width="80"
+  color="#2563eb"
+  ariaLabel="rings-loading"
+  wrapperStyle={{}}
+  wrapperClass=""
+  />
 </div>
     )
 }
