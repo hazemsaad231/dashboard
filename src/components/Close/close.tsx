@@ -1,7 +1,6 @@
 import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { useState } from 'react'
 import{Link} from 'react-router-dom'
-import { FaOutdent} from "react-icons/fa6";
 const close = ()=>{
   const [isOpen, setIsOpen] = useState(false)
 
@@ -15,12 +14,12 @@ const close = ()=>{
 
   return (
     <>
-      <Button
+       <button
         onClick={open}
-        className='text-md sm:text-md md:text-lg lg:text-lg xl:text-xl'
-      >
-        <FaOutdent size={22} />
-      </Button>
+        className="w-max m-auto flex items-center justify-center gap-2 p-3 rounded-lg bg-red-500 hover:bg-red-600 text-white transition-colors duration-200 font-medium text-sm">
+            
+              تسجيل الخروج
+            </button>
 
       <Dialog open={isOpen}  className="relative z-10" onClose={close}>
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">

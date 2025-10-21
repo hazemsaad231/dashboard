@@ -48,7 +48,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="lg:mr-60 min-h-screen bg-gray-100 rounded-xl p-6">
+    <div className="lg:mr-60 min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 rounded-xl p-6">
       <ToastContainer/>
       <h1 className="text-xl font-bold mb-6">Personal Information</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">

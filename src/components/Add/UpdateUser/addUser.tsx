@@ -10,7 +10,7 @@ import { api } from "../../Api/api";
 
 type FormValues = {
   title: string;
-  text: string;
+  discription: string;
   img: string;
 };
 
@@ -23,8 +23,8 @@ const Add_Update = () => {
     if (!id) return;
     (async () => {
       try {
-        const { data } = await axios.get(`${api}/${resource}/${id}`);
-        reset({ title: data.title, text: data.text, img: data.img });
+        const { data } = await axios.get(`${api}/${resource}/${id}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
+        reset({ title: data.title, discription: data.discription, img: data.img });
       } catch (error) {
         console.error(error);
       }
@@ -34,13 +34,13 @@ const Add_Update = () => {
   const onSubmit = async (formData: FormValues) => {
     try {
       if (id) {
-        await axios.put(`${api}/${resource}/${id}`, formData);
+        await axios.put(`${api}/${resource}/${id}`, formData, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
         toast.success("تم التعديل بنجاح");
       } else {
-        await axios.post(`${api}/${resource}`, formData);
+        await axios.post(`${api}/${resource}`, formData, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
         toast.success("تم الإضافة بنجاح");
       }
-      setTimeout(() => navigate(`/dashboard/${resource}/${resource}`), 400);
+      setTimeout(() => navigate(`/dashboard/${resource}/${resource}`), 800);
     } catch (e) {
       console.error(e);
       toast.error("حدث خطأ أثناء العملية");
@@ -48,22 +48,22 @@ const Add_Update = () => {
   };
 
   return (
-    <div className="lg:mr-60 bg-gray-100 min-h-screen">
+    <div className="lg:mr-52 bg-gradient-to-t from-slate-50 to-slate-100 min-h-screen">
       <ToastContainer limit={1} />
       <div className="flex justify-center items-center py-20">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="bg-white shadow-lg w-[90%] md:w-[80%] xl:w-[70%] mx-auto p-4 rounded-xl"
         >
-          <h1 className="text-lg md:text-xl text-center tracking-[2px] text-green-800 font-bold">
-            {id ? `Update ${resource}` : `Add ${resource}`}
+          <h1 className="text-lg md:text-xl text-center tracking-[2px] text-blue-600 font-bold">
+            {id ? `تعديل ` : `اضافة`}
           </h1>
 
           <div className="grid grid-cols-1 gap-4 mt-4">
 
             
             <div className="flex flex-col">
-              <label>Image URL</label>
+              <label>الصورة</label>
               <input
                 {...register("img", {
                   required: "رابط الصورة مطلوب",
@@ -79,7 +79,7 @@ const Add_Update = () => {
             </div>
 
             <div className="flex flex-col">
-              <label>Title</label>
+              <label>العنوان</label>
               <input
                 {...register("title", { required: "العنوان مطلوب" })}
                 className="border p-2 mt-1 shadow"
@@ -89,13 +89,13 @@ const Add_Update = () => {
             </div>
 
             <div className="flex flex-col">
-              <label>Text</label>
+              <label>الوصف</label>
               <textarea
-                {...register("text", { required: "النص مطلوب" })}
-                className="border mt-1 h-60 shadow"
+                {...register("discription", { required: "النص مطلوب" })}
+                className="border mt-1 p-2 h-80 shadow"
                 placeholder="Enter text"
               />
-              {errors.text && <span className="text-red-500">{errors.text.message}</span>}
+              {errors.discription && <span className="text-red-500">{errors.discription.message}</span>}
             </div>
 
           </div>
@@ -104,9 +104,9 @@ const Add_Update = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="bg-green-800 text-white px-16 py-2 rounded-lg"
+              className="bg-blue-700 text-white px-16 py-2 rounded-lg"
             >
-              {id ? "Update" : "Save"}
+              {id ? "تعديل" : "اضافة"}
             </button>
           </div>
         </form>

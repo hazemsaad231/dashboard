@@ -114,8 +114,10 @@ export default function Blogs() {
   if (loading) return <Load />;
 
   return (
-    <div className="lg:mr-52 pt-16 p-4 bg-gray-100 h-full">
-      <ToastContainer limit={1} />
+    <>
+    <ToastContainer limit={1} />
+    
+    <div className="lg:mr-52 pt-16 p-4 bg-gradient-to-b from-slate-50 to-slate-100 h-full">
       <div className="flex justify-between items-center p-6">
         <h1 className="font-bold text-2xl">المدونات</h1>
         <Link to="/dashboard/addUser/blogs"><button className="bg-black text-white p-2 rounded">إضافة مدونة</button></Link>
@@ -217,5 +219,6 @@ export default function Blogs() {
         </div>
       </Dialog>
     </div>
+    </>
   );
 }

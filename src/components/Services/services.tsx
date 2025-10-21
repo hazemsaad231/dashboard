@@ -36,8 +36,11 @@ export default function Services() {
   useEffect(() => {
     (async () => {
       try {
-        const r = await axios.get(`${api}/${resource}`);
+        const r = await axios.get(`${api}/services?type=blog&is_active=0&per_page=10`,
+          { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
+        );
         const arr = Array.isArray(r.data) ? r.data : r.data?.data || [];
+        console.log('services',arr);
         setData(arr);
         setAll(arr);
       } catch (e) {
@@ -120,7 +123,7 @@ export default function Services() {
   if (loading) return <Load />;
 
   return (
-    <div className="lg:mr-52 pt-16 p-4 font-cairo bg-gray-100 h-full">
+    <div className="lg:mr-52 pt-16 p-4 bg-gradient-to-b from-slate-50 to-slate-100 h-full">
       <ToastContainer limit={1} />
       <div className="flex justify-between items-center p-6">
         <h1 className="font-bold text-2xl">الخدمات</h1>

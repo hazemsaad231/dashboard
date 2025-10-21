@@ -1,20 +1,9 @@
-import { FaRegUser } from "react-icons/fa";
-import { MdOutlineIntegrationInstructions } from "react-icons/md";
+import { FaBriefcase, FaBuilding, FaUsers, FaUserTie} from "react-icons/fa";
 
 export const Data = [
-    {
-        title:'إجمالي المستخدمين',
-        count:150,
-        icon:FaRegUser
-    },
-    {
-        title:'النسبة الكلية',
-        count:2.6,
-        icon:MdOutlineIntegrationInstructions
-    },
-    {
-        title:'إجمالي الإيرادات',
-        count:20.255,
-        icon:FaRegUser
-    }
-]
+  { title: "سنوات الخبرة", count: "8+", icon: FaBriefcase, sub: "في تنفيذ المشاريع التقنية والتسويقية" },
+  { title: "عملاء وشركاء", count: "52", icon: FaUsers, sub: "من مختلف القطاعات" },
+  { title: "المشروعات المكتملة", count: "120+", icon: FaBuilding, sub: "بنجاح ورضا العملاء" },
+  { title: "فريق العمل", count: "24", icon: FaUserTie, sub: "فريق عمل محترف في مجالات متعددة" },
+];
+

@@ -8,6 +8,8 @@ import {ContextProvider} from './components/Context/context.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-<ContextProvider><App/></ContextProvider>
+{/* <ContextProvider> */}
+  <App/>
+  {/* </ContextProvider> */}
 </StrictMode>,
 )

@@ -222,7 +222,7 @@ import { GrServices } from "react-icons/gr"
 import { TbLogs } from "react-icons/tb"
 import { RxAvatar } from "react-icons/rx"
 import { Link } from "react-router-dom"
-
+import Close from "../Close/close";
 const Navbar = () => {
   const [isNavbarVisible, setNavbarVisible] = useState(false)
   const [activeItem, setActiveItem] = useState("home")
@@ -240,21 +240,21 @@ const Navbar = () => {
     { id: "home", label: "الرئيسية", icon: FaHouse, path: "/dashboard" },
     { id: "services", label: "الخدمات", icon: GrServices, path: "/dashboard/services/services" },
     { id: "blogs", label: "المدونة", icon: TbLogs, path: "/dashboard/blogs/blogs" },
-    { id: "profile", label: "الملف الشخصي", icon: FaPerson, path: "/dashboard/profile" },
+    // { id: "profile", label: "الملف الشخصي", icon: FaPerson, path: "/dashboard/profile" },
   ]
 
   return (
     <>
       {/* Mobile Menu Button */}
       <GiHamburgerMenu
-        className="fixed top-4 right-4 text-2xl cursor-pointer sm:block md:block lg:hidden xl:hidden z-50 hover:text-blue-600 transition-colors duration-200"
+        className="absolute top-4 right-4 text-2xl cursor-pointer sm:block md:block lg:hidden xl:hidden z-50 hover:text-blue-600 transition-colors duration-200"
         onClick={toggleNavbar}
       />
 
       {/* Desktop Sidebar */}
       <div className="fixed z-10 min-h-screen w-52 bg-gradient-to-b from-slate-50 to-slate-100 border-l border-slate-200 p-6 text-slate-700 hidden sm:hidden md:hidden lg:block xl:block shadow-lg">
         <div className="flex flex-col items-center h-full">
-          <div className="text-center mb-8">
+          <div className="mb-8 text-center">
             <div className="w-24 h-24 mx-auto mb-3 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 p-1 shadow-md">
               <div className="w-full h-full rounded-full bg-slate-100 flex items-center justify-center">
                 <RxAvatar size={80} className="text-blue-600" />
@@ -286,11 +286,8 @@ const Navbar = () => {
             })}
           </ul>
 
-          <div className="w-full pt-4 border-t border-slate-200">
-            <button className="w-full flex items-center justify-center gap-2 p-2 rounded-lg bg-red-500 hover:bg-red-600 text-white transition-colors duration-200 font-medium text-sm">
-            
-              تسجيل الخروج
-            </button>
+          <div className="absolute bottom-4 left-2 w-full pt-4 border-t border-slate-200">
+            <Close />
           </div>
         </div>
       </div>
@@ -340,9 +337,7 @@ const Navbar = () => {
           </ul>
 
           <div className="pt-4 border-t border-blue-500">
-            <button className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-red-500 hover:bg-red-600 transition-colors duration-200 font-medium text-sm text-white">
-              تسجيل الخروج
-            </button>
+            <Close />
           </div>
         </div>
       </div>

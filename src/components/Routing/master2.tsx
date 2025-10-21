@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom"
 import Navbar from "../Navbar/navbar"
-import Side from '../Navbar/sideBar'
 const Master2 = ()=>{
 
     return (
@@ -11,7 +10,7 @@ const Master2 = ()=>{
             </div>
 
             <div>
-            <Side />
+            {/* <Side /> */}
             <Outlet />
             </div>
         </div>

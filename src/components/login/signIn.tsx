@@ -3,8 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Context } from "../Context/context";
-import { useContext } from "react";
+
 
 
 
@@ -12,7 +11,6 @@ import { useContext } from "react";
 const Sign = ()=>{
 
 
-   const{saveDate}:any=useContext(Context) 
 
   const navigate = useNavigate()
 
@@ -22,16 +20,15 @@ const{register,handleSubmit,formState:{errors}}=useForm();
 const onSubmait=async(data:any)=>{
 
     try {
-        const response = await axios.post('https://dummyjson.com/auth/login',data)
+        const response = await axios.post('https://tadbeer.wj.edu.sa/public/api/admin/login',data)
         
-        console.log('token',response.data)
-        localStorage.setItem('token',response.data.accessToken);
-        localStorage.setItem('id',response.data.id);
-        console.log('id',response.data.id)
-        saveDate()
-         setTimeout(() => {
-          navigate("/dashboard", {state:{message:"تم تسجيل الدخول"} });
-        }, 1000);
+        console.log('token',response.data.data.token)
+        localStorage.setItem('token',response.data.data.token);
+        localStorage.setItem('admin',response.data.data.admin);
+         console.log('id',response.data.data.admin.id)
+        localStorage.setItem('id',response.data.data.admin.id);
+        navigate("/dashboard", {state:{message:"تم تسجيل الدخول"} });
+      
     } catch(error) {
         toast.error('خطأ في تسجيل الدخول')
         console.log(error)
@@ -60,10 +57,10 @@ const onSubmait=async(data:any)=>{
 </div>
 <form onSubmit={handleSubmit(onSubmait)}>
 <div className="flex flex-col mt-10">
-    <label htmlFor="username" className="text-start text-gray-600 font-normal">اسم المستخدم</label>
+    <label htmlFor="email" className="text-start text-gray-600 font-normal">الايميل</label>
     <input type="text" placeholder="emilys"
      className="border p-2 px-4 mt-1 rounded-md placeholder-gray-300 shadow outline-none"
-     {...register("username",{required:true})}/>
+     {...register("email",{required:true})}/>
      {errors.username && <p className="text-red-500 text-start">اسم المستخدم مطلوب</p>}
 
 

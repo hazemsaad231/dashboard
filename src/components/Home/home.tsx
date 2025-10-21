@@ -1,74 +1,74 @@
-import { PieChart, Pie, Cell, ResponsiveContainer as PieResponsiveContainer } from "recharts"
-import { Data } from "./data"
-import { useLocation, useNavigate } from "react-router-dom"
-import { useEffect } from "react"
-import { toast, ToastContainer } from "react-toastify"
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { PieChart, Pie, Cell, ResponsiveContainer as PieResponsiveContainer } from "recharts";
+import { Data } from "../Home/data";
+
+const COLORS = ["#D4AF37", "#241a56", "#00C49F", "#FF8042"];
+const RADIAN = Math.PI / 180;
 
 const pieData = [
-  { name: "المجموعة أ", value: 400 },
-  { name: "المجموعة ب", value: 300 },
-  { name: "المجموعة ج", value: 300 },
-  { name: "المجموعة د", value: 200 },
-]
+  { name: "بحث Google", value: 420 },
+  { name: "زيارات مباشرة", value: 310 },
+  { name: "منصات اجتماعية", value: 180 },
+  { name: "شركاء ومواقع خارجية", value: 90 },
+];
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"]
-
-const RADIAN = Math.PI / 180
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: any) => {
-  const radius = innerRadius + (outerRadius - innerRadius) / 2
-  const x = cx + radius * Math.cos(-midAngle * RADIAN)
-  const y = cy + radius * Math.sin(-midAngle * RADIAN)
+  const radius = innerRadius + (outerRadius - innerRadius) / 2;
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
   return (
-    <text x={x} y={y} fill="white" textAnchor="middle" dominantBaseline="central" fontSize={14}>
+    <text x={x} y={y} fill="white" textAnchor="middle" dominantBaseline="central" fontSize={12} fontWeight={700}>
       {`${(percent * 100).toFixed(0)}%`}
     </text>
-  )
-}
-
-
+  );
+};
 
 export default function Home() {
+  const location = useLocation();
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (location.state?.message) {
+      toast.success(location.state.message, { autoClose: 2000 });
+      navigate(location.pathname, { replace: true });
+    }
+  }, [location.state, navigate]);
 
-    const location = useLocation();
-      const navigate = useNavigate();
-  
-      useEffect(() => {
-          if (location.state?.message) {
-              toast.success(location.state.message, { autoClose: 2000 }); // عرض الرسالة
-              // تفريغ الحالة بعد عرض التوست
-              navigate(location.pathname, { replace: true }); 
-          }
-      }, [location.state, navigate]);
-      
   return (
     <>
-    <ToastContainer />
-    <div dir="rtl" className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 p-12 pt-16 font-cairo lg:mr-52">
-      <h1 className="text-3xl font-bold mb-6 text-foreground">الصفحة الرئيسية</h1>
+      <ToastContainer />
+      <div dir="rtl" className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 p-12 pt-16 font-cairo lg:mr-52">
+        <h1 className="text-3xl font-bold mb-6 text-foreground">نظرة عامة</h1>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-        {Data.map((item: any, index: number) => (
-          <div
-            key={index}
-            className="bg-card p-6 rounded-md shadow hover:shadow-md transition-shadow bg-white"
-          >
-            <div className="flex items-center justify-between">
-              <div className="text-right">
-                <h2 className="text-sm font-medium text-muted-foreground mb-1">{item.title}</h2>
-                <p className="text-2xl font-bold text-card-foreground">{item.count}</p>
+        {/* Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mb-6">
+          {Data.map((item: any, index: number) => (
+            <div
+              key={index}
+              className="bg-card p-6 rounded-md shadow hover:shadow-md transition-shadow bg-white border-l-4"
+              style={{ borderColor: "#D4AF37" }}
+            >
+              <div className="flex items-center justify-between">
+                <div className="text-right">
+                  <h2 className="text-sm font-medium text-muted-foreground mb-1">{item.title}</h2>
+                  <p className="text-2xl font-bold text-card-foreground">{item.count}</p>
+                  {item.sub && <p className="text-xs text-slate-400 mt-1">{item.sub}</p>}
+                </div>
+                <div className="w-12 h-12 rounded-md bg-[#241a56] flex items-center justify-center">
+                  <item.icon className="w-6 h-6 text-white" />
+                </div>
               </div>
-              <item.icon className="w-10 h-10 text-primary" />
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-        <div className="grid grid-cols-1 gap-4">
         {/* Pie Chart */}
         <div className="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow">
-          <h2 className="text-xl font-semibold mb-4 text-foreground">العملاء حسب المصدر</h2>
+          <h2 className="text-xl font-semibold mb-2 text-foreground">مصادر الزيارات</h2>
+          <p className="text-sm text-slate-500 mb-4">توضح أبرز قنوات الوصول لموقع الشركة</p>
           <div className="h-[25rem]">
             <PieResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -79,7 +79,7 @@ export default function Home() {
                   labelLine={false}
                   label={renderCustomizedLabel}
                   outerRadius="90%"
-                  fill="#8884d8"
+                  innerRadius="45%"
                   dataKey="value"
                 >
                   {pieData.map((_entry, index) => (
@@ -89,9 +89,18 @@ export default function Home() {
               </PieChart>
             </PieResponsiveContainer>
           </div>
+
+          <div className="mt-4 flex flex-wrap gap-3">
+            {pieData.map((p, i) => (
+              <div key={i} className="flex items-center gap-2 text-sm">
+                <span style={{ background: COLORS[i] }} className="w-4 h-4 rounded-sm inline-block" />
+                <span className="text-slate-600">{p.name}</span>
+              </div>
+            ))}
+          </div>
         </div>
-        </div>
+
       </div>
     </>
-  )
+  );
 }
