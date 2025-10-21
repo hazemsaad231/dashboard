@@ -217,7 +217,7 @@
 
 import { useState } from "react"
 import { GiHamburgerMenu } from "react-icons/gi"
-import { FaHouse, FaPerson } from "react-icons/fa6"
+import { FaHouse} from "react-icons/fa6"
 import { GrServices } from "react-icons/gr"
 import { TbLogs } from "react-icons/tb"
 import { RxAvatar } from "react-icons/rx"
