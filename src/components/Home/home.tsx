@@ -27,8 +27,8 @@ export default function Home() {
 
   return (
     <>
-      <div className="bg-gradient-to-b from-slate-50 to-slate-100 p-8 pt-16 lg:mr-48">
-        <h1 className="text-3xl font-bold mb-6 text-foreground">نظرة عامة</h1>
+      <div className="lg:mr-48 h-screen py-20 p-2 md:p-4 lg:p-8 bg-gradient-to-b from-slate-50 to-slate-100">
+        <h1 className="text-3xl md:text-4xl  font-bold mb-6 text-foreground">نظرة عامة</h1>
 
         {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mb-6">

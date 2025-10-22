@@ -30,7 +30,7 @@ const Navbar = () => {
     <>
       {/* Mobile Menu Button */}
       <TiThMenu
-        className="absolute top-4 left-4 text-2xl cursor-pointer sm:block md:block lg:hidden xl:hidden  z-10 text-blue-600 hover:text-blue-700 transition-colors duration-200"
+        className="absolute top-4 right-4 text-2xl cursor-pointer sm:block md:block lg:hidden xl:hidden  z-10 text-blue-600 hover:text-blue-700 transition-colors duration-200"
         onClick={toggleNavbar}
       />
 
