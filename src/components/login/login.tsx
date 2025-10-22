@@ -59,7 +59,7 @@ const onSubmait=async(data:any)=>{
 <div className="flex flex-col mt-10">
     <label htmlFor="email" className="text-start text-gray-600 font-normal">الايميل</label>
     <input type="text" placeholder="admin@example.com"
-     className="border p-2 px-4 mt-1 rounded-md placeholder-gray-300 shadow outline-none"
+     className="border p-2 px-4 mt-1 rounded-md placeholder-gray-300 outline-none"
      {...register("email",{
        required: "الايميل مطلوب",
        pattern: {
@@ -71,7 +71,7 @@ const onSubmait=async(data:any)=>{
 
 
     <label htmlFor="pass" className="text-start text-gray-600 font-normal mt-4">كلمة المرور</label>
-    <input type="text" placeholder="password"   className="border p-2 px-4 mt-1  rounded-md placeholder-gray-300 shadow outline-none"
+    <input type="text" placeholder="password"   className="border p-2 px-4 mt-1  rounded-md placeholder-gray-300 outline-none"
     {...register("password",{required:true})} />
     {errors.password && <p className="text-red-500 text-start"><span>⚠️</span> كلمة المرور مطلوبه</p>}
 

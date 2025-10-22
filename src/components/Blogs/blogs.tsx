@@ -129,7 +129,9 @@ export default function Blogs() {
       renderCell: (p: any) => (
         <div className="flex justify-center items-center h-full w-full">
           <img
-            src={p.value || '/placeholder.png'}
+            // src={p.value || '/placeholder.png'}
+            src={'https://tadbeer-two.vercel.app/_next/image?url=%2Fimg4.png&w=1920&q=75'}
+
             alt={String(p.row.title)}
             className="w-20 h-20 object-cover rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow"
           />
@@ -191,7 +193,7 @@ export default function Blogs() {
                 <p className="text-slate-500 text-sm">إدارة وتنظيم جميع المدونات المتاحة</p>
               </div>
               <Link to="/dashboard/addUser/blogs">
-                <button className="bg-blue-600 hover:bg-blue-700 text-white px-2 py-2.5 rounded-lg font-medium transition-colors shadow-sm hover:shadow-md">+ إضافة مدونة</button>
+                <button className="bg-[#2d2265] text-white px-2 py-2.5 rounded-lg font-medium transition-colors shadow-sm hover:shadow-md">+ إضافة مدونة</button>
               </Link>
             </div>
 

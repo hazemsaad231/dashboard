@@ -30,7 +30,7 @@ const Navbar = () => {
     <>
       {/* Mobile Menu Button */}
       <TiThMenu
-        className="absolute top-4 right-4 text-2xl cursor-pointer sm:block md:block lg:hidden xl:hidden  z-10 text-blue-600 hover:text-blue-700 transition-colors duration-200"
+        className="absolute top-4 right-4 text-2xl cursor-pointer sm:block md:block lg:hidden xl:hidden  z-10 text-[#41389c] hover:text-[#4220c9] transition-colors duration-200"
         onClick={toggleNavbar}
       />
 
@@ -38,9 +38,9 @@ const Navbar = () => {
       <div className="fixed z-10 min-h-screen w-48 bg-gradient-to-b from-slate-50 to-slate-100 border-l border-slate-200 p-5 text-slate-700 hidden sm:hidden md:hidden lg:block xl:block shadow-md">
         <div className="flex flex-col items-center h-full ">
           <div className="mb-8 text-center">
-            <div className="w-24 h-24 mx-auto mb-3 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 p-1 shadow-md">
+            <div className="w-24 h-24 mx-auto mb-3 rounded-full bg-gradient-to-br from-[#412da3] to-[#3318b8] p-1 shadow-md">
               <div className="w-full h-full rounded-full bg-slate-100 flex items-center justify-center">
-                <RxAvatar size={80} className="text-blue-600" />
+                <RxAvatar size={80} className="text-[#2e268a]" />
               </div>
             </div>
             <h3 className="font-bold text-lg text-slate-800">المسؤول</h3>
@@ -57,7 +57,7 @@ const Navbar = () => {
                     onClick={() => handleNavClick(item.id)}
                     className={`flex items-center gap-3 p-2 rounded-lg cursor-pointer transition-all duration-300 ${
                       activeItem === item.id
-                        ? "bg-blue-600 text-white shadow-md scale-105"
+                        ? "bg-[#42309f] text-white shadow-md scale-105"
                         : "hover:bg-slate-200 text-slate-700"
                     }`}
                   >
@@ -77,14 +77,14 @@ const Navbar = () => {
 
       {/* Mobile Sidebar */}
       <div
-        className={`fixed z-40 w-full bg-gradient-to-b from-blue-600 to-blue-700 text-white h-screen shadow-xl transform transition-transform duration-1000 ease-in-out ${
+        className={`fixed z-40 w-full bg-gradient-to-b from-[#362978] to-[#331d9f] text-white h-screen shadow-xl transform transition-transform duration-1000 ease-in-out ${
           isNavbarVisible ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="flex flex-col h-full p-6">
           <button
             onClick={toggleNavbar}
-            className="absolute top-4 right-4 text-white hover:bg-blue-500 p-2 rounded-lg transition-colors duration-200"
+            className="absolute top-4 right-4 text-white hover:bg-[#332673] p-2 rounded-lg transition-colors duration-200"
           >
             ✖
           </button>
@@ -92,7 +92,7 @@ const Navbar = () => {
           <div className="text-center mt-12 mb-8">
             <div className="w-28 h-28 mx-auto mb-3 rounded-full bg-white p-1 shadow-lg">
               <div className="w-full h-full rounded-full bg-slate-200 flex items-center justify-center">
-                <RxAvatar size={100} className="text-blue-600" />
+                <RxAvatar size={100} className="text-[#372c70]" />
               </div>
             </div>
             <h3 className="text-xl font-bold">المسؤول</h3>
@@ -108,7 +108,7 @@ const Navbar = () => {
                     to={item.path}
                     onClick={() => handleNavClick(item.id)}
                     className={`flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer transition-all duration-300 ${
-                      activeItem === item.id ? "bg-white text-blue-600 shadow-md" : "hover:bg-blue-500 text-white"
+                      activeItem === item.id ? "bg-white text-[#241a56] shadow-md" : "hover:bg-[#241a56] text-white"
                     }`}
                   >
                     <Icon size={20} />
@@ -122,7 +122,7 @@ const Navbar = () => {
           <div className="mt-4 pt-4 border-t border-blue-200">
             <button
         
-        className="w-max m-auto z-50 flex items-center justify-center gap-2 p-3 rounded-lg bg-red-500 hover:bg-red-600 text-white transition-colors duration-200 font-medium text-md">
+        className="w-max m-auto z-50 flex items-center justify-center gap-2 p-3 rounded-lg bg-[#DFC96D] text-white transition-colors duration-200 font-medium text-md">
             
             <Link
                   to="/"

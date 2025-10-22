@@ -137,7 +137,7 @@ export default function Services() {
         <div className="flex justify-center items-center h-full w-full">
        <img
   // src={`https://tadbeer.wj.edu.sa/storage/${p.value}`}
-  src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0TTbUfyAAANbPkNeRdfx7c_iMXWhFPhw5Rg&s'}
+  src={'https://tadbeer-two.vercel.app/_next/image?url=https%3A%2F%2Ftadbeer-two.vercel.app%2F_next%2Fimage%3Furl%3D%252Fslide2.webp%26w%3D1920%26q%3D75&w=1920&q=75'}
   alt={p.row.title}
   className="w-20 h-20 object-cover rounded-lg"
 />
@@ -173,10 +173,10 @@ export default function Services() {
       align: 'center',
       renderCell: (p: any) => (
         <div className="flex gap-3 justify-center w-full items-center h-full">
-          <button onClick={() => openDelete(p.id)} className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="حذف">
+          <button onClick={() => openDelete(p.id)} className="p-2 text-[#302b6d] hover:bg-red-50 rounded-lg transition-colors" title="حذف">
             <MdDelete size={20} />
           </button>
-          <Link to={`/dashboard/addUser/${resource}/${p.id}`} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="تعديل">
+          <Link to={`/dashboard/addUser/${resource}/${p.id}`} className="p-2 text-[#DFC96D] hover:bg-blue-50 rounded-lg transition-colors" title="تعديل">
             <FaEdit size={20} />
           </Link>
           <Link to={`/dashboard/services/${resource}/${p.id}`} className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors" title="عرض">
@@ -201,7 +201,7 @@ export default function Services() {
                 <p className="text-slate-500 text-sm">إدارة وتنظيم جميع الخدمات المتاحة</p>
               </div>
               <Link to="/dashboard/addUser/services">
-                <button className="bg-blue-600 hover:bg-blue-700 text-white px-2 py-2.5 rounded-lg font-medium transition-colors shadow-sm hover:shadow-md">+ إضافة خدمة</button>
+                <button className="bg-[#2d2265] text-white px-2 py-2.5 rounded-lg font-medium transition-colors shadow-sm hover:shadow-md">+ إضافة خدمة</button>
               </Link>
             </div>
 

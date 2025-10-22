@@ -16,7 +16,7 @@ const close = ()=>{
     <>
        <button
         onClick={open}
-        className="w-max m-auto z-50 flex items-center justify-center gap-2 p-3 rounded-lg bg-red-500 hover:bg-red-600 text-white transition-colors duration-200 font-medium text-sm">
+        className="w-max m-auto z-50 flex items-center justify-center gap-2 p-3 rounded-lg bg-[#DFC96D] text-white transition-colors duration-200 font-medium text-sm">
             
               تسجيل الخروج
             </button>
