@@ -116,7 +116,12 @@ export default function Services() {
   };
 
   // صفوف الجدول
-  const rows = currentData.map((it, i) => ({ id: it.id ?? it._id ?? String(i + 1), title: it.title ?? '-', img: it.image ?? it.image ?? '' }));
+  const rows = currentData.map((it, i) => ({
+     id: it.id ?? it._id ?? String(i + 1),
+     title: it.title ?? '-',
+     description: it.description ?? '-',
+      image: it.image ?? null,
+  }));
 
   const columns: any = [
     {
@@ -130,13 +135,12 @@ export default function Services() {
       align: 'center',
       renderCell: (p: any) => (
         <div className="flex justify-center items-center h-full w-full">
-          {/* <img
-            src={p.value || '/placeholder.png'}
-            alt={String(p.row.title)}
-            className="w-20 h-20 object-cover rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow"
-          /> */}
-          <img src={p.value}
-            className="w-20 h-20 object-cover rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow" />
+       <img
+  src={`https://tadbeer.wj.edu.sa/storage/${p.value}`}
+  alt={p.row.title}
+  className="w-20 h-20 object-cover rounded-lg"
+/>
+
 
         </div>
       ),
@@ -186,7 +190,7 @@ export default function Services() {
     <>
       <ToastContainer limit={1} />
 
-      <div className="lg:mr-52 h-screen pt-16 p-4 bg-gradient-to-b from-slate-50 to-slate-100">
+      <div className="lg:mr-48 h-screen pt-16 p-8 bg-gradient-to-b from-slate-50 to-slate-100">
         {loading ? (
           <Load />
         ) : (
@@ -194,7 +198,7 @@ export default function Services() {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
               <div>
                 <h1 className="font-bold text-4xl md:text-5xl text-slate-900">الخدمات</h1>
-                <p className="text-slate-500 text-sm mt-1">إدارة وتنظيم جميع الخدمات المتاحة</p>
+                <p className="text-slate-500 text-sm mt-2">إدارة وتنظيم جميع الخدمات المتاحة</p>
               </div>
               <Link to="/dashboard/addUser/services">
                 <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-medium transition-colors shadow-sm hover:shadow-md">+ إضافة خدمة</button>

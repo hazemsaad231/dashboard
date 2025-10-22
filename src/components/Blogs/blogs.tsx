@@ -181,22 +181,22 @@ export default function Blogs() {
     <>
       <ToastContainer limit={1} />
 
-      <div className="lg:mr-52 pt-16 p-4 bg-gradient-to-br from-slate-50 via-white to-slate-50">
+      <div className="lg:mr-48 pt-16 p-8 bg-gradient-to-br from-slate-50 via-white to-slate-50">
         {loading ? (
           <Load />
         ) : (
           <div>
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
               <div>
                 <h1 className="font-bold text-4xl md:text-5xl text-slate-900">المدونات</h1>
-                <p className="text-slate-500 text-sm mt-1">إدارة وتنظيم جميع المدونات المتاحة</p>
+                <p className="text-slate-500 text-sm mt-2">إدارة وتنظيم جميع المدونات المتاحة</p>
               </div>
               <Link to="/dashboard/addUser/blogs">
                 <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-medium transition-colors shadow-sm hover:shadow-md">+ إضافة مدونة</button>
               </Link>
             </div>
 
-            <Paper sx={{ backgroundColor: 'white', borderRadius: '16px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', border: '1px solid #e2e8f0', overflowY: 'hidden' }} className="p-6">
+            <Paper sx={{ backgroundColor: 'white', borderRadius: '16px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', border: '1px solid #e2e8f0', overflowY: 'hidden' }} className="p-6 mt-16">
 
               <div className="flex flex-col md:flex-row items-start md:items-center gap-4 mb-6 pb-6 border-b border-slate-200">
                 <div className="relative w-full md:w-auto">

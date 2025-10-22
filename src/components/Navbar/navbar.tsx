@@ -35,7 +35,7 @@ const Navbar = () => {
       />
 
       {/* Desktop Sidebar */}
-      <div className="fixed z-10 min-h-screen w-52 bg-gradient-to-b from-slate-50 to-slate-100 border-l border-slate-200 p-5 text-slate-700 hidden sm:hidden md:hidden lg:block xl:block shadow-md">
+      <div className="fixed z-10 min-h-screen w-48 bg-gradient-to-b from-slate-50 to-slate-100 border-l border-slate-200 p-5 text-slate-700 hidden sm:hidden md:hidden lg:block xl:block shadow-md">
         <div className="flex flex-col items-center h-full ">
           <div className="mb-8 text-center">
             <div className="w-24 h-24 mx-auto mb-3 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 p-1 shadow-md">
