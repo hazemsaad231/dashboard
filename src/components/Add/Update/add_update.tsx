@@ -2,9 +2,8 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { api } from "../../Api/api";
+import toast from "react-hot-toast";
 
 type FormValues = {
   title: string;
@@ -92,7 +91,6 @@ const Add_Update: React.FC = () => {
 
   return (
     <div className="lg:mr-48 min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 pt-16 pb-12 p-3">
-      <ToastContainer limit={1} />
       <div className="flex justify-center items-center">
         <form
           onSubmit={handleSubmit(onSubmit)}

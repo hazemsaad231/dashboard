@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-hot-toast";
+
 
 
 
@@ -21,13 +21,13 @@ const onSubmait=async(data:any)=>{
 
     try {
         const response = await axios.post('https://tadbeer.wj.edu.sa/public/api/admin/login',data)
-        
         console.log('token',response.data.data.token)
         localStorage.setItem('token',response.data.data.token);
         localStorage.setItem('admin',response.data.data.admin);
+        toast.success('تم تسجيل الدخول بنجاح');
          console.log('id',response.data.data.admin.id)
         localStorage.setItem('id',response.data.data.admin.id);
-        navigate("/dashboard", {state:{message:"تم تسجيل الدخول"} });
+        navigate('/dashboard');
       
     } catch(error) {
         toast.error('خطأ في تسجيل الدخول')
@@ -40,7 +40,7 @@ const onSubmait=async(data:any)=>{
     return(
 
 <>
-<ToastContainer autoClose={2000} limit={1} />
+
 <div className="flex justify-center items-center h-screen bg-[#dfc96d]">
 <div className="bg-white p-6 text-start rounded-xl shadow-xl w-[90%] sm:w-[90%] md:w-[60%] lg:w-[50%] xl:w-[30%]">
 <div className="flex flex-col justify-center items-center">

@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import Load from '../Load/load';
 import { FaEdit } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
-import { ToastContainer, toast } from 'react-toastify';
 import { Dialog, DialogPanel } from "@headlessui/react";
+import toast from "react-hot-toast";
 const ServiceDetails = () => {
     const { id } = useParams();
     const [data, setData] = useState<any | null>(null);
@@ -81,7 +81,6 @@ const ServiceDetails = () => {
 
     return (
         <>
-        <ToastContainer/>
         <div className="lg:mr-60 p-8">
                   <div className="relative flex flex-col gap-4">
                         <img

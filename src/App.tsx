@@ -11,6 +11,7 @@ import PrivateRoute from './components/Routing/protuct'
 import Blogs from './components/Blogs/blogs'
 import ServiceDetails from './components/Services/serviceDetails'
 import BlogDetails from './components/Blogs/blogDetails'
+import { Toaster } from 'react-hot-toast'
 
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
 
   return (
     <>
+  <Toaster position="top-center" reverseOrder={false} />
   <RouterProvider router={route} ></RouterProvider>
      
     </>

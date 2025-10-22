@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import Load from '../Load/load';
-import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { CiSearch } from 'react-icons/ci';
 import { FaEdit, FaEye } from 'react-icons/fa';
@@ -12,6 +11,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
 import { Dialog } from '@headlessui/react';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import toast from 'react-hot-toast';
 
 export default function Services() {
   const { resource } = useParams();
@@ -107,7 +107,7 @@ export default function Services() {
       });
       setAll(prev => prev.filter(it => String(it.id ?? it._id) !== String(Id)));
       setData(prev => prev.filter(it => String(it.id ?? it._id) !== String(Id)));
-      toast.success('تم الحذف بنجاح', { autoClose: 2000 });
+      toast.success('تم الحذف بنجاح');
       closeDelete();
     } catch (err) {
       console.error('delete error:', err);
@@ -188,7 +188,6 @@ export default function Services() {
 
   return (
     <>
-      <ToastContainer limit={1} />
 
       <div className="lg:mr-48 h-screen pt-16 p-8 bg-gradient-to-b from-slate-50 to-slate-100">
         {loading ? (
