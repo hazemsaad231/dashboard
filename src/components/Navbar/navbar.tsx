@@ -35,7 +35,7 @@ const Navbar = () => {
       />
 
       {/* Desktop Sidebar */}
-      <div className="fixed z-10 min-h-screen w-52 bg-gradient-to-b from-slate-50 to-slate-100 border-l border-slate-200 p-6 text-slate-700 hidden sm:hidden md:hidden lg:block xl:block shadow-md">
+      <div className="fixed z-10 min-h-screen w-52 bg-gradient-to-b from-slate-50 to-slate-100 border-l border-slate-200 p-5 text-slate-700 hidden sm:hidden md:hidden lg:block xl:block shadow-md">
         <div className="flex flex-col items-center h-full ">
           <div className="mb-8 text-center">
             <div className="w-24 h-24 mx-auto mb-3 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 p-1 shadow-md">
@@ -77,7 +77,7 @@ const Navbar = () => {
 
       {/* Mobile Sidebar */}
       <div
-        className={`fixed z-40 w-full bg-gradient-to-b from-blue-600 to-blue-700 text-white h-screen shadow-2xl transform transition-transform duration-300 ease-in-out ${
+        className={`fixed z-40 w-full bg-gradient-to-b from-blue-600 to-blue-700 text-white h-screen shadow-xl transform transition-transform duration-1000 ease-in-out ${
           isNavbarVisible ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -112,17 +112,17 @@ const Navbar = () => {
                     }`}
                   >
                     <Icon size={20} />
-                    <span className="text-sm font-medium">{item.label}</span>
+                    <span className="text-lg font-medium">{item.label}</span>
                   </Link>
                 </li>
               )
             })}
           </ul>
 
-          <div className="mt-4 pt-4 border-t border-blue-400">
+          <div className="mt-4 pt-4 border-t border-blue-200">
             <button
         
-        className="w-max m-auto z-50 flex items-center justify-center gap-2 p-3 rounded-lg bg-red-500 hover:bg-red-600 text-white transition-colors duration-200 font-medium text-sm">
+        className="w-max m-auto z-50 flex items-center justify-center gap-2 p-3 rounded-lg bg-red-500 hover:bg-red-600 text-white transition-colors duration-200 font-medium text-md">
             
             <Link
                   to="/"

@@ -130,11 +130,14 @@ export default function Services() {
       align: 'center',
       renderCell: (p: any) => (
         <div className="flex justify-center items-center h-full w-full">
-          <img
+          {/* <img
             src={p.value || '/placeholder.png'}
             alt={String(p.row.title)}
             className="w-20 h-20 object-cover rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow"
-          />
+          /> */}
+          <img src={p.value}
+            className="w-20 h-20 object-cover rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow" />
+
         </div>
       ),
     },
@@ -183,12 +186,12 @@ export default function Services() {
     <>
       <ToastContainer limit={1} />
 
-      <div className="lg:mr-52 pt-16 p-4 bg-gradient-to-br from-slate-50 via-white to-slate-50">
+      <div className="lg:mr-52 h-screen pt-16 p-4 bg-gradient-to-b from-slate-50 to-slate-100">
         {loading ? (
           <Load />
         ) : (
-          <div>
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+          <>
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
               <div>
                 <h1 className="font-bold text-4xl md:text-5xl text-slate-900">الخدمات</h1>
                 <p className="text-slate-500 text-sm mt-1">إدارة وتنظيم جميع الخدمات المتاحة</p>
@@ -198,12 +201,12 @@ export default function Services() {
               </Link>
             </div>
 
-            <Paper sx={{ backgroundColor: 'white', borderRadius: '16px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', border: '1px solid #e2e8f0', overflowY: 'hidden' }} className="p-6">
+            <Paper sx={{ backgroundColor: 'white', borderRadius: '16px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', border: '1px solid #e2e8f0', overflowY: 'hidden' }} className="p-5 mt-16">
 
               <div className="flex flex-col md:flex-row items-start md:items-center gap-4 mb-6 pb-6 border-b border-slate-200">
                 <div className="relative w-full md:w-auto">
                   <CiSearch size={20} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                  <input type="text" placeholder="ابحث عن خدمة..." onChange={(e) => search(e.target.value)} className="w-full md:w-80 h-11 rounded-lg pl-4 pr-10 bg-slate-50 border border-slate-200 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all outline-none" />
+                  <input type="text" placeholder="ابحث عن خدمة..." onChange={(e) => search(e.target.value)} className="w-full md:w-80 h-10 rounded-lg pl-4 pr-10 bg-slate-50 border border-slate-200 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all outline-none" />
                 </div>
               </div>
 
@@ -260,8 +263,7 @@ export default function Services() {
                 </Dialog.Panel>
               </div>
             </Dialog>
-
-          </div>
+          </>
         )}
       </div>
     </>

@@ -14,79 +14,82 @@ type FormValues = {
 };
 
 const Add_Update = () => {
+
   const { id, resource } = useParams();
   const navigate = useNavigate();
 
-  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<FormValues>({
+  const { register, handleSubmit, setValue, formState: { errors, isSubmitting } } = useForm<FormValues>({
     defaultValues: { title: "", description: "", image: "", type: resource },
   });
 
-  // 🟢 جلب بيانات العنصر إذا كنا في وضع التعديل
+  // جلب بيانات العنصر للتعديل
   useEffect(() => {
     if (!id) return;
-
-    (async () => {
+    const update =async () => {
       try {
-        const { data } = await axios.get(`${api}/${resource}/${id}`, {
+        const { data } = await axios.get(`${api}/services/${id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
-        reset({
-          title: data.data.title,
-          description: data.data.description,
-          image: data.data.image,
-          type: resource,
-        });
+        const res = data.data;
+        setValue("title", res.title);
+        setValue("description", res.description);
+        setValue("image", res.image);
+        setValue("type", resource ?? "");
+        console.log('data',data);
       } catch (error) {
         console.error(error);
         toast.error("فشل في جلب بيانات العنصر");
       }
-    })();
-  }, [id, reset, resource]);
+    } 
+    update();
+  }, [id, resource, setValue]);
 
-  // 🟢 إرسال البيانات (إضافة أو تعديل)
+
+// إرسال البيانات (إضافة أو تعديل)
+
   const onSubmit = async (data: FormValues) => {
-    const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("description", data.description);
-    formData.append("type", data.type);
+        try {
+            if (id) {
+               
+                const response = await axios.put(`${api}/services/${id}`, data,{
+                    headers: {
+                      Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                  });
+                console.log(response,'updated');
+                setTimeout(() => {
+                    navigate(`/dashboard/${resource}/${resource}`)
+                },1000)
+                toast("تحديث العنصر تم بنجاح");
+            } else {
+                const response = await axios.post(`${api}/services`, data,
+                    {headers: {
+                      Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                  }
+                );
+                console.log(response);
+                setTimeout(() => {
+                    navigate(`/dashboard/${resource}/${resource}`)
+                },1000)
+               
+                toast("إضافة العنصر تم بنجاح");
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error("حدث خطأ أثناء العملية.");
+        }
+    };
 
-    // رفع الصورة كملف
-    const fileInput = document.querySelector<HTMLInputElement>('input[type="file"]');
-    if (fileInput?.files?.[0]) formData.append("image", fileInput.files[0]);
 
-    try {
-      if (id) {
-        await axios.put(`${api}/services/${id}`, formData, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "multipart/form-data",
-          },
-        });
-        toast.success("تم التعديل بنجاح");
-      } else {
-        await axios.post(`${api}/services`, formData, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "multipart/form-data",
-          },
-        });
-        toast.success("تم الإضافة بنجاح");
-      }
-      // بعد الإضافة/التعديل نرجع للصفحة السابقة
-      setTimeout(() => navigate(`/dashboard/${resource}/${resource}`), 800);
-    } catch (e) {
-      console.error(e);
-      toast.error("حدث خطأ أثناء العملية");
-    }
-  };
 
   return (
-    <div className="lg:mr-52 min-h-screen pt-16 pb-12 p-3">
+    <div className="lg:mr-52 min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 pt-16 pb-12 p-3">
       <ToastContainer limit={1} />
       <div className="flex justify-center items-center">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="bg-white shadow-lg w-full max-w-2xl rounded-2xl p-8 border border-slate-100"
+          className="bg-white shadow-xl w-full max-w-4xl rounded-2xl p-4"
         >
           {/* العنوان الرئيسي */}
           <h1 className="text-3xl md:text-4xl text-center font-bold mb-6">
@@ -94,11 +97,14 @@ const Add_Update = () => {
           </h1>
 
           {/* حقل رفع الصورة */}
-          <div className="mb-4">
-            <label className="block font-semibold mb-2">📷 اختر صورة</label>
-            <input type="file" accept="image/*" {...register("image", { required: "الصورة مطلوبة" })} />
-            {errors.image && <p className="text-red-500 text-sm mt-1">{errors.image.message}</p>}
-          </div>
+              <div className="mb-4">
+                 <label className="block font-semibold mb-2">📷 اختر صورة</label>
+                    <input  className="border p-3 w-full rounded-lg" {...register("image", { required: false,pattern:{
+                          value:/(\.(jpg|jpeg|png|gif|bmp|webp|svg)$)|(^https?:\/\/[^\s]+)$/i,
+                       message: 'Only JPG, JPEG, and PNG files are allowed',
+                    } })} placeholder="Enter image" />
+                   {errors.image && <span className="text-red-500">{errors.image.message}</span>}                         
+            </div>
 
           {/* حقل العنوان */}
           <div className="mb-4">
@@ -117,7 +123,7 @@ const Add_Update = () => {
             <textarea
               {...register("description", { required: "الوصف مطلوب" })}
               placeholder="أدخل الوصف التفصيلي"
-              className="border p-3 w-full h-40 rounded-lg"
+              className="border p-3 w-full h-[24rem] md:h-60 rounded-lg"
             />
             {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>}
           </div>
