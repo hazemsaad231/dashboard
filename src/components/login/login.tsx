@@ -44,22 +44,23 @@ const onSubmait=async(data:any)=>{
 <div className="flex justify-center items-center h-screen bg-[#dfc96d]">
 <div className="bg-white p-6 text-start rounded-xl shadow-xl w-[90%] sm:w-[90%] md:w-[60%] lg:w-[50%] xl:w-[30%]">
 <div className="flex flex-col justify-center items-center">
-
     <img
     src="/logo2.jpeg"
     alt="logo"
-    className="w-40 h-40 mb-8"
+    className="w-32 h-32 mb-4"
 
     />
 
 <h3 className="text-xl font-semibold">تسجيل الدخول</h3>
 <p className="text-md text-gray-500 font-extralight">من فضلك قم بتسجيل الدخول</p>
+<div className="w-2/3 m-auto h-[2px] bg-[#dfc96d] mt-4"></div>
 </div>
 <form onSubmit={handleSubmit(onSubmait)}>
+   
 <div className="flex flex-col mt-10">
     <label htmlFor="email" className="text-start text-gray-600 font-normal">الايميل</label>
     <input type="text" placeholder="admin@example.com"
-     className="border p-2 px-4 mt-1 rounded-md placeholder-gray-300 outline-none"
+     className="border p-2 px-4 mt-1 rounded-md  outline-[#dfc96d]"
      {...register("email",{
        required: "الايميل مطلوب",
        pattern: {
@@ -71,7 +72,7 @@ const onSubmait=async(data:any)=>{
 
 
     <label htmlFor="pass" className="text-start text-gray-600 font-normal mt-4">كلمة المرور</label>
-    <input type="text" placeholder="password"   className="border p-2 px-4 mt-1  rounded-md placeholder-gray-300 outline-none"
+    <input type="text" placeholder="password"   className="border p-2 px-4 mt-1  rounded-md outline-[#dfc96d]"
     {...register("password",{required:true})} />
     {errors.password && <p className="text-red-500 text-start"><span>⚠️</span> كلمة المرور مطلوبه</p>}
 
@@ -89,5 +90,3 @@ const onSubmait=async(data:any)=>{
 }
 
 export default Sign;
-
-

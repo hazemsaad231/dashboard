@@ -113,12 +113,23 @@ export default function Blogs() {
     }
   };
 
-  // صفوف الجدول
-  const rows = currentData.map((it, i) => ({ id: it.id ?? it._id ?? String(i + 1), title: it.title ?? '-', img: it.img ?? it.image ?? '' }));
+    // صفوف الجدول
+  const rows = currentData.map((it, i) => ({
+     id: it.id ?? it._id ?? String(i + 1),
+     title: it.title ?? '-',
+     description: it.description ?? '-',
+      image: it.image_url ?? null,
+  }));
+console.log('rows:', currentData.map((it, i) => ({
+     id: it.id ?? it._id ?? String(i + 1),
+     title: it.title ?? '-',
+     description: it.description ?? '-',
+      image: it.image_url ?? null,
+  })));
 
   const columns: any = [
     {
-      field: 'img',
+      field: 'image',
       headerName: 'صورة',
       width: 120,
       sortable: false,
@@ -129,10 +140,8 @@ export default function Blogs() {
       renderCell: (p: any) => (
         <div className="flex justify-center items-center h-full w-full">
           <img
-            // src={p.value || '/placeholder.png'}
-            src={'https://tadbeer-two.vercel.app/_next/image?url=%2Fimg4.png&w=1920&q=75'}
-
-            alt={String(p.row.title)}
+            src={`${p.value}`}
+            alt={p.row.title}
             className="w-20 h-20 object-cover rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow"
           />
         </div>
@@ -182,7 +191,7 @@ export default function Blogs() {
   return (
     <>
 
-      <div className="lg:mr-48 h-screen py-20 p-2 md:p-4 lg:p-8 bg-gradient-to-b from-slate-50 to-slate-100">
+      <div className="lg:mr-52 h-screen py-20 p-2 md:p-4 lg:p-8 bg-gradient-to-b from-slate-50 to-slate-100">
         {loading ? (
           <Load />
         ) : (

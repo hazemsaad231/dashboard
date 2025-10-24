@@ -12,6 +12,7 @@ import Blogs from './components/Blogs/blogs'
 import ServiceDetails from './components/Services/serviceDetails'
 import BlogDetails from './components/Blogs/blogDetails'
 import { Toaster } from 'react-hot-toast'
+import Chances from './components/Chances/chance'
 
 
 function App() {
@@ -35,8 +36,9 @@ function App() {
         {index: true, element: <Home/>},
         {path: "home", element: <Home/>},
         {path: "services/:resource", element: <Services/>},
-        {path: "services/:resource/:id", element:<ServiceDetails/>},
         {path: "blogs/:resource", element: <Blogs/>},
+        {path: "chances", element: <Chances/>},
+        {path: "services/:resource/:id", element:<ServiceDetails/>},
         {path: "blogs/:resource/:id", element:<BlogDetails/>},
         {path: "addUser/:resource", element: <AddUser/>},
         {path: "addUser/:resource/:id", element: <AddUser/>},

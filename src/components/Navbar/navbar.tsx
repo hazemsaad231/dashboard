@@ -4,6 +4,7 @@ import { FaHouse} from "react-icons/fa6"
 import { GrServices } from "react-icons/gr"
 import { TbLogs } from "react-icons/tb"
 import { RxAvatar } from "react-icons/rx"
+import { FaBriefcase } from "react-icons/fa";
 import { Link } from "react-router-dom"
 import Close from "../Close/close";
 const Navbar = () => {
@@ -23,6 +24,7 @@ const Navbar = () => {
     { id: "home", label: "الرئيسية", icon: FaHouse, path: "/dashboard" },
     { id: "services", label: "الخدمات", icon: GrServices, path: "/dashboard/services/services" },
     { id: "blogs", label: "المدونة", icon: TbLogs, path: "/dashboard/blogs/blogs" },
+    { id: "chances", label: 'الفرص الاستثمارية', icon: FaBriefcase, path: "/dashboard/chances" },
     // { id: "profile", label: "الملف الشخصي", icon: FaPerson, path: "/dashboard/profile" },
   ]
 
@@ -35,7 +37,7 @@ const Navbar = () => {
       />
 
       {/* Desktop Sidebar */}
-      <div className="fixed z-10 min-h-screen w-48 bg-gradient-to-b from-slate-50 to-slate-100 border-l border-slate-200 p-5 text-slate-700 hidden sm:hidden md:hidden lg:block xl:block shadow-md">
+      <div className="fixed z-10 min-h-screen w-52 bg-gradient-to-b from-slate-50 to-slate-100 border-l border-slate-200 p-5 text-slate-700 hidden sm:hidden md:hidden lg:block xl:block shadow-md">
         <div className="flex flex-col items-center h-full ">
           <div className="mb-8 text-center">
             <div className="w-24 h-24 mx-auto mb-3 rounded-full bg-gradient-to-br from-[#412da3] to-[#3318b8] p-1 shadow-md">

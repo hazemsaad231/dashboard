@@ -120,8 +120,9 @@ export default function Services() {
      id: it.id ?? it._id ?? String(i + 1),
      title: it.title ?? '-',
      description: it.description ?? '-',
-      image: it.image ?? null,
+      image: it.image_url ?? null,
   }));
+
 
   const columns: any = [
     {
@@ -133,18 +134,15 @@ export default function Services() {
       disableColumnMenu: true,
       headerAlign: 'center',
       align: 'center',
-      renderCell: (p: any) => (
-        <div className="flex justify-center items-center h-full w-full">
-       <img
-  // src={`https://tadbeer.wj.edu.sa/storage/${p.value}`}
-  src={'https://tadbeer-two.vercel.app/_next/image?url=https%3A%2F%2Ftadbeer-two.vercel.app%2F_next%2Fimage%3Furl%3D%252Fslide2.webp%26w%3D1920%26q%3D75&w=1920&q=75'}
-  alt={p.row.title}
-  className="w-20 h-20 object-cover rounded-lg"
-/>
-
-
-        </div>
-      ),
+renderCell: (p: any) => (
+  <div className="flex justify-center items-center h-full w-full">
+    <img
+      src={`${p.value}`}
+      alt={p.row.title}
+      className="w-20 h-20 object-cover rounded-lg"
+    />
+  </div>
+),
     },
     {
       field: 'title',
@@ -190,7 +188,7 @@ export default function Services() {
   return (
     <>
 
-      <div className="lg:mr-48 h-screen py-20 p-2 md:p-4 lg:p-8 bg-gradient-to-b from-slate-50 to-slate-100">
+      <div className="lg:mr-52 h-screen py-20 p-2 md:p-4 lg:p-8 bg-gradient-to-b from-slate-50 to-slate-100">
         {loading ? (
           <Load />
         ) : (
