@@ -16,12 +16,12 @@ const close = ()=>{
     <>
        <button
         onClick={open}
-        className="w-max m-auto z-50 flex items-center justify-center gap-2 p-3 rounded-lg bg-[#DFC96D] text-white transition-colors duration-200 font-medium text-sm">
+        className="w-max m-auto flex items-center justify-center gap-2 p-3 rounded-lg bg-[#DFC96D] text-white transition-colors duration-200 font-medium text-sm">
             
               تسجيل الخروج
             </button>
 
-      <Dialog open={isOpen}  className="relative z-10" onClose={close}>
+      <Dialog open={isOpen}  className="relative z-40" onClose={close}>
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
           <div className="flex min-h-full items-center justify-center  ml-24 p-4">
             <DialogPanel
@@ -31,23 +31,23 @@ const close = ()=>{
               <DialogTitle>
                 
               </DialogTitle>
-              <p className='text-md font-semibold mb-6'>
+              <p className='text-md font-semibold mb-6 '>
                 هل أنت متأكد من تسجيل الخروج؟
               </p>
               <div className='flex gap-2'>
                 <Link
                   to="/"
-                  className=" bg-red-600 rounded-lg p-1 text-white"
+                  className=" bg-red-800 rounded-lg p-1 text-white"
                   onClick={()=>
                     localStorage.removeItem('token')
                   }
                 >
-                  تسجيل الخروج
+                  تاكيد
                 </Link>
 
                 <Link
                   to=""
-                  className=" bg-blue-600 rounded-lg p-1 text-white"
+                  className=" bg-blue-800 rounded-lg p-1 text-white"
                   onClick={close}
                 >
                   إلغاء

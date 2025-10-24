@@ -279,7 +279,7 @@ export default function Chances() {
             className="p-2 rounded-lg hover:bg-red-50 transition-colors"
             title="حذف"
           >
-            <MdDelete size={20} className="text-red-600" />
+            <MdDelete size={20} className="text-red-700" />
           </button>
           <button
             onClick={() => {
@@ -530,25 +530,22 @@ export default function Chances() {
   const columns = viewMode === "all" ? allColumns : viewMode === "categories" ? categoryColumns : investorColumns
 
   return (
-    <div className="lg:mr-52 min-h-screen py-20 p-8 bg-gradient-to-b from-slate-50 via-white to-slate-50">
+    <div className="z-0 lg:mr-52 h-screen py-20 p-2 md:p-4 lg:p-8 bg-gradient-to-b from-slate-50 to-slate-100">
       {loading ? (
         <Load />
       ) : (
         <>
           {/* header with tabs and search */}
           <div className="mb-8">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-6">
+            <div className="flex justify-between items-start md:items-center gap-6 mb-6">
               <div>
-                <h1 className="text-3xl font-bold text-slate-900">الفرص الاستثمارية</h1>
+                <h1 className="text-2xl md:text-3xl font-bold text-slate-900">الفرص الاستثمارية</h1>
                 <p className="text-sm text-slate-500 mt-1">إدارة وتتبع الفرص والمستثمرين والتصنيفات</p>
               </div>
 
-              <Link to="/dashboard/addUser/services">
-                <button className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white px-6 py-3 rounded-lg font-medium transition-all shadow-md hover:shadow-lg">
-                  <MdAdd size={20} />
-                  إضافة فرصة
-                </button>
-              </Link>
+                <Link to="/dashboard/addUser/blogs">
+                              <button className="bg-[#2d2265] text-white px-2 py-2.5 rounded-lg font-medium transition-colors shadow-sm hover:shadow-md">+ إضافة فرصة</button>
+                  </Link>
             </div>
 
             <div className="flex items-center justify-between gap-4 mb-1">

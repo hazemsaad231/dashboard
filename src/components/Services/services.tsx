@@ -171,7 +171,7 @@ renderCell: (p: any) => (
       align: 'center',
       renderCell: (p: any) => (
         <div className="flex gap-3 justify-center w-full items-center h-full">
-          <button onClick={() => openDelete(p.id)} className="p-2 text-[#302b6d] hover:bg-red-50 rounded-lg transition-colors" title="حذف">
+          <button onClick={() => openDelete(p.id)} className="p-2 text-red-700 hover:bg-red-50 rounded-lg transition-colors" title="حذف">
             <MdDelete size={20} />
           </button>
           <Link to={`/dashboard/addUser/${resource}/${p.id}`} className="p-2 text-[#DFC96D] hover:bg-blue-50 rounded-lg transition-colors" title="تعديل">
@@ -186,7 +186,7 @@ renderCell: (p: any) => (
   return (
     <>
 
-      <div className="lg:mr-52 h-screen py-20 p-2 md:p-4 lg:p-8 bg-gradient-to-b from-slate-50 to-slate-100">
+      <div className="z-0 lg:mr-52 h-screen py-20 p-2 md:p-4 lg:p-8 bg-gradient-to-b from-slate-50 to-slate-100">
         {loading ? (
           <Load />
         ) : (

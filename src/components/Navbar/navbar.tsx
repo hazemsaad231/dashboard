@@ -74,14 +74,16 @@ const Navbar = () => {
           <div className="absolute bottom-4 left-2 w-full pt-4 border-t border-slate-200">
             <Close />
           </div>
+
         </div>
       </div>
 
       {/* Mobile Sidebar */}
       <div
-        className={`fixed z-40 w-full bg-gradient-to-b from-[#362978] to-[#331d9f] text-white h-screen shadow-xl transform transition-transform duration-1000 ease-in-out ${
-          isNavbarVisible ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`fixed top-0 left-0 z-10 min-h-screen w-2/3 bg-gradient-to-b from-[#362978] to-[#331d9f]
+            text-white h-screen shadow-xl transform transition-transform duration-1000 ease-in-out ${isNavbarVisible ? "translate-x-0" : "-translate-x-full"}
+         `
+        }
       >
         <div className="flex flex-col h-full p-6">
           <button
@@ -120,29 +122,16 @@ const Navbar = () => {
               )
             })}
           </ul>
-
-          <div className="mt-4 pt-4 border-t border-blue-200">
-            <button
-        
-        className="w-max m-auto z-50 flex items-center justify-center gap-2 p-3 rounded-lg bg-[#DFC96D] text-white transition-colors duration-200 font-medium text-md">
-            
-            <Link
-                  to="/"
-                  onClick={()=>
-                    localStorage.removeItem('token')
-                  }
-                >
-                  تسجيل الخروج
-                </Link>
-            </button>
+             <div className="absolute bottom-4 left-2 w-full pt-4 border-t border-slate-200">
+            <Close />
           </div>
         </div>
       </div>
 
       {/* Mobile Overlay */}
-      {isNavbarVisible && (
+      {/* {isNavbarVisible && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden" onClick={toggleNavbar} />
-      )}
+      )} */}
     </>
   )
 }
