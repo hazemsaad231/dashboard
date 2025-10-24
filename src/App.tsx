@@ -9,8 +9,6 @@ import Master2 from './components/Routing/master2'
 import Sign from './components/login/login'
 import PrivateRoute from './components/Routing/protuct'
 import Blogs from './components/Blogs/blogs'
-import ServiceDetails from './components/Services/serviceDetails'
-import BlogDetails from './components/Blogs/blogDetails'
 import { Toaster } from 'react-hot-toast'
 import Chances from './components/Chances/chance'
 
@@ -38,8 +36,6 @@ function App() {
         {path: "services/:resource", element: <Services/>},
         {path: "blogs/:resource", element: <Blogs/>},
         {path: "chances", element: <Chances/>},
-        {path: "services/:resource/:id", element:<ServiceDetails/>},
-        {path: "blogs/:resource/:id", element:<BlogDetails/>},
         {path: "addUser/:resource", element: <AddUser/>},
         {path: "addUser/:resource/:id", element: <AddUser/>},
         {path: "profile", element: <Profile/>},

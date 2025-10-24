@@ -4,7 +4,7 @@ import { Link, useParams, useLocation } from 'react-router-dom';
 import Load from '../Load/load';
 import 'react-toastify/dist/ReactToastify.css';
 import { CiSearch } from 'react-icons/ci';
-import { FaEdit, FaEye } from 'react-icons/fa';
+import { FaEdit} from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { api } from '../Api/api';
 import { DataGrid } from '@mui/x-data-grid';
@@ -177,9 +177,7 @@ renderCell: (p: any) => (
           <Link to={`/dashboard/addUser/${resource}/${p.id}`} className="p-2 text-[#DFC96D] hover:bg-blue-50 rounded-lg transition-colors" title="تعديل">
             <FaEdit size={20} />
           </Link>
-          <Link to={`/dashboard/services/${resource}/${p.id}`} className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors" title="عرض">
-            <FaEye size={20} />
-          </Link>
+        
         </div>
       ),
     },

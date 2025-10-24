@@ -89,7 +89,7 @@ export default function Chances() {
         name: it.name ?? it.title ?? "-",
         type: it.type ?? "-",
         price: it.price ?? "-",
-        gallery: Array.isArray(it.gallery) && it.gallery.length ? (typeof it.gallery[0] === "string" ? it.gallery[0] : it.gallery[0].photo_url ?? "") : null,
+        gallery: Array.isArray(it.gallery) && it.gallery.length ? it.gallery[0].photo_url ?? "" : null,
         gallery_all: Array.isArray(it.gallery) ? it.gallery.map((g:any)=> typeof g === "string" ? g : (g.photo_url ?? g.url ?? "") ).filter(Boolean) : [],
         categories: preparedCats,
         investors: preparedInvs,
@@ -119,7 +119,6 @@ export default function Chances() {
     return rows
   }
 
-  // flatten investors
   const prepareInvestorRows = (items: any[]) => {
     const rows: any[] = []
     items.forEach((it: any) => {
@@ -141,10 +140,9 @@ export default function Chances() {
     return rows
   }
 
-  // ===== new helper: show investors of one opportunity IN THE MAIN TABLE =====
   const showInvestorsOf = (row: any) => {
     if (!row) return
-    // set flattened investor rows for this single opportunity
+
     const invRows = prepareInvestorRows([row])
     setData(invRows)
     setViewMode("investors")
@@ -152,15 +150,8 @@ export default function Chances() {
     setCurrent(1)
   }
 
-  // back to all opportunities
-  const backToAll = () => {
-    setData(prepareAllRows(all))
-    setViewMode("all")
-    setInvestorsParent(null)
-    setCurrent(1)
-  }
 
-  // columns for main grid
+
   const allColumns: GridColDef[] = [
     {
       field: "name",
@@ -210,7 +201,7 @@ export default function Chances() {
             <img
               src={`${p.value}`}
               alt="img"
-              className="w-20 h-20 object-cover rounded-lg border-2 border-indigo-200 shadow-md hover:shadow-lg transition-shadow"
+              className="w-20 h-20 rounded-lg border-2 border-indigo-200 shadow-md"
             />
           ) : (
             <div className="w-20 h-20 bg-gradient-to-br from-slate-100 to-slate-200 rounded-lg flex items-center justify-center text-xs text-slate-400">
@@ -239,8 +230,8 @@ export default function Chances() {
             }}
             className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-indigo-50 transition-colors"
           >
-            <span className="text-sm font-medium text-white py-1 px-6 bg-indigo-600 rounded-3xl">
-              مشاهدة <FaEye size={16} className="text-white m-auto" />
+            <span className="text-sm font-medium text-indigo-600 py-1 px-6 bg-indigo-100 rounded-3xl">
+              مشاهدة <FaEye size={16} className="text-indigo-600 m-auto" />
             </span>
           </button>
         </div>
@@ -255,7 +246,7 @@ export default function Chances() {
       align: "center",
       disableColumnMenu: true,
       renderCell: (p: any) => {
-        const count = Array.isArray(p.row.investors) ? p.row.investors.length : 0
+        // const count = Array.isArray(p.row.investors) ? p.row.investors.length : 0
         return (
           <div className="w-full h-full flex items-center justify-center">
             <button
@@ -263,8 +254,9 @@ export default function Chances() {
               onClick={() => showInvestorsOf(p.row)}
               className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-indigo-50 transition-colors"
             >
-              <span className="text-sm font-medium">مشاهدة</span>
-              <span className="text-sm font-medium text-slate-600">{count}</span>
+            <span className="text-sm font-medium text-indigo-600 py-1 px-6 bg-indigo-100 rounded-3xl">
+              مشاهدة <FaEye size={16} className="text-indigo-600 m-auto" />
+            </span>
             </button>
           </div>
         )
@@ -304,6 +296,11 @@ export default function Chances() {
   ]
 
   const categoryColumns: GridColDef[] = [
+     
+    
+      
+    
+    
     { field: "cat_id", headerName: "ID", width: 100, headerAlign: "center", align: "center" },
     {
       field: "name",
@@ -320,11 +317,13 @@ export default function Chances() {
       headerAlign: "center",
       align: "center",
       renderCell: (p: any) =>
-        p.value ? (
+        <div className="w-full h-full flex items-center justify-center">
+       { p.value ? (
           <img src={p.value || "/placeholder.svg"} alt="icon" className="w-12 h-8 object-contain" />
         ) : (
           <div className="text-xs text-slate-400">—</div>
-        ),
+        )}
+      </div>,
     },
     {
       field: "description",
@@ -339,6 +338,7 @@ export default function Chances() {
         </div>
       ),
     },
+
   ]
 
   const investorColumns: GridColDef[] = [
@@ -409,6 +409,20 @@ export default function Chances() {
           </button>
         </div>
       ),
+    },
+        {
+      field: "",
+      headerName: '',
+      width: 120,
+      headerAlign: "center",
+      align: "center",
+      renderCell: () => 
+        <button
+                    onClick={() => switchView("all")}
+                    className="bg-slate-200 hover:bg-slate-300 text-slate-500 hover:text-slate-600 rounded-lg px-4 py-2 transition-all"
+                  >
+                    ✖
+                  </button>
     },
   ]
 
@@ -499,8 +513,10 @@ export default function Chances() {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
       setAll((prev) => prev.filter((it) => String(it.id ?? it._id) !== String(Id)))
-   fetchData()
+      setData((prev) => prev.filter((it) => String(it.id ?? it._id) !== String(Id)))
       // refresh current view data
+      if (viewMode === "all") setData(prepareAllRows(all))
+      else if (viewMode === "categories") setData(prepareCategoryRows(all))
       switchView("all")
       toast.success("تم الحذف بنجاح")
       cancelDelete()
@@ -514,7 +530,7 @@ export default function Chances() {
   const columns = viewMode === "all" ? allColumns : viewMode === "categories" ? categoryColumns : investorColumns
 
   return (
-    <div className="lg:mr-52 min-h-screen py-12 p-8 bg-gradient-to-b from-slate-50 via-white to-slate-50">
+    <div className="lg:mr-52 min-h-screen py-20 p-8 bg-gradient-to-b from-slate-50 via-white to-slate-50">
       {loading ? (
         <Load />
       ) : (
@@ -525,13 +541,6 @@ export default function Chances() {
               <div>
                 <h1 className="text-3xl font-bold text-slate-900">الفرص الاستثمارية</h1>
                 <p className="text-sm text-slate-500 mt-1">إدارة وتتبع الفرص والمستثمرين والتصنيفات</p>
-                {/* if viewing investors of one opportunity, show breadcrumb + back */}
-                {viewMode === "investors" && investorsParent && (
-                  <div className="mt-2 flex items-center gap-3 text-sm">
-                    <button onClick={backToAll} className="px-3 py-1 border rounded hover:bg-slate-50">رجوع للفرص</button>
-                    <div className="text-slate-600">عرض مستثمري: <span className="font-medium text-slate-900">{investorsParent.name}</span></div>
-                  </div>
-                )}
               </div>
 
               <Link to="/dashboard/addUser/services">
@@ -542,12 +551,9 @@ export default function Chances() {
               </Link>
             </div>
 
-            <div className="flex items-center justify-between gap-4 mb-4">
-              <div className="flex gap-2 bg-white border border-slate-100 rounded-md p-1 shadow-sm">
-                <button onClick={() => switchView("all")} className={`px-3 py-1 rounded-md text-sm ${viewMode === "all" ? "bg-[#2d2265] text-white" : "text-slate-700 hover:bg-slate-50"}`}>الفرص</button>
-                <button onClick={() => switchView("investors")} className={`px-3 py-1 rounded-md text-sm ${viewMode === "investors" ? "bg-[#2d2265] text-white" : "text-slate-700 hover:bg-slate-50"}`}>المستثمرين</button>
-                <button onClick={() => switchView("categories")} className={`px-3 py-1 rounded-md text-sm ${viewMode === "categories" ? "bg-[#2d2265] text-white" : "text-slate-700 hover:bg-slate-50"}`}>التصنيفات</button>
-              </div>
+            <div className="flex items-center justify-between gap-4 mb-1">
+         
+         
 
               <div className="relative max-w-md w-full">
                 <CiSearch size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -569,6 +575,17 @@ export default function Chances() {
           <Paper className="rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
             <div className="w-full overflow-x-auto">
               <div className="min-w-[760px]">
+
+                        {viewMode !== "all" && (
+                   <button
+                    onClick={() => switchView("all")}
+                    className="bg-slate-200 hover:bg-slate-300 text-slate-500 hover:text-slate-600 px-4 py-2 transition-all"
+                  >
+                    ✖
+                  </button>
+                )}
+                
+
                 {currentData.length === 0 ? (
                   <div className="p-12 text-center">
                     <div className="text-6xl mb-4">📭</div>
@@ -578,6 +595,9 @@ export default function Chances() {
                     </p>
                   </div>
                 ) : (
+                   <>
+              
+                   
                   <DataGrid
                     rows={currentData}
                     columns={columns}
@@ -598,10 +618,11 @@ export default function Chances() {
                       },
                     }}
                   />
+              </>
                 )}
               </div>
             </div>
-
+           
             {currentData.length > 0 && (
               <div className="flex items-center justify-between p-6 border-t border-slate-200 bg-slate-50">
                 <div className="flex items-center gap-3">
