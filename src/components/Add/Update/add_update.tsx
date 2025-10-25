@@ -31,9 +31,7 @@ const Add_Update: React.FC = () => {
     if (!id) return;
     const fetchItem = async () => {
       try {
-        const resp = await axios.get(`${api}/services/${id}`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        });
+        const resp = await axios.get(`${api}/services/${id}`);
         const item = resp.data.data;
         setValue("title", item.title || "");
         setValue("description", item.description || "");
@@ -60,19 +58,11 @@ const Add_Update: React.FC = () => {
       if (id) {
         // تحديث
         fd.append("_method", "PUT");
-        await axios.post(`${api}/services/${id}`, fd, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        await axios.post(`${api}/services/${id}`, fd);
         toast.success("تم تحديث العنصر بنجاح");
       } else {
         // إضافة جديد
-        await axios.post(`${api}/services`, fd, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        await axios.post(`${api}/services`, fd);
         console.log('data',fd,data,resource);
         toast.success("تم إضافة العنصر بنجاح");
       }

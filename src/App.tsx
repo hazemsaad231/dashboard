@@ -11,6 +11,7 @@ import PrivateRoute from './components/Routing/protuct'
 import Blogs from './components/Blogs/blogs'
 import { Toaster } from 'react-hot-toast'
 import Chances from './components/Chances/chance'
+import Add_Update_Chance from './components/Add/Update/add_update_chance'
 
 
 function App() {
@@ -38,6 +39,8 @@ function App() {
         {path: "chances", element: <Chances/>},
         {path: "addUser/:resource", element: <AddUser/>},
         {path: "addUser/:resource/:id", element: <AddUser/>},
+        {path: "addChance", element: <Add_Update_Chance/>},
+        {path: "addChance/:id", element: <Add_Update_Chance/>},
         {path: "profile", element: <Profile/>},
 
       ]

@@ -13,21 +13,20 @@ import toast from "react-hot-toast"
 import { Link } from "react-router-dom"
 
 export default function Chances() {
+
   const [all, setAll] = useState<any[]>([])
   const [data, setData] = useState<any[]>([])
   const [loading, setLoading] = useState<boolean>(true)
 
-  // view mode: 'all' | 'categories' | 'investors'
+
   const [viewMode, setViewMode] = useState<"all" | "categories" | "investors">("all")
 
-  // when we open investors for a specific opportunity, store its name (for header) and id
   const [investorsParent, setInvestorsParent] = useState<{ id: string | number; name: string } | null>(null)
 
   // delete dialog
   const [Id, setId] = useState<string | number | null>(null)
   const [openDelete, setOpenDelete] = useState(false)
 
-  // pagination
   const [current, setCurrent] = useState<number>(1)
   const [itemsPerPage, setItemsPerPage] = useState<number>(10)
 
@@ -36,7 +35,6 @@ export default function Chances() {
   const totalPages = Math.max(1, Math.ceil(data.length / itemsPerPage))
   const currentData = data.slice(startIndex, lastIndex)
 
-  // normalize helper
   const norm = (s = "") =>
     String(s).replace(/[أإآ]/g, "ا").replace(/ى/g, "ي").replace(/ة/g, "ه").replace(/\s+/g, "").toLowerCase()
 
@@ -44,13 +42,17 @@ export default function Chances() {
   const fetchData = async () => {
     setLoading(true)
     try {
-      const resp = await axios.get(`https://tadbeer.wj.edu.sa/public/api/invests?type&min_price&max_price&per_page`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      })
+      const resp = await axios.get(`https://tadbeer.wj.edu.sa/public/api/invests?type&min_price&max_price&per_page`)
       const payload = resp?.data?.data ?? []
-      setAll(payload)
-      setData(payload)
+     // داخل fetchData بعد ما تجيب payload
+setAll(payload)
+setData(prepareAllRows(payload)) // مهم: data تبقى دايمًا بنفس الشكل المتوقع بالـ image
+console.log("fetched services:", payload)
+console.log("image urls:", payload.map((it:any)=> (it.gallery && it.gallery[0] ? it.gallery[0].photo_url : null)))
+
       console.log("fetched services:", payload)
+      console.log("fetched services:", payload.map((it: any) => it.gallery.map((g: any) => g.photo_url)))
+
     } catch (err) {
       console.error("fetch invests error:", err)
       toast.error("فشل في جلب البيانات")
@@ -65,38 +67,75 @@ export default function Chances() {
     })()
   }, [])
 
-  const prepareAllRows = (items: any[]) => {
-    return items.map((it: any, i: number) => {
-      const cats = Array.isArray(it.categories) ? it.categories : []
-      const preparedCats = cats.map((c: any) => ({
-        id: c.id ?? null,
-        name: c.name ?? "",
-        icon_url: c.icon_url ?? c.icon ?? null,
-        description: c.description ?? "",
-        invest_id: c.invest_id ?? it.id ?? null,
-      }))
-      const invs = Array.isArray(it.investors) ? it.investors : []
-      const preparedInvs = invs.map((inv: any) => ({
-        id: inv.id ?? null,
-        name: inv.name ?? "",
-        notes: inv.notes ?? "",
-        number_of_arrows: inv.number_of_arrows ?? 0,
-        phone: inv.phone ?? "",
-        invest_id: inv.invest_id ?? it.id ?? null,
-      }))
-      return {
-        id: it.id ?? it._id ?? String(i + 1),
-        name: it.name ?? it.title ?? "-",
-        type: it.type ?? "-",
-        price: it.price ?? "-",
-        gallery: Array.isArray(it.gallery) && it.gallery.length ? it.gallery[0].photo_url ?? "" : null,
-        gallery_all: Array.isArray(it.gallery) ? it.gallery.map((g:any)=> typeof g === "string" ? g : (g.photo_url ?? g.url ?? "") ).filter(Boolean) : [],
-        categories: preparedCats,
-        investors: preparedInvs,
-        _raw: it,
-      }
-    })
-  }
+  // const prepareAllRows = (items: any[]) => {
+  //   return items.map((it: any, i: number) => {
+  //     const cats = Array.isArray(it.categories) ? it.categories : []
+  //     const preparedCats = cats.map((c: any) => ({
+  //       id: c.id ?? null,
+  //       name: c.name ?? "",
+  //       icon_url: c.icon_url ?? c.icon ?? null,
+  //       description: c.description ?? "",
+  //       invest_id: c.invest_id ?? it.id ?? null,
+  //     }))
+  //     const invs = Array.isArray(it.investors) ? it.investors : []
+  //     const preparedInvs = invs.map((inv: any) => ({
+  //       id: inv.id ?? null,
+  //       name: inv.name ?? "",
+  //       notes: inv.notes ?? "",
+  //       number_of_arrows: inv.number_of_arrows ?? 0,
+  //       phone: inv.phone ?? "",
+  //       invest_id: inv.invest_id ?? it.id ?? null,
+  //     }))
+  //     return {
+  //       id: it.id ?? it._id ?? String(i + 1),
+  //       name: it.name ?? it.title ?? "-",
+  //       type: it.type ?? "-",
+  //       price: it.price ?? "-",
+  //       gallery: (Array.isArray(it.gallery) && it.gallery.length) ? it.gallery[0].photo_url : [],
+  //       categories: preparedCats,
+  //       investors: preparedInvs,
+  //       _raw: it,
+  //     }
+  //   })
+  // }
+const prepareAllRows = (items: any[]) => {
+  return items.map((it: any, i: number) => {
+    const cats = Array.isArray(it.categories) ? it.categories : [];
+    const preparedCats = cats.map((c: any) => ({
+      id: c.id ?? null,
+      name: c.name ?? "",
+      icon_url: c.icon_url ?? c.icon ?? null,
+      description: c.description ?? "",
+      invest_id: c.invest_id ?? it.id ?? null,
+    }));
+    const invs = Array.isArray(it.investors) ? it.investors : [];
+    const preparedInvs = invs.map((inv: any) => ({
+      id: inv.id ?? null,
+      name: inv.name ?? "",
+      notes: inv.notes ?? "",
+      number_of_arrows: inv.number_of_arrows ?? 0,
+      phone: inv.phone ?? "",
+      invest_id: inv.invest_id ?? it.id ?? null,
+    }));
+
+    // أبسط لوجيك: لو فيه gallery وخليها أول عنصر وphoto_url موجود استخدمه وإلا خليها فارغة
+    const galleryValue =
+      Array.isArray(it.gallery) && it.gallery.length > 0 && it.gallery[0].photo_url
+        ? it.gallery[0].photo_url
+        : "";
+
+    return {
+      id: it.id ?? it._id ?? String(i + 1),
+      name: it.name ?? it.title ?? "-",
+      type: it.type ?? "-",
+      price: it.price ?? "-",
+      image: galleryValue,
+      categories: preparedCats,
+      investors: preparedInvs,
+      _raw: it,
+    };
+  });
+};
 
   // flatten categories
   const prepareCategoryRows = (items: any[]) => {
@@ -158,6 +197,9 @@ export default function Chances() {
       headerName: "الاسم",
       headerAlign: "center",
       align: "center",
+       sortable: false,
+      filterable: false,
+       disableColumnMenu: true,
       flex: 1,
       renderCell: (p: any) => (
         <div className="flex justify-center items-center h-full w-full">
@@ -170,6 +212,9 @@ export default function Chances() {
       headerName: "النوع",
       headerAlign: "center",
       align: "center",
+       sortable: false,
+      filterable: false,
+       disableColumnMenu: true,
       flex: 1,
       renderCell: (p: any) => (
         <div className="flex justify-center items-center h-full w-full">
@@ -182,6 +227,9 @@ export default function Chances() {
       headerName: "السعر",
       headerAlign: "center",
       align: "center",
+       sortable: false,
+      filterable: false,
+       disableColumnMenu: true,
       flex: 1,
       renderCell: (p: any) => (
         <div className="flex justify-center items-center h-full w-full">
@@ -190,24 +238,23 @@ export default function Chances() {
       ),
     },
     {
-      field: "gallery",
-      headerName: "المعرض",
-      headerAlign: "center",
-      align: "center",
-      flex: 1,
-      renderCell: (p: any) => (
-        <div className="w-full h-full flex items-center justify-center">
-          {p.value ? (
-            <img
-              src={`${p.value}`}
-              alt="img"
-              className="w-20 h-20 rounded-lg border-2 border-indigo-200 shadow-md"
-            />
-          ) : (
-            <div className="w-20 h-20 bg-gradient-to-br from-slate-100 to-slate-200 rounded-lg flex items-center justify-center text-xs text-slate-400">
-              —
-            </div>
-          )}
+      field: 'image',
+      headerName: 'صورة',
+      width: 120,
+      sortable: false,
+      filterable: false,
+      disableColumnMenu: true,
+      headerAlign: 'center',
+      align: 'center',
+      renderCell: (p: any) =>
+        
+        (
+        <div className="flex justify-center items-center h-full w-full">
+          <img
+            src={`${p.value}`}
+            alt={p.row.title}
+            className="w-20 h-20 object-cover rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow"
+          />
         </div>
       ),
     },
@@ -218,6 +265,8 @@ export default function Chances() {
       headerAlign: "center",
       align: "center",
       disableColumnMenu: true,
+       sortable: false,
+      filterable: false,
       renderCell: (p: any) => (
         <div className="w-full h-full flex items-center justify-center">
           <button
@@ -238,15 +287,16 @@ export default function Chances() {
       ),
     },
 
-    // INVESTORS column: now it will replace main table with that opportunity's investors
+  
     {
       field: "investors",
       headerName: "المستثمرين",
       headerAlign: "center",
+       sortable: false,
+      filterable: false,
       align: "center",
       disableColumnMenu: true,
       renderCell: (p: any) => {
-        // const count = Array.isArray(p.row.investors) ? p.row.investors.length : 0
         return (
           <div className="w-full h-full flex items-center justify-center">
             <button
@@ -269,6 +319,9 @@ export default function Chances() {
       width: 160,
       headerAlign: "center",
       align: "center",
+       sortable: false,
+      filterable: false,
+       disableColumnMenu: true,
       renderCell: (p: any) => (
         <div className="w-full h-full flex items-center justify-center gap-2">
           <button
@@ -281,15 +334,10 @@ export default function Chances() {
           >
             <MdDelete size={20} className="text-red-700" />
           </button>
-          <button
-            onClick={() => {
-              setId(p.id)
-            }}
-            className="p-2 rounded-lg hover:bg-indigo-50 transition-colors"
-            title="تعديل"
-          >
-            <FaEdit size={18} className="text-indigo-600" />
-          </button>
+          <Link to={`/dashboard/addChance/${p.id}`} className="p-2 text-[#DFC96D] hover:bg-blue-50 rounded-lg transition-colors" title="تعديل">
+                    <FaEdit size={20} />
+                  </Link>
+                
         </div>
       ),
     },
@@ -308,6 +356,8 @@ export default function Chances() {
       width: 220,
       headerAlign: "center",
       align: "center",
+       sortable: false,
+      filterable: false,
       renderCell: (p: any) => <div className="truncate font-medium text-slate-900">{p.value}</div>,
     },
     {
@@ -316,6 +366,8 @@ export default function Chances() {
       width: 120,
       headerAlign: "center",
       align: "center",
+       sortable: false,
+      filterable: false,
       renderCell: (p: any) =>
         <div className="w-full h-full flex items-center justify-center">
        { p.value ? (
@@ -332,6 +384,8 @@ export default function Chances() {
       minWidth: 260,
       headerAlign: "center",
       align: "center",
+       sortable: false,
+      filterable: false,
       renderCell: (p: any) => (
         <div className="truncate text-slate-600" title={p.value}>
           {p.value || "—"}
@@ -349,6 +403,8 @@ export default function Chances() {
       width: 220,
       headerAlign: "center",
       align: "center",
+       sortable: false,
+      filterable: false,
       renderCell: (p: any) => <div className="truncate font-medium text-slate-900">{p.value}</div>,
     },
     {
@@ -357,6 +413,8 @@ export default function Chances() {
       width: 200,
       headerAlign: "center",
       align: "center",
+       sortable: false,
+      filterable: false,
       renderCell: (p: any) => <div className="truncate text-slate-700">{p.value}</div>,
     },
     {
@@ -366,6 +424,8 @@ export default function Chances() {
       minWidth: 240,
       headerAlign: "center",
       align: "center",
+       sortable: false,
+      filterable: false,
       renderCell: (p: any) => (
         <div className="truncate text-slate-600" title={p.value}>
           {p.value || "—"}
@@ -378,6 +438,8 @@ export default function Chances() {
       width: 120,
       headerAlign: "center",
       align: "center",
+       sortable: false,
+      filterable: false,
       renderCell: (p: any) => <span className="font-semibold text-indigo-600">{p.value}</span>,
     },
 
@@ -386,6 +448,8 @@ export default function Chances() {
       headerName: "الإجراءات",
       headerAlign: "center",
       align: "center",
+       sortable: false,
+      filterable: false,
       renderCell: (p: any) => (
         <div className="w-full h-full flex items-center justify-center gap-2">
           <button
@@ -398,15 +462,10 @@ export default function Chances() {
           >
             <MdDelete size={20} className="text-red-600" />
           </button>
-          <button
-            onClick={() => {
-              setId(p.id)
-            }}
-            className="p-2 rounded-lg hover:bg-indigo-50 transition-colors"
-            title="تعديل"
-          >
-            <FaEdit size={18} className="text-indigo-600" />
-          </button>
+           <Link to={`/dashboard/addChance/${p.id}`} className="p-2 text-[#DFC96D] hover:bg-blue-50 rounded-lg transition-colors" title="تعديل">
+                    <FaEdit size={20} />
+                  </Link>
+                
         </div>
       ),
     },
@@ -426,15 +485,12 @@ export default function Chances() {
     },
   ]
 
-  // search function adapts to current view
   const search = (q = "") => {
     const t = q.trim()
     if (!t) {
-      // reset view data according to viewMode (if we were showing investors of one opportunity, keep that state)
       if (viewMode === "all") setData(prepareAllRows(all))
       else if (viewMode === "categories") setData(prepareCategoryRows(all))
       else if (viewMode === "investors") {
-        // if investorsParent is set, show only its investors again; otherwise show all investors flattened
         if (investorsParent) {
           const parent = all.find((a) => String(a.id) === String(investorsParent.id))
           setData(parent ? prepareInvestorRows([parent]) : [])
@@ -465,7 +521,6 @@ export default function Chances() {
       })
       setData(rows)
     } else if (viewMode === "investors") {
-      // If we're in investors view filtered by parent, search only inside those rows.
       if (investorsParent) {
         const parent = all.find((a) => String(a.id) === String(investorsParent.id))
         const rows = parent ? prepareInvestorRows([parent]).filter((r:any) => norm(r.name).includes(qn) || norm(r.notes||'').includes(qn) || norm(r.invest_title||'').includes(qn)) : []
@@ -478,11 +533,9 @@ export default function Chances() {
     setCurrent(1)
   }
 
-  // switch view handler
   const switchView = (mode: "all" | "categories" | "investors") => {
     setViewMode(mode)
     setCurrent(1)
-    // prepare data accordingly
     if (mode === "all") {
       setData(prepareAllRows(all))
       setInvestorsParent(null)
@@ -490,52 +543,67 @@ export default function Chances() {
       setData(prepareCategoryRows(all))
       setInvestorsParent(null)
     } else if (mode === "investors") {
-      // show all investors flattened
       setData(prepareInvestorRows(all))
       setInvestorsParent(null)
     }
   }
 
-  // initial populate rows in normalized form when all is loaded
+
   useEffect(() => {
     if (!loading) switchView("all")
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, [loading])
 
   const cancelDelete = () => {
     setId(null)
     setOpenDelete(false)
   }
-  const doDelete = async () => {
-    if (!Id) return
-    try {
-      await axios.delete(`https://tadbeer.wj.edu.sa/public/api/invests/${Id}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      })
-      setAll((prev) => prev.filter((it) => String(it.id ?? it._id) !== String(Id)))
-      setData((prev) => prev.filter((it) => String(it.id ?? it._id) !== String(Id)))
-      // refresh current view data
-      if (viewMode === "all") setData(prepareAllRows(all))
-      else if (viewMode === "categories") setData(prepareCategoryRows(all))
-      switchView("all")
-      toast.success("تم الحذف بنجاح")
-      cancelDelete()
-    } catch (err) {
-      console.error("delete error:", err)
-      toast.error("حدث خطأ أثناء الحذف")
-    }
-  }
+const doDelete = async () => {
+  if (!Id) return;
+  try {
+    await axios.delete(`https://tadbeer.wj.edu.sa/public/api/invests/${Id}`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    });
 
-  // choose columns based on view
+    // build newAll synchronously from current all
+    setAll((prevAll) => {
+      const newAll = prevAll.filter((it) => String(it.id ?? it._id) !== String(Id));
+      // update data based on current view immediately using newAll
+      if (viewMode === "all") {
+        setData(prepareAllRows(newAll));
+      } else if (viewMode === "categories") {
+        setData(prepareCategoryRows(newAll));
+      } else if (viewMode === "investors") {
+        // if we are viewing investors of a parent, try to keep that context
+        if (investorsParent) {
+          const parent = newAll.find((a) => String(a.id) === String(investorsParent.id));
+          setData(parent ? prepareInvestorRows([parent]) : []);
+        } else {
+          setData(prepareInvestorRows(newAll));
+        }
+      }
+      return newAll;
+    });
+
+    // make sure pagination not out-of-range
+    setCurrent(1);
+
+    toast.success("تم الحذف بنجاح");
+    cancelDelete();
+  } catch (err) {
+    console.error("delete error:", err);
+    toast.error("حدث خطأ أثناء الحذف");
+  }
+};
+
   const columns = viewMode === "all" ? allColumns : viewMode === "categories" ? categoryColumns : investorColumns
 
   return (
-    <div className="z-0 lg:mr-52 h-screen py-20 p-2 md:p-4 lg:p-8 bg-gradient-to-b from-slate-50 to-slate-100">
+    <div className="z-0 lg:mr-52 h-screen p-2 md:p-4 lg:p-8 py-20 bg-gradient-to-b from-slate-50 to-slate-100">
       {loading ? (
         <Load />
       ) : (
         <>
-          {/* header with tabs and search */}
           <div className="mb-8">
             <div className="flex justify-between items-start md:items-center gap-6 mb-6">
               <div>
@@ -543,7 +611,7 @@ export default function Chances() {
                 <p className="text-sm text-slate-500 mt-1">إدارة وتتبع الفرص والمستثمرين والتصنيفات</p>
               </div>
 
-                <Link to="/dashboard/addUser/blogs">
+                <Link to="/dashboard/addChance">
                               <button className="bg-[#2d2265] text-white px-2 py-2.5 rounded-lg font-medium transition-colors shadow-sm hover:shadow-md">+ إضافة فرصة</button>
                   </Link>
             </div>
@@ -663,35 +731,26 @@ export default function Chances() {
             )}
           </Paper>
 
-          <Dialog open={openDelete} onClose={cancelDelete} className="relative z-50">
-            <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4">
-              <Dialog.Panel className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl border border-slate-200">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
-                    <MdDelete size={24} className="text-red-600" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-slate-900">حذف العنصر</h3>
-                </div>
-                <p className="text-sm text-slate-600 mb-6">
-                  هل أنت متأكد من رغبتك في حذف هذا العنصر؟ لا يمكن التراجع عن هذا الإجراء.
-                </p>
-                <div className="flex gap-3 justify-end">
-                  <button
-                    onClick={cancelDelete}
-                    className="px-4 py-2 border-2 border-slate-200 rounded-lg text-slate-700 font-medium hover:bg-slate-50 transition-colors"
-                  >
-                    إلغاء
-                  </button>
-                  <button
-                    onClick={doDelete}
-                    className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors"
-                  >
-                    حذف
-                  </button>
-                </div>
-              </Dialog.Panel>
-            </div>
-          </Dialog>
+     
+         <Dialog open={openDelete} onClose={cancelDelete} className="relative z-50">
+                   <div className="fixed inset-0 z-50 w-72 md:w-screen m-auto overflow-y-auto flex items-center justify-center">
+                     <Dialog.Panel className="w-max rounded-xl bg-white px-6 py-8 shadow-2xl border border-slate-200 animate-in fade-in zoom-in-95 duration-200">
+                       <div className="flex items-start gap-4">
+                         <div className="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+                           <MdDelete className="h-6 w-6 text-red-600" />
+                         </div>
+                         <div className="flex-1">
+                           <h3 className="text-lg font-semibold text-slate-900">حذف الفرصه</h3>
+                           <p className="mt-2 text-sm text-slate-600">هل أنت متأكد من رغبتك في حذف هذه الفرصة ؟</p>
+                         </div>
+                       </div>
+                       <div className="flex gap-3 mt-6 justify-start items-center">
+                         <button onClick={cancelDelete} className="px-4 py-2 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 font-medium transition-colors">إلغاء</button>
+                         <button onClick={doDelete} className="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-medium transition-colors shadow-sm">حذف</button>
+                       </div>
+                     </Dialog.Panel>
+                   </div>
+                 </Dialog>
         </>
       )}
     </div>

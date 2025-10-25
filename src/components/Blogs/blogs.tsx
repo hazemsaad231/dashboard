@@ -48,9 +48,7 @@ export default function Blogs() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const r = await axios.get(`${api}/services?per_page=100`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-      });
+      const r = await axios.get(`${api}/services?per_page=100`);
 
       const payload = r?.data?.data ?? [];
       const arr = Array.isArray(payload)
@@ -189,7 +187,7 @@ console.log('rows:', currentData.map((it, i) => ({
   return (
     <>
 
-      <div className="z-0 lg:mr-52 h-screen py-20 p-2 md:p-4 lg:p-8 bg-gradient-to-b from-slate-50 to-slate-100">
+      <div className="z-0 lg:mr-52  py-20 p-2 md:p-4 lg:p-8 bg-gradient-to-b from-slate-50 to-slate-100">
         {loading ? (
           <Load />
         ) : (
@@ -247,16 +245,16 @@ console.log('rows:', currentData.map((it, i) => ({
               </div>
             </Paper>
 
-            <Dialog open={open} onClose={closeDelete} className="relative z-50">
+    <Dialog open={open} onClose={closeDelete} className="relative z-50">
               <div className="fixed inset-0 z-50 w-72 md:w-screen m-auto overflow-y-auto flex items-center justify-center">
-                <Dialog.Panel className="w-full max-w-md rounded-xl bg-white px-6 py-8 shadow-2xl border border-slate-200 animate-in fade-in zoom-in-95 duration-200">
+                <Dialog.Panel className="w-max rounded-xl bg-white px-6 py-8 shadow-2xl border border-slate-200 animate-in fade-in zoom-in-95 duration-200">
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
                       <MdDelete className="h-6 w-6 text-red-600" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-slate-900">حذف الخدمة</h3>
-                      <p className="mt-2 text-sm text-slate-600">هل أنت متأكد من رغبتك في حذف هذه الخدمة؟ لا يمكن التراجع عن هذا الإجراء.</p>
+                      <h3 className="text-lg font-semibold text-slate-900">حذف المدونة</h3>
+                      <p className="mt-2 text-sm text-slate-600">هل أنت متأكد من رغبتك في حذف هذه المدونة ؟</p>
                     </div>
                   </div>
                   <div className="flex gap-3 mt-6 justify-start items-center">
