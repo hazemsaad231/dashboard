@@ -39,7 +39,6 @@ const AddUpdateCategory: React.FC = () => {
         setValue("name", item.name ?? "");
         setValue("description", item.description ?? "");
         setValue("icon_url", item.icon_url ?? item.icon ?? null);
-        // ما بنعيّن icon (FileList) هنا — المستخدم يقدر يرفع ملف جديد لو حب
       } catch (err) {
         console.error(err);
         toast.error("فشل في جلب بيانات التصنيف");
@@ -49,7 +48,7 @@ const AddUpdateCategory: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, setValue]);
 
-  // لمعاينة ملف جديد لو المستخدم اختار ملف
+ 
   const iconFiles = watch("icon");
   const iconUrl = watch("icon_url"); 
 
@@ -61,11 +60,10 @@ const AddUpdateCategory: React.FC = () => {
       fd.append("name", data.name);
       fd.append("description", data.description ?? "");
 
-      // لو في ملف رفعه هنبعثه وده هيغير الأيقونة على السيرفر
       if (data.icon && data.icon.length > 0) {
         fd.append("icon", data.icon[0]);
       } else {
-        // لو مفيش ملف، وفي حالة الـ update ممكن نرسل icon_url عشان يحتفظ بها (مش لازم)
+    
         if (data.icon_url) fd.append("icon_url", data.icon_url);
       }
 

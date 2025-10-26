@@ -10,7 +10,7 @@ export default function Select({
   categories: { id?: number | null; name: string }[];
   loading?: boolean;
   selectedIds: (number | string)[];
-  onChange: (ids: (number | string)[]) => void;
+  onChange: (ids: (number | any)[]) => void;
   placeholder?: string;
 }) {
   const [open, setOpen] = useState(false);
