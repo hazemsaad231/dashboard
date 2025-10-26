@@ -12,6 +12,8 @@ import Blogs from './components/Blogs/blogs'
 import { Toaster } from 'react-hot-toast'
 import Chances from './components/Chances/chance'
 import Add_Update_Chance from './components/Add/Update/add_update_chance'
+import Category from './components/Categories/category'
+import  AddCategory  from './components/AddCategories/addCategory'
 
 
 function App() {
@@ -37,10 +39,13 @@ function App() {
         {path: "services/:resource", element: <Services/>},
         {path: "blogs/:resource", element: <Blogs/>},
         {path: "chances", element: <Chances/>},
+        {path: "category", element: <Category/>},
         {path: "addUser/:resource", element: <AddUser/>},
         {path: "addUser/:resource/:id", element: <AddUser/>},
         {path: "addChance", element: <Add_Update_Chance/>},
         {path: "addChance/:id", element: <Add_Update_Chance/>},
+         {path: "addCategory", element: <AddCategory/>},
+        {path: "addCategory/:id", element: <AddCategory/>},
         {path: "profile", element: <Profile/>},
 
       ]

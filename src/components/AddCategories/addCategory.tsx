@@ -2,17 +2,18 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { api } from "../../Api/api";
+import { api } from "../Api/api";
 import toast from "react-hot-toast";
 
 type FormValues = {
   name: string;
   description: string;
-  icon: FileList | null;
+  icon: FileList | null; // للرفع لو عايز تغير الأيقونة
+  icon_url?: string | null; // للمعاينة لو موجودة من السيرفر
 };
 
 const AddUpdateCategory: React.FC = () => {
-  const { id } = useParams(); // لو عندك route زي /dashboard/categories/add/:id
+  const { id } = useParams(); // لو المسار يدينا id للتعديل
   const navigate = useNavigate();
 
   const {
@@ -20,13 +21,13 @@ const AddUpdateCategory: React.FC = () => {
     handleSubmit,
     setValue,
     reset,
-    formState: { errors, isSubmitting },
     watch,
+    formState: { errors, isSubmitting },
   } = useForm<FormValues>({
-    defaultValues: { name: "", description: "", icon: null },
+    defaultValues: { name: "", description: "", icon: null, icon_url: null },
   });
 
-  // لو تعديل — جلب بيانات التصنيف علشان نعمل prefill
+  // لو تعديل — جلب بيانات التصنيف علشان نعمل prefill ونعرض icon_url
   useEffect(() => {
     if (!id) return;
     const fetchItem = async () => {
@@ -34,10 +35,11 @@ const AddUpdateCategory: React.FC = () => {
         const resp = await axios.get(`${api}/categories/${id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
-        const item = resp?.data?.data ?? resp?.data;
+        const item = resp?.data?.data ?? resp?.data ?? {};
         setValue("name", item.name ?? "");
         setValue("description", item.description ?? "");
-        // لو عايز تعرض معاينة من الـ icon_url ممكن تخزنها في state، بس نحافظ على الشكل البسيط زي المثال
+        setValue("icon_url", item.icon_url ?? item.icon ?? null);
+        // ما بنعيّن icon (FileList) هنا — المستخدم يقدر يرفع ملف جديد لو حب
       } catch (err) {
         console.error(err);
         toast.error("فشل في جلب بيانات التصنيف");
@@ -47,19 +49,28 @@ const AddUpdateCategory: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, setValue]);
 
+  // لمعاينة ملف جديد لو المستخدم اختار ملف
+  const iconFiles = watch("icon");
+  const iconUrl = watch("icon_url"); 
+
+ 
+
   const onSubmit = async (data: FormValues) => {
     try {
       const fd = new FormData();
       fd.append("name", data.name);
       fd.append("description", data.description ?? "");
-      // لو فيه ملف أيقونة مرفوع
+
+      // لو في ملف رفعه هنبعثه وده هيغير الأيقونة على السيرفر
       if (data.icon && data.icon.length > 0) {
         fd.append("icon", data.icon[0]);
+      } else {
+        // لو مفيش ملف، وفي حالة الـ update ممكن نرسل icon_url عشان يحتفظ بها (مش لازم)
+        if (data.icon_url) fd.append("icon_url", data.icon_url);
       }
 
       if (id) {
-        // تحديث
-        // بعض السيرفرات مش بتقبل PUT مع multipart فبنستخدم method override
+        // تحديث: method override لو السيرفر مش بيسمح PUT مع multipart
         fd.append("_method", "PUT");
         await axios.post(`${api}/categories/${id}`, fd, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -73,8 +84,7 @@ const AddUpdateCategory: React.FC = () => {
         toast.success("تم إضافة التصنيف بنجاح");
       }
 
-      // بعد الحفظ ارجع للقائمة
-      navigate("/dashboard/categories/categories");
+      navigate("/dashboard/category");
     } catch (err: any) {
       console.error(err);
       if (err?.response?.data) {
@@ -85,9 +95,6 @@ const AddUpdateCategory: React.FC = () => {
       }
     }
   };
-
-  // لو عايز تعرض اسم الملف المختار أو معاينة بسيطة
-  const iconFiles = watch("icon");
 
   return (
     <div className="lg:mr-48 min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 pt-16 pb-12 p-3">
@@ -103,15 +110,32 @@ const AddUpdateCategory: React.FC = () => {
           {/* 📷 أيقونة التصنيف */}
           <div className="mb-4">
             <label className="block font-semibold mb-2">📷 أيقونة التصنيف (اختياري)</label>
-            <input
-              type="file"
-              accept="image/*"
-              className="border p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
-              {...register("icon")}
-            />
-            {iconFiles && iconFiles.length > 0 && (
-              <p className="text-xs text-slate-500 mt-2">ملف مُختار: {iconFiles[0].name}</p>
-            )}
+
+            <div className="flex items-start gap-4">
+              <div className="w-36 h-36 rounded overflow-hidden border flex items-center justify-center bg-white">
+                {/* لو المستخدم اختار ملف جديد نعرضه، وإلا نعرض icon_url لو موجود */}
+                {iconFiles && iconFiles.length > 0 ? (
+                  // @ts-ignore createObjectURL expects Blob
+                  <img src={URL.createObjectURL(iconFiles[0])} alt="preview" className="w-full h-full object-cover" />
+                ) : iconUrl ? (
+                  <img src={iconUrl} alt="icon" className="w-full h-full object-cover" />
+                ) : (
+                  <div className="text-xs text-slate-400 text-center p-2">معاينة الأيقونة</div>
+                )}
+              </div>
+
+              <div className="flex-1">
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="border p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
+                  {...register("icon")}
+                />
+                {/* نخزن icon_url كحقل مخفي لو جاي من السيرفر */}
+                <input type="hidden" {...register("icon_url")} />
+                <p className="text-xs text-slate-500 mt-2">لو عايز تغيّر الأيقونة اختَر ملف جديد</p>
+              </div>
+            </div>
           </div>
 
           {/* 📝 اسم التصنيف */}

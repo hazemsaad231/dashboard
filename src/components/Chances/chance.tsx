@@ -66,38 +66,6 @@ console.log("image urls:", payload.map((it:any)=> (it.gallery && it.gallery[0] ?
       await fetchData()
     })()
   }, [])
-
-  // const prepareAllRows = (items: any[]) => {
-  //   return items.map((it: any, i: number) => {
-  //     const cats = Array.isArray(it.categories) ? it.categories : []
-  //     const preparedCats = cats.map((c: any) => ({
-  //       id: c.id ?? null,
-  //       name: c.name ?? "",
-  //       icon_url: c.icon_url ?? c.icon ?? null,
-  //       description: c.description ?? "",
-  //       invest_id: c.invest_id ?? it.id ?? null,
-  //     }))
-  //     const invs = Array.isArray(it.investors) ? it.investors : []
-  //     const preparedInvs = invs.map((inv: any) => ({
-  //       id: inv.id ?? null,
-  //       name: inv.name ?? "",
-  //       notes: inv.notes ?? "",
-  //       number_of_arrows: inv.number_of_arrows ?? 0,
-  //       phone: inv.phone ?? "",
-  //       invest_id: inv.invest_id ?? it.id ?? null,
-  //     }))
-  //     return {
-  //       id: it.id ?? it._id ?? String(i + 1),
-  //       name: it.name ?? it.title ?? "-",
-  //       type: it.type ?? "-",
-  //       price: it.price ?? "-",
-  //       gallery: (Array.isArray(it.gallery) && it.gallery.length) ? it.gallery[0].photo_url : [],
-  //       categories: preparedCats,
-  //       investors: preparedInvs,
-  //       _raw: it,
-  //     }
-  //   })
-  // }
 const prepareAllRows = (items: any[]) => {
   return items.map((it: any, i: number) => {
     const cats = Array.isArray(it.categories) ? it.categories : [];

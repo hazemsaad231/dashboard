@@ -25,6 +25,7 @@ const Navbar = () => {
     { id: "services", label: "الخدمات", icon: GrServices, path: "/dashboard/services/services" },
     { id: "blogs", label: "المدونة", icon: TbLogs, path: "/dashboard/blogs/blogs" },
     { id: "chances", label: 'الفرص الاستثمارية', icon: FaBriefcase, path: "/dashboard/chances" },
+    { id: "category", label: 'التصنيفات', icon: FaBriefcase, path: "/dashboard/category" },
     // { id: "profile", label: "الملف الشخصي", icon: FaPerson, path: "/dashboard/profile" },
   ]
 
