@@ -430,10 +430,6 @@ const prepareAllRows = (items: any[]) => {
           >
             <MdDelete size={20} className="text-red-600" />
           </button>
-           <Link to={`/dashboard/addChance/${p.id}`} className="p-2 text-[#DFC96D] hover:bg-blue-50 rounded-lg transition-colors" title="تعديل">
-                    <FaEdit size={20} />
-                  </Link>
-                
         </div>
       ),
     },
