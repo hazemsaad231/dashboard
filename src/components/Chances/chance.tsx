@@ -594,7 +594,7 @@ const doDelete = async () => {
                   onChange={(e) => search(e.target.value)}
                   placeholder={
                     viewMode === "all"
-                      ? "ابحث عن فرصة أو تصنيف..."
+                      ? "ابحث عن فرصة..."
                       : viewMode === "categories"
                         ? "ابحث في التصنيفات..."
                         : "ابحث في المستثمرين..."

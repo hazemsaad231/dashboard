@@ -6,13 +6,14 @@ import { api } from "../../Api/api";
 import toast from "react-hot-toast";
 
 type FormValues = {
-  name: string;
+  title: string;
   description: string;
-  icon: FileList | null;
+  image: FileList | null;
+  type: string;
 };
 
-const AddUpdateCategory: React.FC = () => {
-  const { id } = useParams(); // لو عندك route زي /dashboard/categories/add/:id
+const Add_Update: React.FC = () => {
+  const { id, resource } = useParams();
   const navigate = useNavigate();
 
   const {
@@ -21,73 +22,69 @@ const AddUpdateCategory: React.FC = () => {
     setValue,
     reset,
     formState: { errors, isSubmitting },
-    watch,
   } = useForm<FormValues>({
-    defaultValues: { name: "", description: "", icon: null },
+    defaultValues: {
+      title: "",
+      description: "",
+      image: null,
+      type: resource ?? "",
+    },
   });
 
-  // لو تعديل — جلب بيانات التصنيف علشان نعمل prefill
+  // لو تعديل
   useEffect(() => {
     if (!id) return;
     const fetchItem = async () => {
       try {
-        const resp = await axios.get(`${api}/categories/${id}`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        });
-        const item = resp?.data?.data ?? resp?.data;
-        setValue("name", item.name ?? "");
-        setValue("description", item.description ?? "");
-        // لو عايز تعرض معاينة من الـ icon_url ممكن تخزنها في state، بس نحافظ على الشكل البسيط زي المثال
+        const resp = await axios.get(`${api}/services/${id}`);
+        const item = resp.data.data;
+        setValue("title", item.title || "");
+        setValue("description", item.description || "");
+        setValue("type", resource ?? "");
       } catch (err) {
         console.error(err);
-        toast.error("فشل في جلب بيانات التصنيف");
+        toast.error("فشل في جلب بيانات العنصر");
       }
     };
     fetchItem();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, setValue]);
+  }, [id, resource, setValue]);
 
   const onSubmit = async (data: FormValues) => {
     try {
+      // نستخدم FormData عشان نقدر نرفع ملف الصورة
       const fd = new FormData();
-      fd.append("name", data.name);
-      fd.append("description", data.description ?? "");
-      // لو فيه ملف أيقونة مرفوع
-      if (data.icon && data.icon.length > 0) {
-        fd.append("icon", data.icon[0]);
+      fd.append("title", data.title);
+      fd.append("description", data.description);
+      fd.append("type", data.type || resource || "");
+
+      if (data.image && data.image.length > 0) {
+        fd.append("image", data.image[0]);
       }
 
       if (id) {
         // تحديث
-        // بعض السيرفرات مش بتقبل PUT مع multipart فبنستخدم method override
         fd.append("_method", "PUT");
-        await axios.post(`${api}/categories/${id}`, fd, {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        });
-        toast.success("تم تحديث التصنيف بنجاح");
+        await axios.post(`${api}/services/${id}`, fd);
+        toast.success("تم تحديث العنصر بنجاح");
       } else {
-        // إنشاء جديد
-        await axios.post(`${api}/categories`, fd, {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        });
-        toast.success("تم إضافة التصنيف بنجاح");
+        // إضافة جديد
+        await axios.post(`${api}/services`, fd);
+        console.log("data", fd, data, resource);
+        toast.success("تم إضافة العنصر بنجاح");
       }
 
-      // بعد الحفظ ارجع للقائمة
-      navigate("/dashboard/categories/categories");
+      navigate(`/dashboard/${resource}/${resource}`);
     } catch (err: any) {
       console.error(err);
       if (err?.response?.data) {
-        const serverMsg = err.response.data.message || JSON.stringify(err.response.data);
+        const serverMsg =
+          err.response.data.message || JSON.stringify(err.response.data);
         toast.error("خطأ من السيرفر: " + serverMsg);
       } else {
         toast.error("حدث خطأ أثناء العملية.");
       }
     }
   };
-
-  // لو عايز تعرض اسم الملف المختار أو معاينة بسيطة
-  const iconFiles = watch("icon");
 
   return (
     <div className="lg:mr-48 min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 pt-16 pb-12 p-3">
@@ -97,46 +94,54 @@ const AddUpdateCategory: React.FC = () => {
           className="bg-white shadow-xl w-full max-w-4xl rounded-2xl p-4"
         >
           <h1 className="text-3xl md:text-4xl text-center font-bold mb-6">
-            {id ? "تعديل تصنيف" : "إضافة تصنيف"}
+            {id
+              ? `تعديل ${resource === "services" ? "خدمة" : "مقال"}`
+              : `إضافة ${resource === "services" ? "خدمة" : "مقال"}`}
           </h1>
 
-          {/* 📷 أيقونة التصنيف */}
+          {/* 📷 صورة */}
           <div className="mb-4">
-            <label className="block font-semibold mb-2">📷 أيقونة التصنيف (اختياري)</label>
+            <label className="block font-semibold mb-2">📷 اختر صورة</label>
             <input
               type="file"
               accept="image/*"
               className="border p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
-              {...register("icon")}
+              {...register("image")}
             />
-            {iconFiles && iconFiles.length > 0 && (
-              <p className="text-xs text-slate-500 mt-2">ملف مُختار: {iconFiles[0].name}</p>
+            {errors.image && (
+              <p className="text-red-500 text-sm mt-1">
+                ⚠️ {errors.image.message as string}
+              </p>
             )}
           </div>
 
-          {/* 📝 اسم التصنيف */}
+          {/* 📝 عنوان */}
           <div className="mb-4">
-            <label className="block font-semibold mb-2">📝 اسم التصنيف</label>
+            <label className="block font-semibold mb-2">📝 العنوان</label>
             <input
-              {...register("name", { required: "اسم التصنيف مطلوب" })}
-              placeholder="أدخل اسم التصنيف"
+              {...register("title", { required: "العنوان مطلوب" })}
+              placeholder="أدخل العنوان"
               className="border p-3 w-full rounded-lg"
             />
-            {errors.name && (
-              <p className="text-red-500 text-sm mt-1">⚠️ {errors.name.message as string}</p>
+            {errors.title && (
+              <p className="text-red-500 text-sm mt-1">
+                ⚠️ {errors.title.message}
+              </p>
             )}
           </div>
 
-          {/* 📄 الوصف */}
+          {/* 📄 وصف */}
           <div className="mb-4">
             <label className="block font-semibold mb-2">📄 الوصف</label>
             <textarea
               {...register("description", { required: "الوصف مطلوب" })}
-              placeholder="أدخل وصف للتصنيف"
+              placeholder="أدخل الوصف التفصيلي"
               className="border p-3 w-full h-[24rem] md:h-60 rounded-lg"
             />
             {errors.description && (
-              <p className="text-red-500 text-sm mt-1">⚠️ {errors.description.message as string}</p>
+              <p className="text-red-500 text-sm mt-1">
+                ⚠️ {errors.description.message}
+              </p>
             )}
           </div>
 
@@ -146,7 +151,11 @@ const AddUpdateCategory: React.FC = () => {
               disabled={isSubmitting}
               className="bg-blue-600 text-white px-6 py-2 rounded-lg disabled:opacity-50"
             >
-              {isSubmitting ? "⏳ جاري المعالجة..." : id ? "✏️ تعديل" : "➕ إضافة"}
+              {isSubmitting
+                ? "⏳ جاري المعالجة..."
+                : id
+                ? "✏️ تعديل"
+                : "➕ إضافة"}
             </button>
             <button
               type="button"
@@ -165,4 +174,4 @@ const AddUpdateCategory: React.FC = () => {
   );
 };
 
-export default AddUpdateCategory;
+export default Add_Update;
