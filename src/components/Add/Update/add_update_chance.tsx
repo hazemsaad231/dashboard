@@ -223,17 +223,20 @@ console.log('existingGallery',existingGallery)
                 {...register("title", { required: "العنوان مطلوب" })}
                 className="w-full border p-3 rounded-lg"
               />
-              {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>}
+              {errors.title && <p className="text-red-500 text-sm mt-1"><span>⚠️</span> {errors.title.message}</p>}
             </div>
 
             <div>
               <label className="block font-medium mb-1">النوع</label>
-              <input {...register("type")} className="w-full border p-3 rounded-lg" />
+              <input {...register("type", { required: "النوع مطلوب" })}
+                className="w-full border p-3 rounded-lg" />
+              {errors.type && <p className="text-red-500 text-sm mt-1"><span>⚠️</span> النوع مطلوب</p>}
             </div>
 
             <div>
               <label className="block font-medium mb-1">السعر</label>
-              <input type="number" {...register("price")} className="w-full border p-3 rounded-lg" />
+              <input type="number" {...register("price", { required: "السعر مطلوب" })} className="w-full border p-3 rounded-lg" />
+              {errors.price && <p className="text-red-500 text-sm mt-1"><span>⚠️</span> السعر مطلوب</p>}
             </div>
           </div>
 
