@@ -110,7 +110,7 @@ const AddUpdateCategory: React.FC = () => {
             <label className="block font-semibold mb-2">📷 أيقونة التصنيف (اختياري)</label>
 
             <div className="flex items-start gap-4">
-              <div className="w-36 h-36 rounded overflow-hidden border flex items-center justify-center bg-white">
+              <div className="w-20 h-20 rounded overflow-hidden border flex items-center justify-center bg-white">
                 {/* لو المستخدم اختار ملف جديد نعرضه، وإلا نعرض icon_url لو موجود */}
                 {iconFiles && iconFiles.length > 0 ? (
                   // @ts-ignore createObjectURL expects Blob

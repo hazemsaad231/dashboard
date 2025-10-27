@@ -231,14 +231,14 @@ const Add_Update_Chance: React.FC = () => {
 
           <div>
             <label className="block font-medium mb-2">الصور (المعرض)</label>
-            <div className="flex gap-4 items-start">
+            <div className="flex flex-col gap-4 items-start">
               <div>
                 <input type="file" accept="image/*" multiple onChange={(e) => onPickNewImages(e.target.files)} />
                 <p className="text-xs text-slate-500 mt-1">مسموح رفع أكثر من صورة، الأولى هتظهر بالجدول.</p>
               </div>
-              <div className="flex gap-3 flex-wrap">
+              <div className="flex gap-2 flex-wrap">
                 {existingGallery.map((url) => (
-                  <div key={url} className="relative w-28 h-20 rounded overflow-hidden border">
+                  <div key={url} className="relative w-20 h-20 rounded overflow-hidden border">
                     <img src={url} alt="existing" className="w-full h-full object-cover" />
                     <button type="button" onClick={() => removeExistingGalleryUrl(url)} className="absolute top-1 right-1 bg-white/80 rounded p-1 text-red-600">✖</button>
                   </div>

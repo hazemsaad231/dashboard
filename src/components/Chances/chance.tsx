@@ -86,7 +86,6 @@ const prepareAllRows = (items: any[]) => {
       invest_id: inv.invest_id ?? it.id ?? null,
     }));
 
-    // أبسط لوجيك: لو فيه gallery وخليها أول عنصر وphoto_url موجود استخدمه وإلا خليها فارغة
     const galleryValue =
       Array.isArray(it.gallery) && it.gallery.length > 0 && it.gallery[0].photo_url
         ? it.gallery[0].photo_url
