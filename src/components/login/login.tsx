@@ -72,7 +72,7 @@ const onSubmait=async(data:any)=>{
 
 
     <label htmlFor="pass" className="text-start text-gray-600 font-normal mt-4">كلمة المرور</label>
-    <input type="text" placeholder="password"   className="border p-2 px-4 mt-1  rounded-md outline-[#dfc96d]"
+    <input type="password" placeholder="password"   className="border p-2 px-4 mt-1  rounded-md outline-[#dfc96d]"
     {...register("password",{required:true})} />
     {errors.password && <p className="text-red-500 text-start"><span>⚠️</span> كلمة المرور مطلوبه</p>}
 

@@ -38,11 +38,12 @@ const Add_Update_Chance: React.FC = () => {
   });
 
   // --- الصور ---
-  const [existingGallery, setExistingGallery] = useState<{ id: number | string; url: string }[]>([]);
+  const [existingGallery, setExistingGallery] = useState<{ id: number | string ; url: string}[]>([]);
   const [removedGallery, setRemovedGallery] = useState<(number | string)[]>([]);
   const [newImages, setNewImages] = useState<File[]>([]);
   const [previewNewImages, setPreviewNewImages] = useState<string[]>([]);
-
+console.log('removedGallery',removedGallery)
+console.log('existingGallery',existingGallery)
   // --- التصنيفات ---
   const [allCategories, setAllCategories] = useState<Category[]>([]);
   const [loadingCategories, setLoadingCategories] = useState<boolean>(true);
@@ -147,7 +148,11 @@ const Add_Update_Chance: React.FC = () => {
     selectedCategoryIds.forEach((cid) => fd.append("category_ids[]", String(cid)));
   };
 
-  // ارسال الفورم
+
+
+
+
+ // ارسال الفورم
   const onSubmit = async (values: FormValues) => {
     try {
       const token = localStorage.getItem("token");
@@ -164,6 +169,9 @@ const Add_Update_Chance: React.FC = () => {
       // الصور الممسوحة
       if (removedGallery.length > 0) fd.append("removed_gallery", JSON.stringify(removedGallery));
 
+    console.log(removedGallery);
+
+
       const url = id ? `${api}/invests/${id}` : `${api}/invests`;
       if (id) fd.append("_method", "PUT");
 
@@ -172,8 +180,9 @@ const Add_Update_Chance: React.FC = () => {
       });
 
       const returned = resp?.data?.data ?? resp?.data;
+      console.log("returned", returned);
       toast.success(id ? "تم تحديث العنصر بنجاح" : "تم إضافة العنصر بنجاح");
-      navigate("/dashboard/chances");
+    
 
       // تحديث المعرض بعد الحفظ
       if (returned) {
@@ -187,6 +196,8 @@ const Add_Update_Chance: React.FC = () => {
             ? returned.categories.map((c: any) => Number(c.id ?? c._id)).filter(Boolean)
             : [];
         setSelectedCategoryIds(catsIds);
+
+          navigate("/dashboard/chances");
       }
     } catch (err: any) {
       console.error("submit error:", err);

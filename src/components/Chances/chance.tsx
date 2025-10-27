@@ -325,6 +325,7 @@ const prepareAllRows = (items: any[]) => {
       align: "center",
        sortable: false,
       filterable: false,
+       disableColumnMenu: true,
       renderCell: (p: any) => <div className="truncate font-medium text-slate-900">{p.value}</div>,
     },
     {
@@ -335,6 +336,7 @@ const prepareAllRows = (items: any[]) => {
       align: "center",
        sortable: false,
       filterable: false,
+      disableColumnMenu: true,
       renderCell: (p: any) =>
         <div className="w-full h-full flex items-center justify-center">
        { p.value ? (
@@ -353,6 +355,7 @@ const prepareAllRows = (items: any[]) => {
       align: "center",
        sortable: false,
       filterable: false,
+      disableColumnMenu: true,
       renderCell: (p: any) => (
         <div className="truncate text-slate-600" title={p.value}>
           {p.value || "—"}
@@ -372,6 +375,7 @@ const prepareAllRows = (items: any[]) => {
       align: "center",
        sortable: false,
       filterable: false,
+      disableColumnMenu: true,
       renderCell: (p: any) => <div className="truncate font-medium text-slate-900">{p.value}</div>,
     },
     {
@@ -382,6 +386,7 @@ const prepareAllRows = (items: any[]) => {
       align: "center",
        sortable: false,
       filterable: false,
+      disableColumnMenu: true,
       renderCell: (p: any) => <div className="truncate text-slate-700">{p.value}</div>,
     },
     {
@@ -393,6 +398,7 @@ const prepareAllRows = (items: any[]) => {
       align: "center",
        sortable: false,
       filterable: false,
+      disableColumnMenu: true,
       renderCell: (p: any) => (
         <div className="truncate text-slate-600" title={p.value}>
           {p.value || "—"}
@@ -407,6 +413,7 @@ const prepareAllRows = (items: any[]) => {
       align: "center",
        sortable: false,
       filterable: false,
+      disableColumnMenu: true,
       renderCell: (p: any) => <span className="font-semibold text-indigo-600">{p.value}</span>,
     },
 
@@ -417,6 +424,7 @@ const prepareAllRows = (items: any[]) => {
       align: "center",
        sortable: false,
       filterable: false,
+      disableColumnMenu: true,
       renderCell: (p: any) => (
         <div className="w-full h-full flex items-center justify-center gap-2">
           <button
@@ -438,6 +446,9 @@ const prepareAllRows = (items: any[]) => {
       width: 120,
       headerAlign: "center",
       align: "center",
+        sortable: false,
+      filterable: false,
+       disableColumnMenu: true,
       renderCell: () => 
         <button
                     onClick={() => switchView("all")}
