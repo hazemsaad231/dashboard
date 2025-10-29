@@ -12,6 +12,7 @@ body{
   font-family: 'Cairo', sans-serif;
   direction: rtl;
   overflow-x: hidden;
+  background-color: #f8fafc;
 }
 
 
@@ -28,3 +29,4 @@ html {
   background: #262163;
   border-radius: 8px;
 }
+
