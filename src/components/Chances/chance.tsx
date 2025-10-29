@@ -504,7 +504,6 @@ const prepareAllRows = (items: any[]) => {
     const t = q.trim()
     if (!t) {
       if (viewMode === "all") setData(prepareAllRows(all))
-      else if (viewMode === "categories") setData(prepareCategoryRows(all))
       else if (viewMode === "investors") {
         if (investorsParent) {
           const parent = all.find((a) => String(a.id) === String(investorsParent.id))
@@ -573,46 +572,6 @@ const prepareAllRows = (items: any[]) => {
     setId(null)
     setOpenDelete(false)
   }
-// const doDelete = async () => {
-//   if (!Id) return;
-//   try {
-//     await axios.delete(`https://tadbeer.wj.edu.sa/public/api/invests/${Id}`, {
-//       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-//     });
-
-
-//     // build newAll synchronously from current all
-//     setAll((prevAll) => {
-//       const newAll = prevAll.filter((it) => String(it.id ?? it._id) !== String(Id));
-//       // update data based on current view immediately using newAll
-//       if (viewMode === "all") {
-//         setData(prepareAllRows(newAll));
-//       } else if (viewMode === "categories") {
-//         setData(prepareCategoryRows(newAll));
-//       } else if (viewMode === "investors") {
-//         // if we are viewing investors of a parent, try to keep that context
-//         if (investorsParent) {
-//           const parent = newAll.find((a) => String(a.id) === String(investorsParent.id));
-//           setData(parent ? prepareInvestorRows([parent]) : []);
-//         } else {
-//           setData(prepareInvestorRows(newAll));
-//         }
-//       }
-//       return newAll;
-//     });
-
-//     // make sure pagination not out-of-range
-//     setCurrent(1);
-
-//     toast.success("تم الحذف بنجاح");
-//     cancelDelete();
-//   } catch (err) {
-//     console.error("delete error:", err);
-//     toast.error("حدث خطأ أثناء الحذف");
-//   }
-// };
-
-// ... الكود كله زي ما هو فوق بدون تغيير
 
 const doDelete = async () => {
   if (!Id) return;
@@ -645,45 +604,7 @@ const doDelete = async () => {
   }
 };
 
-// دالة حذف المستثمر فقط
-// const DeleteInvestor = async () => {
-//   if (!Id) return;
-//   try {
-//     await axios.delete(`https://tadbeer.wj.edu.sa/public/api/investors/${Id}`, {
-//       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-//     });
 
-//     setAll((prevAll) => {
-//       const newAll = prevAll.map((invest) => {
-//         if (invest.investors) {
-//           return {
-//             ...invest,
-//             investors: invest.investors.filter((inv: any) => String(inv.id) !== String(Id)),
-//           };
-//         }
-//         return invest;
-//       });
-
-//       if (viewMode === "investors") {
-//         if (investorsParent) {
-//           const parent = newAll.find((a) => String(a.id) === String(investorsParent.id));
-//           setData(parent ? prepareInvestorRows([parent]) : []);
-//         } else {
-//           setData(prepareInvestorRows(newAll));
-//         }
-//       }
-
-//       return newAll;
-//     });
-
-//     setCurrent(1);
-//     toast.success("تم حذف المستثمر بنجاح");
-//     cancelDelete();
-//   } catch (err) {
-//     console.error("delete investor error:", err);
-//     toast.error("حدث خطأ أثناء حذف المستثمر");
-//   }
-// };
 
 const handleConfirmDelete = async () => {
   if (!Id) return;
@@ -759,13 +680,7 @@ const handleConfirmDelete = async () => {
                 <CiSearch size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
                   onChange={(e) => search(e.target.value)}
-                  placeholder={
-                    viewMode === "all"
-                      ? "ابحث عن فرصة..."
-                      : viewMode === "categories"
-                        ? "ابحث في التصنيفات..."
-                        : "ابحث في المستثمرين..."
-                  }
+                  placeholder={ "ابحث عن فرصة..."}
                   className="w-full h-11 pr-12 pl-4 rounded-lg border-2 border-slate-200 bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none transition-all"
                 />
               </div>

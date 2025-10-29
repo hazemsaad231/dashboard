@@ -66,7 +66,7 @@ console.log('existingGallery',existingGallery)
         // تحويل الصور القديمة
         const galleryItems =
           Array.isArray(item.gallery) && item.gallery.length
-            ? item.gallery.map((g: any) => ({ id: g.id, url: g.photo_url ?? g.url ?? "" }))
+            ? item.gallery.map((g: any) => ({ id: g.id, url: g.photo_url ?? "" }))
             : [];
         setExistingGallery(galleryItems);
 
@@ -167,7 +167,7 @@ console.log('existingGallery',existingGallery)
       newImages.forEach((file) => fd.append("images[]", file));
 
       // الصور الممسوحة
-      if (removedGallery.length > 0) fd.append("removed_gallery", JSON.stringify(removedGallery));
+      if (removedGallery.length > 0) fd.append("", JSON.stringify(removedGallery));
 
     console.log(removedGallery);
 
@@ -197,6 +197,10 @@ console.log('existingGallery',existingGallery)
             : [];
         setSelectedCategoryIds(catsIds);
 
+          // عرض المعرض بشكل جدول
+  console.table(galleryUrls);
+
+
           navigate("/dashboard/chances");
       }
     } catch (err: any) {
@@ -205,6 +209,10 @@ console.log('existingGallery',existingGallery)
       toast.error("حدث خطأ: " + serverMsg);
     }
   };
+
+
+
+
 
   return (
     <div className="lg:mr-52 min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 pt-16 pb-12 p-3">
@@ -316,3 +324,4 @@ console.log('existingGallery',existingGallery)
 };
 
 export default Add_Update_Chance;
+
