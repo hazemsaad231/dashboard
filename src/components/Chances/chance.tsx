@@ -316,7 +316,6 @@ const prepareAllRows = (items: any[]) => {
       
     
     
-    { field: "cat_id", headerName: "ID", width: 100, headerAlign: "center", align: "center" },
     {
       field: "name",
       headerName: "اسم التصنيف",
@@ -346,27 +345,56 @@ const prepareAllRows = (items: any[]) => {
         )}
       </div>,
     },
-    {
-      field: "description",
-      headerName: "الوصف",
-      flex: 1,
-      minWidth: 260,
-      headerAlign: "center",
-      align: "center",
-       sortable: false,
-      filterable: false,
-      disableColumnMenu: true,
-      renderCell: (p: any) => (
-        <div className="truncate text-slate-600" title={p.value}>
-          {p.value || "—"}
+  {
+  field: "description",
+  headerName: "الوصف",
+  flex: 1,
+  minWidth: 340,            // خليها أعرض علشان تاخد مساحة للكلام
+  headerAlign: "center",
+  align: "left",            // important: خلي النص يترجم ويسطر على اليسار (rtl content still works)
+  sortable: false,
+  filterable: false,
+  disableColumnMenu: true,
+  renderCell: (p: any) => {
+    const val = p.value || "—"
+    return (
+      <div className="w-full">
+        <div
+          className="whitespace-normal text-center break-words text-slate-600"
+          style={{
+            maxHeight: 96,            // ارتفاع الخلية قبل ما يظهر scroll
+            overflow: "auto",
+            paddingRight: 8,
+            lineHeight: 1.4,
+            fontSize: 14,
+          }}
+          title={val}
+        >
+          {val}
         </div>
-      ),
-    },
+
+        {/* زر صغير لفتح الوصف كامل */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation()
+            // event up the DOM: نطلق custom event علشان نفتح dialog خارجي
+            const ev = new CustomEvent("openFullDescription", { detail: { text: val } })
+            window.dispatchEvent(ev)
+          }}
+          className="mt-1 text-xs px-2 py-1 rounded-md bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition-colors"
+        >
+          عرض كامل
+        </button>
+      </div>
+    )
+  },
+},
+
 
   ]
 
   const investorColumns: GridColDef[] = [
-    { field: "inv_id", headerName: "ID", width: 100, headerAlign: "center", align: "center" },
+
     {
       field: "name",
       headerName: "اسم المستثمر",
@@ -389,22 +417,7 @@ const prepareAllRows = (items: any[]) => {
       disableColumnMenu: true,
       renderCell: (p: any) => <div className="truncate text-slate-700">{p.value}</div>,
     },
-    {
-      field: "notes",
-      headerName: "ملاحظات",
-      flex: 1,
-      minWidth: 240,
-      headerAlign: "center",
-      align: "center",
-       sortable: false,
-      filterable: false,
-      disableColumnMenu: true,
-      renderCell: (p: any) => (
-        <div className="truncate text-slate-600" title={p.value}>
-          {p.value || "—"}
-        </div>
-      ),
-    },
+   
     {
       field: "number_of_arrows",
       headerName: "عدد الأسهم",
@@ -416,6 +429,50 @@ const prepareAllRows = (items: any[]) => {
       disableColumnMenu: true,
       renderCell: (p: any) => <span className="font-semibold text-indigo-600">{p.value}</span>,
     },
+      {
+  field: "notes",
+  headerName: "الوصف",
+  flex: 1,
+  minWidth: 340,            // خليها أعرض علشان تاخد مساحة للكلام
+  headerAlign: "center",
+  align: "left",            // important: خلي النص يترجم ويسطر على اليسار (rtl content still works)
+  sortable: false,
+  filterable: false,
+  disableColumnMenu: true,
+  renderCell: (p: any) => {
+    const val = p.value || "—"
+    return (
+      <div className="w-full">
+        <div
+          className="whitespace-normal text-center break-words text-slate-600"
+          style={{
+            maxHeight: 96,            // ارتفاع الخلية قبل ما يظهر scroll
+            overflow: "auto",
+            paddingRight: 8,
+            lineHeight: 1.4,
+            fontSize: 14,
+          }}
+          title={val}
+        >
+          {val}
+        </div>
+
+        {/* زر صغير لفتح الوصف كامل */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation()
+            // event up the DOM: نطلق custom event علشان نفتح dialog خارجي
+            const ev = new CustomEvent("openFullDescription", { detail: { text: val } })
+            window.dispatchEvent(ev)
+          }}
+          className="mt-1 text-xs px-2 py-1 rounded-md bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition-colors"
+        >
+          عرض كامل
+        </button>
+      </div>
+    )
+  },
+},
 
     {
       field: "actions",
@@ -440,23 +497,7 @@ const prepareAllRows = (items: any[]) => {
         </div>
       ),
     },
-        {
-      field: "",
-      headerName: '',
-      width: 120,
-      headerAlign: "center",
-      align: "center",
-        sortable: false,
-      filterable: false,
-       disableColumnMenu: true,
-      renderCell: () => 
-        <button
-                    onClick={() => switchView("all")}
-                    className="bg-slate-200 hover:bg-slate-300 text-slate-500 hover:text-slate-600 rounded-lg px-4 py-2 transition-all"
-                  >
-                    ✖
-                  </button>
-    },
+
   ]
 
   const search = (q = "") => {
@@ -532,6 +573,47 @@ const prepareAllRows = (items: any[]) => {
     setId(null)
     setOpenDelete(false)
   }
+// const doDelete = async () => {
+//   if (!Id) return;
+//   try {
+//     await axios.delete(`https://tadbeer.wj.edu.sa/public/api/invests/${Id}`, {
+//       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+//     });
+
+
+//     // build newAll synchronously from current all
+//     setAll((prevAll) => {
+//       const newAll = prevAll.filter((it) => String(it.id ?? it._id) !== String(Id));
+//       // update data based on current view immediately using newAll
+//       if (viewMode === "all") {
+//         setData(prepareAllRows(newAll));
+//       } else if (viewMode === "categories") {
+//         setData(prepareCategoryRows(newAll));
+//       } else if (viewMode === "investors") {
+//         // if we are viewing investors of a parent, try to keep that context
+//         if (investorsParent) {
+//           const parent = newAll.find((a) => String(a.id) === String(investorsParent.id));
+//           setData(parent ? prepareInvestorRows([parent]) : []);
+//         } else {
+//           setData(prepareInvestorRows(newAll));
+//         }
+//       }
+//       return newAll;
+//     });
+
+//     // make sure pagination not out-of-range
+//     setCurrent(1);
+
+//     toast.success("تم الحذف بنجاح");
+//     cancelDelete();
+//   } catch (err) {
+//     console.error("delete error:", err);
+//     toast.error("حدث خطأ أثناء الحذف");
+//   }
+// };
+
+// ... الكود كله زي ما هو فوق بدون تغيير
+
 const doDelete = async () => {
   if (!Id) return;
   try {
@@ -539,16 +621,11 @@ const doDelete = async () => {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
 
-    // build newAll synchronously from current all
     setAll((prevAll) => {
       const newAll = prevAll.filter((it) => String(it.id ?? it._id) !== String(Id));
-      // update data based on current view immediately using newAll
-      if (viewMode === "all") {
-        setData(prepareAllRows(newAll));
-      } else if (viewMode === "categories") {
-        setData(prepareCategoryRows(newAll));
-      } else if (viewMode === "investors") {
-        // if we are viewing investors of a parent, try to keep that context
+      if (viewMode === "all") setData(prepareAllRows(newAll));
+      else if (viewMode === "categories") setData(prepareCategoryRows(newAll));
+      else if (viewMode === "investors") {
         if (investorsParent) {
           const parent = newAll.find((a) => String(a.id) === String(investorsParent.id));
           setData(parent ? prepareInvestorRows([parent]) : []);
@@ -559,9 +636,7 @@ const doDelete = async () => {
       return newAll;
     });
 
-    // make sure pagination not out-of-range
     setCurrent(1);
-
     toast.success("تم الحذف بنجاح");
     cancelDelete();
   } catch (err) {
@@ -569,6 +644,92 @@ const doDelete = async () => {
     toast.error("حدث خطأ أثناء الحذف");
   }
 };
+
+// دالة حذف المستثمر فقط
+// const DeleteInvestor = async () => {
+//   if (!Id) return;
+//   try {
+//     await axios.delete(`https://tadbeer.wj.edu.sa/public/api/investors/${Id}`, {
+//       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+//     });
+
+//     setAll((prevAll) => {
+//       const newAll = prevAll.map((invest) => {
+//         if (invest.investors) {
+//           return {
+//             ...invest,
+//             investors: invest.investors.filter((inv: any) => String(inv.id) !== String(Id)),
+//           };
+//         }
+//         return invest;
+//       });
+
+//       if (viewMode === "investors") {
+//         if (investorsParent) {
+//           const parent = newAll.find((a) => String(a.id) === String(investorsParent.id));
+//           setData(parent ? prepareInvestorRows([parent]) : []);
+//         } else {
+//           setData(prepareInvestorRows(newAll));
+//         }
+//       }
+
+//       return newAll;
+//     });
+
+//     setCurrent(1);
+//     toast.success("تم حذف المستثمر بنجاح");
+//     cancelDelete();
+//   } catch (err) {
+//     console.error("delete investor error:", err);
+//     toast.error("حدث خطأ أثناء حذف المستثمر");
+//   }
+// };
+
+const handleConfirmDelete = async () => {
+  if (!Id) return;
+
+  // لو id فيه prefix "inv-" يبقى المستثمر
+  if (String(Id).startsWith("inv-")) {
+    const realId = String(Id).replace("inv-", "");
+    try {
+      await axios.delete(`https://tadbeer.wj.edu.sa/public/api/investors/${realId}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+
+      setAll((prevAll) => {
+        const newAll = prevAll.map((invest) => ({
+          ...invest,
+          investors: invest.investors?.filter((inv: any) => String(inv.id) !== realId) ?? [],
+        }));
+
+        if (viewMode === "investors") {
+          if (investorsParent) {
+            const parent = newAll.find((a) => String(a.id) === String(investorsParent.id));
+            setData(parent ? prepareInvestorRows([parent]) : []);
+          } else {
+            setData(prepareInvestorRows(newAll));
+          }
+        }
+
+        return newAll;
+      });
+
+      toast.success("تم حذف المستثمر بنجاح");
+      cancelDelete();
+    } catch (err) {
+      console.error("delete investor error:", err);
+      toast.error("حدث خطأ أثناء حذف المستثمر");
+    }
+  } else {
+    // ده للفرص العادية
+    doDelete();
+  }
+};
+
+
+// ... باقي الكود زي ما هو (DataGrid، Dialog، Search، Pagination)
+
+
 
   const columns = viewMode === "all" ? allColumns : viewMode === "categories" ? categoryColumns : investorColumns
 
@@ -615,23 +776,22 @@ const doDelete = async () => {
             <div className="w-full overflow-x-auto">
               <div className="min-w-[760px]">
 
-                        {viewMode !== "all" && (
-                   <button
-                    onClick={() => switchView("all")}
-                    className="bg-slate-200 hover:bg-slate-300 text-slate-500 hover:text-slate-600 px-4 py-2 transition-all"
-                  >
-                    ✖
-                  </button>
-                )}
+               
                 
 
                 {currentData.length === 0 ? (
                   <div className="p-12 text-center">
                     <div className="text-6xl mb-4">📭</div>
                     <h3 className="text-xl font-semibold text-slate-900 mb-2">لا توجد بيانات</h3>
-                    <p className="text-slate-500">
-                      لم يتم العثور على أي {viewMode === "all" ? "فرص" : viewMode === "categories" ? "تصنيفات" : "مستثمرين"}
-                    </p>
+                         {viewMode !== "all" && (
+                   <button
+                    onClick={() => switchView("all")}
+                    className="bg-[#2d2265] text-white px-2 py-2.5 rounded-lg font-medium transition-all"
+                  >
+                  عوده للكل
+                  </button>
+                )}
+
                   </div>
                 ) : (
                    <>
@@ -682,6 +842,15 @@ const doDelete = async () => {
                   </select>
                 </div>
 
+                         {viewMode !== "all" && (
+                   <button
+                    onClick={() => switchView("all")}
+                    className="bg-[#2d2265] text-white px-2 py-2.5 rounded-lg font-medium transition-all"
+                  >
+                  عوده للكل
+                  </button>
+                )}
+
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => setCurrent(current > 1 ? current - 1 : current)}
@@ -720,13 +889,17 @@ const doDelete = async () => {
                        </div>
                        <div className="flex gap-3 mt-6 justify-start items-center">
                          <button onClick={cancelDelete} className="px-4 py-2 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 font-medium transition-colors">إلغاء</button>
-                         <button onClick={doDelete} className="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-medium transition-colors shadow-sm">حذف</button>
+                         <button onClick={handleConfirmDelete} className="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-medium transition-colors shadow-sm">حذف</button>
                        </div>
                      </Dialog.Panel>
                    </div>
                  </Dialog>
+
+            
         </>
       )}
     </div>
   )
 }
+
+
