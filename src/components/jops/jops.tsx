@@ -254,10 +254,10 @@ export default function Applicants() {
             </div>
 
             {/* التحكم في الصفحات */}
-            <div className="flex flex-col md:flex-row justify-between items-center gap-3 pt-4 border-t border-slate-200 mt-4">
+            <div className="flex justify-between items-center gap-3 pt-4 border-t border-slate-200 mt-4">
               <div className="flex items-center gap-2">
                 <label className="text-sm text-slate-600">
-                  عدد الصفوف في الصفحة : 
+                  عدد الصفوف : 
                 </label>
                 <select
                   value={itemsPerPage}
