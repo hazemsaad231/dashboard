@@ -158,157 +158,156 @@ const prepareAllRows = (items: any[]) => {
 
 
 
-  const allColumns: GridColDef[] = [
-    {
-      field: "name",
-      headerName: "الاسم",
-      headerAlign: "center",
-      align: "center",
-       sortable: false,
-      filterable: false,
-       disableColumnMenu: true,
-      flex: 1.2,
-      renderCell: (p: any) => (
-        <div className="flex justify-center items-center h-full w-full px-4">
-          <h1 className="font-semibold text-slate-900 hover:text-indigo-600 transition-colors truncate">{p.value}</h1>
-        </div>
-      ),
-    },
-    {
-      field: "type",
-      headerName: "النوع",
-      headerAlign: "center",
-      align: "center",
-       sortable: false,
-      filterable: false,
-       disableColumnMenu: true,
-      flex: 1,
-      renderCell: (p: any) => (
-        <div className="flex justify-center items-center h-full w-full">
-          <span className="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium">{p.value}</span>
-        </div>
-      ),
-    },
-    {
-      field: "price",
-      headerName: "السعر",
-      headerAlign: "center",
-      align: "center",
-       sortable: false,
-      filterable: false,
-       disableColumnMenu: true,
-      flex: 1,
-      renderCell: (p: any) => (
-        <div className="flex justify-center items-center h-full w-full">
-          <h1 className="font-semibold text-slate-900">{p.value}</h1>
-        </div>
-      ),
-    },
-    {
-      field: 'image',
-      headerName: 'صورة',
-      width: 120,
-      sortable: false,
-      filterable: false,
-      disableColumnMenu: true,
-      headerAlign: 'center',
-      align: 'center',
-      renderCell: (p: any) =>
-        
-        (
-        <div className="flex justify-center items-center h-full w-full">
-          <img
-            src={`${p.value}`}
-            alt={p.row.title}
-            className="w-20 h-20 object-cover rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow"
-          />
-        </div>
-      ),
-    },
-
-    {
-      field: "categories",
-      headerName: "التصنيفات",
-      headerAlign: "center",
-      align: "center",
-      disableColumnMenu: true,
-       sortable: false,
-      filterable: false,
-      renderCell: (p: any) => (
-        <div className="w-full h-full flex items-center justify-center">
-          <button
-            title="عرض التصنيفات"
-            onClick={() => {
-              setData(prepareCategoryRows([p.row]))
-              setViewMode("categories")
-              setInvestorsParent(null)
-              setCurrent(1)
-            }}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-indigo-50 transition-colors"
-          >
-            <span className="text-sm font-medium text-indigo-600 py-1 px-6 bg-indigo-100 rounded-3xl">
-              مشاهدة <FaEye size={16} className="text-indigo-600 m-auto" />
-            </span>
-          </button>
-        </div>
-      ),
-    },
-
-  
-    {
-      field: "investors",
-      headerName: "المستثمرين",
-      headerAlign: "center",
-       sortable: false,
-      filterable: false,
-      align: "center",
-      disableColumnMenu: true,
-      renderCell: (p: any) => {
-        return (
-          <div className="w-full h-full flex items-center justify-center">
-            <button
-              title="عرض المستثمرين داخل نفس الجدول"
-              onClick={() => showInvestorsOf(p.row)}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-indigo-50 transition-colors"
-            >
-            <span className="text-sm font-medium text-indigo-600 py-1 px-6 bg-indigo-100 rounded-3xl">
-              مشاهدة <FaEye size={16} className="text-indigo-600 m-auto" />
-            </span>
-            </button>
-          </div>
-        )
-      },
-    },
-
-    {
-      field: "actions",
-      headerName: "الإجراءات",
-      width: 160,
-      headerAlign: "center",
-      align: "center",
-       sortable: false,
-      filterable: false,
-       disableColumnMenu: true,
-      renderCell: (p: any) => (
-        <div className="w-full h-full flex items-center justify-center gap-2">
-          <button
-            onClick={() => {
-              setId(p.id)
-              setOpenDelete(true)
-            }}
-            className="p-2 rounded-lg hover:bg-red-50 transition-colors"
-            title="حذف"
-          >
-            <MdDelete size={20} className="text-red-700" />
-          </button>
-          <Link to={`/dashboard/addChance/${p.id}`} className="p-2 text-[#DFC96D] hover:bg-blue-50 rounded-lg transition-colors" title="تعديل">
-                    <FaEdit size={20} />
-                  </Link>
-                
-        </div>
-      ),
-    },
-  ]
+const allColumns: GridColDef[] = [
+  {
+    field: "name",
+    headerName: "الاسم",
+    headerAlign: "center",
+    align: "center",
+    sortable: false,
+    filterable: false,
+    disableColumnMenu: true,
+    flex: 1,
+    renderCell: (p: any) => (
+      <div className="flex justify-center items-center h-full w-full">
+        <h1 className="font-semibold text-slate-900 hover:text-indigo-600 transition-colors truncate">
+          {p.value}
+        </h1>
+      </div>
+    ),
+  },
+  {
+    field: "type",
+    headerName: "النوع",
+    headerAlign: "center",
+    align: "center",
+    sortable: false,
+    filterable: false,
+    disableColumnMenu: true,
+    flex: 1,
+    renderCell: (p: any) => (
+      <div className="flex justify-center items-center h-full w-full">
+        <span className="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium">
+          {p.value}
+        </span>
+      </div>
+    ),
+  },
+  {
+    field: "price",
+    headerName: "السعر",
+    headerAlign: "center",
+    align: "center",
+    sortable: false,
+    filterable: false,
+    disableColumnMenu: true,
+    flex: 1,
+    renderCell: (p: any) => (
+      <div className="flex justify-center items-center h-full w-full">
+        <h1 className="font-semibold text-slate-900">{p.value}</h1>
+      </div>
+    ),
+  },
+  {
+    field: "image",
+    headerName: "صورة",
+    width: 120,
+    sortable: false,
+    filterable: false,
+    disableColumnMenu: true,
+    headerAlign: "center",
+    align: "center",
+    renderCell: (p: any) => (
+      <div className="flex justify-center items-center h-full w-full">
+        <img
+          src={p.value}
+          alt={p.row.title}
+          className="w-20 h-20 object-cover rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow"
+        />
+      </div>
+    ),
+  },
+  {
+    field: "categories",
+    headerName: "التصنيفات",
+    headerAlign: "center",
+    align: "center",
+    disableColumnMenu: true,
+    sortable: false,
+    filterable: false,
+    renderCell: (p: any) => (
+      <div className="w-full h-full flex items-center justify-center">
+        <button
+          title="عرض التصنيفات"
+          onClick={() => {
+            setData(prepareCategoryRows([p.row]));
+            setViewMode("categories");
+            setInvestorsParent(null);
+            setCurrent(1);
+          }}
+          className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-indigo-50 transition-colors"
+        >
+          <span className="text-sm font-medium text-indigo-600 py-1 px-6 bg-indigo-100 rounded-3xl">
+            مشاهدة <FaEye size={16} className="text-indigo-600 m-auto" />
+          </span>
+        </button>
+      </div>
+    ),
+  },
+  {
+    field: "investors",
+    headerName: "المستثمرين",
+    headerAlign: "center",
+    sortable: false,
+    filterable: false,
+    align: "center",
+    disableColumnMenu: true,
+    renderCell: (p: any) => (
+      <div className="w-full h-full flex items-center justify-center">
+        <button
+          title="عرض المستثمرين داخل نفس الجدول"
+          onClick={() => showInvestorsOf(p.row)}
+          className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-indigo-50 transition-colors"
+        >
+          <span className="text-sm font-medium text-indigo-600 py-1 px-6 bg-indigo-100 rounded-3xl">
+            مشاهدة <FaEye size={16} className="text-indigo-600 m-auto" />
+          </span>
+        </button>
+      </div>
+    ),
+  },
+  {
+    field: "actions",
+    headerName: "الإجراءات",
+    width: 160,
+    headerAlign: "center",
+    align: "center",
+    sortable: false,
+    filterable: false,
+    disableColumnMenu: true,
+    renderCell: (p: any) => (
+      <div className="w-full h-full flex items-center justify-center gap-2">
+        <button
+          onClick={() => {
+            setId(p.id);
+            setOpenDelete(true);
+          }}
+          className="p-2 rounded-lg hover:bg-red-50 transition-colors"
+          title="حذف"
+        >
+          <MdDelete size={20} className="text-red-700" />
+        </button>
+        <Link
+          to={`/dashboard/addChance/${p.id}`}
+          className="p-2 text-[#DFC96D] hover:bg-blue-50 rounded-lg transition-colors"
+          title="تعديل"
+        >
+          <FaEdit size={20} />
+        </Link>
+      </div>
+    ),
+  },
+];
 
   
  
