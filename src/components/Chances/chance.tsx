@@ -694,7 +694,7 @@ const handleConfirmDelete = async () => {
 
           <Paper className="rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
             <div className="overflow-x-auto w-full">
-              <div className="min-w-[1000px]">
+              <div className="min-w-[800px]">
 
                
                 
