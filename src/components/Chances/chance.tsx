@@ -693,15 +693,15 @@ const handleConfirmDelete = async () => {
           </div>
 
           <Paper className="rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
-            <div className="w-full overflow-x-auto">
-              <div className="min-w-[760px]">
+            <div className="overflow-x-auto w-full">
+              <div className="min-w-[1000px]">
 
                
                 
 
               
 
-                  </div>
+                 
                   
                     {currentData.length === 0 ? (
                   <div className="p-12 text-center">
@@ -743,7 +743,7 @@ const handleConfirmDelete = async () => {
               </>
                 )}
               </div>
-           
+            </div>
             {currentData.length > 0 && (
               <div className="flex items-center justify-between p-6 border-t border-slate-200 bg-slate-50">
                 <div className="flex items-center gap-3">
