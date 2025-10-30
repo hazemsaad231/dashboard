@@ -167,9 +167,9 @@ const prepareAllRows = (items: any[]) => {
        sortable: false,
       filterable: false,
        disableColumnMenu: true,
-      flex: 1,
+      flex: 1.2,
       renderCell: (p: any) => (
-        <div className="flex justify-center items-center h-full w-full">
+        <div className="flex justify-center items-center h-full w-full px-4">
           <h1 className="font-semibold text-slate-900 hover:text-indigo-600 transition-colors truncate">{p.value}</h1>
         </div>
       ),
@@ -309,6 +309,12 @@ const prepareAllRows = (items: any[]) => {
       ),
     },
   ]
+
+  
+ 
+
+ 
+
 
   const categoryColumns: GridColDef[] = [
      
@@ -694,19 +700,22 @@ const handleConfirmDelete = async () => {
                
                 
 
-                {currentData.length === 0 ? (
+              
+
+                  </div>
+                  
+                    {currentData.length === 0 ? (
                   <div className="p-12 text-center">
                     <div className="text-6xl mb-4">📭</div>
-                    <h3 className="text-xl font-semibold text-slate-900 mb-2">لا توجد بيانات</h3>
+                    <h3 className="text-2xl font-semibold text-slate-900 mb-2">لا توجد بيانات</h3>
                          {viewMode !== "all" && (
                    <button
                     onClick={() => switchView("all")}
                     className="bg-[#2d2265] text-white px-2 py-2.5 rounded-lg font-medium transition-all"
                   >
-                  عوده للكل
+                 عوده
                   </button>
                 )}
-
                   </div>
                 ) : (
                    <>
@@ -735,7 +744,6 @@ const handleConfirmDelete = async () => {
               </>
                 )}
               </div>
-            </div>
            
             {currentData.length > 0 && (
               <div className="flex items-center justify-between p-6 border-t border-slate-200 bg-slate-50">
@@ -762,7 +770,7 @@ const handleConfirmDelete = async () => {
                     onClick={() => switchView("all")}
                     className="bg-[#2d2265] text-white px-2 py-2.5 rounded-lg font-medium transition-all"
                   >
-                  عوده للكل
+                  عوده
                   </button>
                 )}
 

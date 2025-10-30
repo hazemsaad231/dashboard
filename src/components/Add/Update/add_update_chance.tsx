@@ -324,4 +324,3 @@ console.log('existingGallery',existingGallery)
 };
 
 export default Add_Update_Chance;
-

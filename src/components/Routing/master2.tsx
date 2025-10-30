@@ -10,7 +10,6 @@ const Master2 = ()=>{
             </div>
 
             <div>
-            {/* <Side /> */}
             <Outlet />
             </div>
         </div>

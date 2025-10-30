@@ -14,6 +14,7 @@ import Chances from './components/Chances/chance'
 import Add_Update_Chance from './components/Add/Update/add_update_chance'
 import Category from './components/Categories/category'
 import  AddCategory  from './components/AddCategories/addCategory'
+import Jops from './components/jops/jops'
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
         {path: "services/:resource", element: <Services/>},
         {path: "blogs/:resource", element: <Blogs/>},
         {path: "chances", element: <Chances/>},
+        {path: "jops", element: <Jops/>},
         {path: "category", element: <Category/>},
         {path: "addUser/:resource", element: <AddUser/>},
         {path: "addUser/:resource/:id", element: <AddUser/>},
