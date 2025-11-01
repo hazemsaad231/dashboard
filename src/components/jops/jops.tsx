@@ -179,7 +179,7 @@ export default function Applicants() {
   ];
 
   return (
-    <div className="z-0 lg:mr-52 py-20 px-3 md:px-6 lg:px-10 bg-gradient-to-b from-slate-50 to-slate-100">
+    <div className="z-0 lg:mr-52 py-20 p-4 md:p-8 bg-gradient-to-b from-slate-50 to-slate-100">
       {loading ? (
         <Load />
       ) : (

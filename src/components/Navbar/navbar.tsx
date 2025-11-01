@@ -52,7 +52,7 @@ const Navbar = () => {
             <p className="text-xs text-slate-500 mt-1">مدير النظام</p>
           </div>
 
-          <ul className="flex flex-col justify-center gap-3">
+          <ul className="flex flex-col justify-center gap-2">
             {navItems.map((item) => {
               const Icon = item.icon
               return (
@@ -60,7 +60,7 @@ const Navbar = () => {
                   <Link
                     to={item.path}
                     onClick={() => handleNavClick(item.id)}
-                    className={`flex items-center gap-3 p-2 rounded-lg cursor-pointer transition-all duration-300 ${
+                    className={`flex items-center gap-2 p-2 rounded-lg cursor-pointer transition-all duration-300 ${
                       activeItem === item.id
                         ? "bg-[#42309f] text-white shadow-md scale-105"
                         : "hover:bg-slate-200 text-slate-700"
@@ -74,7 +74,7 @@ const Navbar = () => {
             })}
           </ul>
 
-          <div className="absolute bottom-4 left-2 w-full pt-4 border-t border-slate-200">
+          <div className="absolute bottom-1 left-2 w-full pt-3 border-t border-slate-200">
             <Close />
           </div>
 
@@ -88,15 +88,15 @@ const Navbar = () => {
          `
         }
       >
-        <div className="flex flex-col h-full p-6">
+        <div className="flex flex-col h-full p-2">
           <button
             onClick={toggleNavbar}
-            className="absolute top-4 right-4 text-white hover:bg-[#332673] p-2 rounded-lg transition-colors duration-200"
+            className="absolute top-1 right-2 text-white hover:bg-[#332673] p-2 rounded-lg transition-colors duration-200"
           >
             ✖
           </button>
 
-          <div className="text-center mt-12 mb-8">
+          <div className="text-center mt-8 mb-8">
             <div className="w-28 h-28 mx-auto mb-3 rounded-full bg-white p-1 shadow-lg">
               <div className="w-full h-full rounded-full bg-slate-200 flex items-center justify-center">
                 <a href="https://tadbeer-nine.vercel.app">
@@ -108,7 +108,7 @@ const Navbar = () => {
             <p className="text-blue-100 text-sm mt-1">مدير النظام</p>
           </div>
 
-          <ul className="flex flex-col gap-2 flex-1">
+          <ul className="flex flex-col gap-1 flex-1">
             {navItems.map((item) => {
               const Icon = item.icon
               return (

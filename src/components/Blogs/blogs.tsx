@@ -187,7 +187,7 @@ console.log('rows:', currentData.map((it, i) => ({
   return (
     <>
 
-      <div className="z-0 lg:mr-52  py-20 p-2 md:p-4 lg:p-8 bg-gradient-to-b from-slate-50 to-slate-100">
+      <div className="z-0 lg:mr-52 py-20 p-2 md:p-4 lg:p-8 bg-gradient-to-b from-slate-50 to-slate-100">
         {loading ? (
           <Load />
         ) : (
@@ -218,9 +218,6 @@ console.log('rows:', currentData.map((it, i) => ({
               </div>
 
               <div className="flex flex-col md:flex-row justify-between items-center gap-3 pt-4 border-t border-slate-200">
-                {/* <div>
-                  <p className="text-sm text-slate-600">عرض {Math.min(lastIndex, data.length)} من أصل {data.length} خدمة</p>
-                </div> */}
 
                 <div className="flex items-center gap-2">
                   <div className="flex items-center gap-2">

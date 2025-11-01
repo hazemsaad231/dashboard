@@ -27,7 +27,7 @@ export default function Home() {
 
   return (
     <>
-      <div className=" z-0 lg:mr-52 h-full py-20 p-4 bg-gradient-to-b from-slate-50 to-slate-100">
+      <div className=" z-0 lg:mr-52 h-full py-20 p-4 md:p-8 bg-gradient-to-b from-slate-50 to-slate-100">
         <h1 className="text-3xl md:text-4xl  font-bold mb-6 text-foreground">نظرة عامة</h1>
 
         {/* Cards */}
