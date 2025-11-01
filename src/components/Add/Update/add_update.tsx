@@ -65,7 +65,7 @@ const Add_Update: React.FC = () => {
         // تحديث
         fd.append("_method", "PUT");
         await axios.post(`${api}/services/${id}`, fd);
-        toast.success("تم تحديث العنصر بنجاح");
+        toast.success("تم تحديث العنصر بنجاح", { id: "unique-id" });
       } else {
         // إضافة جديد
         await axios.post(`${api}/services`, fd);
@@ -81,7 +81,9 @@ const Add_Update: React.FC = () => {
           err.response.data.message || JSON.stringify(err.response.data);
         toast.error("خطأ من السيرفر: " + serverMsg);
       } else {
-        toast.error("حدث خطأ أثناء العملية.");
+        toast.error("حدث خطأ أثناء العملية.", {
+          id: "unique-id"
+        });
       }
     }
   };

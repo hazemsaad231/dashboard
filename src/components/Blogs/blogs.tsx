@@ -103,7 +103,7 @@ export default function Blogs() {
       });
       setAll(prev => prev.filter(it => String(it.id ?? it._id) !== String(sel)));
       setData(prev => prev.filter(it => String(it.id ?? it._id) !== String(sel)));
-      toast.success('تم الحذف بنجاح')
+      toast.success('تم حذف المدونه بنجاح', { id: 'delete' });
       closeDelete();
     } catch (err) {
       console.error('delete error:', err);

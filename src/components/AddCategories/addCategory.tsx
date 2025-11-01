@@ -79,7 +79,7 @@ const AddUpdateCategory: React.FC = () => {
         await axios.post(`${api}/categories`, fd, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
-        toast.success("تم إضافة التصنيف بنجاح");
+        toast.success("تم إضافة التصنيف بنجاح", { id: "unique-id" });
       }
 
       navigate("/dashboard/category");
@@ -89,7 +89,7 @@ const AddUpdateCategory: React.FC = () => {
         const serverMsg = err.response.data.message || JSON.stringify(err.response.data);
         toast.error("خطأ من السيرفر: " + serverMsg);
       } else {
-        toast.error("حدث خطأ أثناء العملية.");
+        toast.error("حدث خطأ أثناء العملية.", { id: "unique-id" });
       }
     }
   };

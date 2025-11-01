@@ -156,26 +156,7 @@ export default function Applicants() {
         );
       },
     },
-    // {
-    //   field: "actions",
-    //   headerName: "الإجراءات",
-    //   flex: 0.5,
-    //   minWidth: 120,
-    //   headerAlign: "center",
-    //   align: "center",
-    //      sortable: false,
-    //   filterable: false,
-    //   disableColumnMenu: true,
-    //   renderCell: (p: any) => (
-    //     <button
-    //       onClick={() => openDelete(p.id)}
-    //       className="p-2 text-red-700 text-center hover:bg-red-50 rounded-lg transition-colors"
-    //       title="حذف"
-    //     >
-    //       <MdDelete size={20} />
-    //     </button>
-    //   ),
-    // },
+   
   ];
 
   return (

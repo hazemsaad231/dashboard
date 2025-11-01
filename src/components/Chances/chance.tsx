@@ -203,6 +203,7 @@ export default function Chances() {
   }
 
   const doDelete = async (realId: string | number) => {
+
     try {
       await axios.delete(`https://tadbeer.wj.edu.sa/public/api/invests/${realId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -218,11 +219,11 @@ export default function Chances() {
       })
 
       setCurrent(1)
-      toast.success("تم الحذف بنجاح")
+      toast.success("تم الحذف بنجاح", { id: 'delete' })
       cancelDelete()
     } catch (err) {
       console.error("delete error:", err)
-      toast.error("حدث خطأ أثناء الحذف")
+      // toast.error("حدث خطأ أثناء الحذف", { id: 'fail' })
     }
   }
 
@@ -244,7 +245,7 @@ export default function Chances() {
           return newAll
         })
 
-        toast.success("تم حذف المستثمر بنجاح")
+        toast.success("تم حذف المستثمر بنجاح", { id: "delete" })
         cancelDelete()
       } catch (err) {
         console.error("delete investor error:", err)

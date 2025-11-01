@@ -24,7 +24,9 @@ const onSubmait=async(data:any)=>{
         console.log('token',response.data.data.token)
         localStorage.setItem('token',response.data.data.token);
         localStorage.setItem('admin',response.data.data.admin);
-        toast.success('تم تسجيل الدخول بنجاح');
+        toast.success('تم تسجيل الدخول بنجاح',{
+            id:'unique-id'
+        });
          console.log('id',response.data.data.admin.id)
         localStorage.setItem('id',response.data.data.admin.id);
         navigate('/dashboard');

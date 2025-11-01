@@ -42,8 +42,6 @@ const Add_Update_Chance: React.FC = () => {
   const [removedGallery, setRemovedGallery] = useState<(number | string)[]>([]);
   const [newImages, setNewImages] = useState<File[]>([]);
   const [previewNewImages, setPreviewNewImages] = useState<string[]>([]);
-console.log('removedGallery',removedGallery)
-console.log('existingGallery',existingGallery)
   // --- التصنيفات ---
   const [allCategories, setAllCategories] = useState<Category[]>([]);
   const [loadingCategories, setLoadingCategories] = useState<boolean>(true);
@@ -58,7 +56,6 @@ console.log('existingGallery',existingGallery)
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
         const item = resp.data.data ?? resp.data;
-
         setValue("title", item.title ?? item.name ?? "");
         setValue("type", item.type ?? "");
         setValue("price", item.price ?? "");
@@ -167,9 +164,8 @@ console.log('existingGallery',existingGallery)
       newImages.forEach((file) => fd.append("images[]", file));
 
       // الصور الممسوحة
-      if (removedGallery.length > 0) fd.append("", JSON.stringify(removedGallery));
-
-    console.log(removedGallery);
+      if (removedGallery.length > 0) fd.append("removed_gallery", JSON.stringify(removedGallery));
+      console.log("removedGallery", removedGallery);
 
 
       const url = id ? `${api}/invests/${id}` : `${api}/invests`;
@@ -181,7 +177,9 @@ console.log('existingGallery',existingGallery)
 
       const returned = resp?.data?.data ?? resp?.data;
       console.log("returned", returned);
-      toast.success(id ? "تم تحديث العنصر بنجاح" : "تم إضافة العنصر بنجاح");
+      toast.success(id ? "تم تحديث العنصر بنجاح" : "تم إضافة العنصر بنجاح" ,{
+        id:'unique-id'
+      });
     
 
       // تحديث المعرض بعد الحفظ
@@ -206,7 +204,7 @@ console.log('existingGallery',existingGallery)
     } catch (err: any) {
       console.error("submit error:", err);
       const serverMsg = err?.response?.data?.message || JSON.stringify(err?.response?.data);
-      toast.error("حدث خطأ: " + serverMsg);
+      toast.error("حدث خطأ: " + serverMsg , {id:'unique-id'});
     }
   };
 
