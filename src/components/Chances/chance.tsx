@@ -342,11 +342,11 @@ export default function Chances() {
       { field: "name", headerName: "اسم المستثمر", width: 220, headerAlign: "center", align: "center", sortable: false, filterable: false, disableColumnMenu: true, renderCell: (p: any) => <div className="truncate font-medium text-slate-900">{p.value}</div> },
       { field: "phone", headerName: "رقم الهاتف", width: 200, headerAlign: "center", align: "center", sortable: false, filterable: false, disableColumnMenu: true, renderCell: (p: any) => <div className="truncate text-slate-700">{p.value}</div> },
       { field: "number_of_arrows", headerName: "عدد الأسهم", width: 120, headerAlign: "center", align: "center", sortable: false, filterable: false, disableColumnMenu: true, renderCell: (p: any) => <span className="font-semibold text-indigo-600">{p.value}</span> },
-      { field: "notes", headerName: "الوصف", flex: 1, minWidth: 340, headerAlign: "center", align: "left", sortable: false, filterable: false, disableColumnMenu: true, renderCell: (p: any) => {
+      { field: "notes", headerName: "الملاحظات", flex: 1, minWidth: 340, headerAlign: "center", align: "left", sortable: false, filterable: false, disableColumnMenu: true, renderCell: (p: any) => {
           const val = p.value || "—"
           return (
             <div className="w-full">
-              <div className="whitespace-normal text-center break-words text-slate-600" style={{ maxHeight: 96, overflow: "auto", paddingRight: 8, lineHeight: 1.4, fontSize: 14 }} title={val}>{val}</div>
+              <div className="whitespace-normal text-center break-words text-slate-600" style={{ maxHeight: 96, overflow: "hidden", paddingRight: 8, lineHeight: 1.4, fontSize: 14 }} title={val}>{val}</div>
               <button onClick={(e) => { e.stopPropagation(); window.dispatchEvent(new CustomEvent("openFullDescription", { detail: { text: val } })) }} className="mt-1 text-xs px-2 py-1 rounded-md bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition-colors">عرض كامل</button>
             </div>
           )
@@ -430,8 +430,8 @@ export default function Chances() {
                     <MdDelete className="h-6 w-6 text-red-600" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-slate-900">حذف الفرصه</h3>
-                    <p className="mt-2 text-sm text-slate-600">هل أنت متأكد من رغبتك في حذف هذه الفرصة ؟</p>
+                    <h3 className="text-lg font-semibold text-slate-900">حذف</h3>
+                    <p className="mt-2 text-sm text-slate-600">هل أنت متأكد من رغبتك في حذف هذه البيانات ؟</p>
                   </div>
                 </div>
                 <div className="flex gap-3 mt-6 justify-start items-center">
