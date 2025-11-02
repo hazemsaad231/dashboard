@@ -142,7 +142,7 @@ const AddUpdateCategory: React.FC = () => {
             <input
               {...register("name", { required: "اسم التصنيف مطلوب" })}
               placeholder="أدخل اسم التصنيف"
-              className="border p-3 w-full rounded-lg"
+              className="border p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
             />
             {errors.name && (
               <p className="text-red-500 text-sm mt-1">⚠️ {errors.name.message as string}</p>
@@ -150,17 +150,32 @@ const AddUpdateCategory: React.FC = () => {
           </div>
 
           {/* 📄 الوصف */}
-          <div className="mb-4">
-            <label className="block font-semibold mb-2">📄 الوصف</label>
-            <textarea
-              {...register("description", { required: "الوصف مطلوب" })}
-              placeholder="أدخل وصف للتصنيف"
-              className="border p-3 w-full h-[24rem] md:h-60 rounded-lg"
-            />
-            {errors.description && (
-              <p className="text-red-500 text-sm mt-1">⚠️ {errors.description.message as string}</p>
-            )}
-          </div>
+<div className="mb-6 relative">
+  <label className="block font-semibold mb-2 text-gray-700">📄 الوصف</label>
+
+  <div className="relative">
+    <textarea
+      {...register("description", { required: "الوصف مطلوب" })}
+      placeholder=" "
+      maxLength={500}
+      className="peer border border-gray-300 focus:border-blue-400 outline-none p-3 w-full h-[20rem] md:h-60 rounded-lg transition-all placeholder-transparent resize-none"
+    />
+    {/* Placeholder متحرك */}
+    <span className="absolute left-3 top-3 text-gray-400 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-sm peer-focus:-top-3 peer-focus:text-xs peer-focus:text-blue-500 bg-white px-1">
+      أدخل وصف للتصنيف
+    </span>
+    {/* عداد الأحرف */}
+    <p className="absolute bottom-2 right-3 text-xs text-gray-400">
+      {watch("description")?.length || 0}/500
+    </p>
+  </div>
+
+  {errors.description && (
+    <p className="text-red-500 text-sm mt-1">
+      ⚠️ {errors.description.message as string}
+    </p>
+  )}
+</div>
 
           <div className="flex justify-center gap-4 mt-6">
             <button
