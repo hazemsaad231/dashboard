@@ -4,6 +4,34 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { api } from "../Api/api";
 import toast from "react-hot-toast";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+
+
+const modules = {
+  toolbar: [
+    [{ header: [1, 2, false] }],
+    ["bold", "italic", "underline", "strike"],
+    [{ align: [] }],
+    [{ list: "ordered" }, { list: "bullet" }],
+    ["link", "image"],
+    ["clean"],
+  ],
+};
+
+const formats = [
+  "header",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "align",
+  "list",
+  "bullet",
+  "link",
+  "image",
+];
+
 
 type FormValues = {
   name: string;
@@ -148,27 +176,19 @@ const AddUpdateCategory: React.FC = () => {
               <p className="text-red-500 text-sm mt-1">⚠️ {errors.name.message as string}</p>
             )}
           </div>
-
-          {/* 📄 الوصف */}
+{/* 📄 الوصف */}
 <div className="mb-6 relative">
   <label className="block font-semibold mb-2 text-gray-700">📄 الوصف</label>
 
-  <div className="relative">
-    <textarea
-      {...register("description", { required: "الوصف مطلوب" })}
-      placeholder=" "
-      maxLength={500}
-      className="peer border border-gray-300 focus:border-blue-400 outline-none p-3 w-full h-[20rem] md:h-60 rounded-lg transition-all placeholder-transparent resize-none"
-    />
-    {/* Placeholder متحرك */}
-    <span className="absolute left-3 top-3 text-gray-400 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-sm peer-focus:-top-3 peer-focus:text-xs peer-focus:text-blue-500 bg-white px-1">
-      أدخل وصف للتصنيف
-    </span>
-    {/* عداد الأحرف */}
-    <p className="absolute bottom-2 right-3 text-xs text-gray-400">
-      {watch("description")?.length || 0}/500
-    </p>
-  </div>
+  <ReactQuill
+    theme="snow"
+    value={watch("description") || ""}
+    onChange={(value) => setValue("description", value)}
+    modules={modules}
+    formats={formats}
+    className="bg-white rounded-lg border border-gray-300 rtl text-right"
+    placeholder="أدخل وصف التصنيف هنا..."
+  />
 
   {errors.description && (
     <p className="text-red-500 text-sm mt-1">
@@ -176,6 +196,8 @@ const AddUpdateCategory: React.FC = () => {
     </p>
   )}
 </div>
+
+
 
           <div className="flex justify-center gap-4 mt-6">
             <button

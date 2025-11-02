@@ -30,3 +30,17 @@ html {
   border-radius: 8px;
 }
 
+.ql-editor {
+  direction: rtl;
+  text-align: right;
+  font-size: 17px;
+  line-height: 1.7;
+  min-height: 14rem;
+  font-family: "Cairo", sans-serif;
+}
+.ql-toolbar button {
+  transform: scale(1.25);
+  margin: 0 4px;
+}
+.ql-toolbar.ql-snow { background: #f9fafb; border-radius: .5rem .5rem 0 0; border-color: #d1d5db; }
+.ql-container.ql-snow { border-radius: 0 0 .5rem .5rem; border-color: #d1d5db; }
