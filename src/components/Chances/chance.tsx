@@ -327,7 +327,9 @@ export default function Chances() {
           const val = p.value || "—"
           return (
             <div className="w-full">
-              <div className="whitespace-normal text-center break-words text-slate-600" style={{ maxHeight: 96, overflow: "auto", paddingRight: 8, lineHeight: 1.4, fontSize: 14 }} title={val}>{val}</div>
+              <div className="whitespace-normal text-center break-words text-slate-600" style={{ maxHeight: 96, overflow: "auto", paddingRight: 8, lineHeight: 1.4, fontSize: 14 }} title={val}
+                dangerouslySetInnerHTML={{ __html: val || "" }}>
+</div>
               <button onClick={(e) => { e.stopPropagation(); window.dispatchEvent(new CustomEvent("openFullDescription", { detail: { text: val } })) }} className="mt-1 text-xs px-2 py-1 rounded-md bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition-colors">عرض كامل</button>
             </div>
           )
