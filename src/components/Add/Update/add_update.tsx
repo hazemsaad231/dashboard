@@ -4,6 +4,9 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { api } from "../../Api/api";
 import toast from "react-hot-toast";
+import { modules , formats } from '../../TextEditor/editor';
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 type FormValues = {
   title: string;
@@ -20,6 +23,7 @@ const Add_Update: React.FC = () => {
     register,
     handleSubmit,
     setValue,
+    watch,
     reset,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
@@ -133,7 +137,7 @@ const Add_Update: React.FC = () => {
           </div>
 
           {/* 📄 وصف */}
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <label className="block font-semibold mb-2">📄 الوصف</label>
             <textarea
               {...register("description", { required: "الوصف مطلوب" })}
@@ -145,8 +149,27 @@ const Add_Update: React.FC = () => {
                 ⚠️ {errors.description.message}
               </p>
             )}
-          </div>
+          </div> */}
+{/* 📄 الوصف */}
+<div className="mb-6 relative">
+  <label className="block font-semibold mb-2 text-gray-700">📄 الوصف</label>
 
+  <ReactQuill
+    theme="snow"
+    value={watch("description") || ""}
+    onChange={(value) => setValue("description", value)}
+    modules={modules}
+    formats={formats}
+    className="bg-white rounded-lg border border-gray-300 rtl text-right"
+    placeholder="أدخل وصف التصنيف هنا..."
+  />
+
+  {errors.description && (
+    <p className="text-red-500 text-sm mt-1">
+      ⚠️ {errors.description.message as string}
+    </p>
+  )}
+</div>
           <div className="flex justify-center gap-4 mt-6">
             <button
               type="submit"

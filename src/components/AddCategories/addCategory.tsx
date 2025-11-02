@@ -6,31 +6,10 @@ import { api } from "../Api/api";
 import toast from "react-hot-toast";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { modules , formats } from "../TextEditor/editor";
 
 
-const modules = {
-  toolbar: [
-    [{ header: [1, 2, false] }],
-    ["bold", "italic", "underline", "strike"],
-    [{ align: [] }],
-    [{ list: "ordered" }, { list: "bullet" }],
-    ["link", "image"],
-    ["clean"],
-  ],
-};
 
-const formats = [
-  "header",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "align",
-  "list",
-  "bullet",
-  "link",
-  "image",
-];
 
 
 type FormValues = {
