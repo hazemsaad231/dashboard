@@ -32,7 +32,9 @@ const onSubmait=async(data:any)=>{
         navigate('/dashboard');
       
     } catch(error) {
-        toast.error('خطأ في تسجيل الدخول')
+        toast.error('خطأ في تسجيل الدخول',{
+            id:'unique-id'
+        })
         console.log(error)
     }
    
