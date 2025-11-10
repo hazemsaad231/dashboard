@@ -173,7 +173,6 @@ export default function Chances() {
     void fetchData()
   }, [fetchData])
 
-  // view switching helpers
   const switchView = useCallback(
     (mode: "all" | "categories" | "investors") => {
       setViewMode(mode)
