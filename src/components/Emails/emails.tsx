@@ -21,7 +21,7 @@ export default function Emails() {
 
   const [current, setCurrent] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [selectionModel, setSelectionModel] = useState<(string | number| null)[]>([]);
+  // const [selectionModel, setSelectionModel] = useState<(string | number| null)[]>([]);
 
   const lastIndex = current * itemsPerPage;
   const startIndex = lastIndex - itemsPerPage;
