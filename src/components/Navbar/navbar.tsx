@@ -3,6 +3,9 @@ import { TiThMenu } from "react-icons/ti";
 import { FaHouse} from "react-icons/fa6"
 import { GrServices } from "react-icons/gr"
 import { TbLogs } from "react-icons/tb"
+import { BiSolidCategory } from "react-icons/bi";
+import { TfiEmail } from "react-icons/tfi";
+import { PiReadCvLogoFill } from "react-icons/pi";
 import { FaBriefcase } from "react-icons/fa";
 import { Link } from "react-router-dom"
 import Close from "../Close/close";
@@ -24,9 +27,9 @@ const Navbar = () => {
     { id: "services", label: "الخدمات", icon: GrServices, path: "/dashboard/services/services" },
     { id: "blogs", label: "المدونة", icon: TbLogs, path: "/dashboard/blogs/blogs" },
     { id: "chances", label: 'الفرص الاستثمارية', icon: FaBriefcase, path: "/dashboard/chances" },
-    { id: "category", label: 'التصنيفات', icon: FaBriefcase, path: "/dashboard/category" },
-    { id: "jops", label: 'المتقدمين للوظائف', icon: FaBriefcase, path: "/dashboard/jops" },
-    { id: "email", label: 'النشره البريدية', icon: FaBriefcase, path: "/dashboard/email" },
+    { id: "category", label: 'التصنيفات', icon: BiSolidCategory, path: "/dashboard/category" },
+    { id: "jops", label: 'المتقدمين للوظائف', icon: PiReadCvLogoFill, path: "/dashboard/jops" },
+    { id: "email", label: 'النشره البريدية', icon: TfiEmail, path: "/dashboard/email" },
     // { id: "profile", label: "الملف الشخصي", icon: FaPerson, path: "/dashboard/profile" },
   ]
 
