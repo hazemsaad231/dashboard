@@ -26,6 +26,7 @@ const Navbar = () => {
     { id: "chances", label: 'الفرص الاستثمارية', icon: FaBriefcase, path: "/dashboard/chances" },
     { id: "category", label: 'التصنيفات', icon: FaBriefcase, path: "/dashboard/category" },
     { id: "jops", label: 'المتقدمين للوظائف', icon: FaBriefcase, path: "/dashboard/jops" },
+    { id: "email", label: 'النشره البريدية', icon: FaBriefcase, path: "/dashboard/email" },
     // { id: "profile", label: "الملف الشخصي", icon: FaPerson, path: "/dashboard/profile" },
   ]
 
@@ -39,20 +40,24 @@ const Navbar = () => {
 
       {/* Desktop Sidebar */}
       <div className="fixed z-10 min-h-screen w-52 bg-gradient-to-b from-slate-50 to-slate-100 border-l border-slate-200 p-5 text-slate-700 hidden sm:hidden md:hidden lg:block xl:block shadow-md">
-        <div className="flex flex-col items-center h-full ">
-          <div className="mb-8 text-center">
-                <div className="w-28 h-28 mx-auto mb-3 rounded-full bg-white p-1 shadow-lg">
-              <div className="w-full h-full rounded-full bg-slate-200 flex items-center justify-center">
+        <div className="flex flex-col items-center justify-evenly h-full ">
+          <div className="md:mb-4 lg:mb-12 xl:mb-20 mx-auto">
+                <div className="w-24 h-24 mb-3 rounded-full bg-white p-1 shadow-lg">
+              <div className="w-full h-full rounded-full bg-slate-200 flex justify-center items-center">
                 <a href="https://tadbeer-nine.vercel.app">
-                 <img src='/logo.png' alt="logo" className="w-20 h-20" />
+                 <img src='/logo.png' alt="logo" className="w-16 h-16" />
                  </a>
               </div>
-            </div>
-            <h3 className="font-bold text-lg text-slate-800">المسؤول</h3>
+                <div className="text-center mt-4">
+<h3 className="font-bold text-lg text-slate-800">المسؤول</h3>
             <p className="text-xs text-slate-500 mt-1">مدير النظام</p>
+            </div>
+            </div>
+          
+            
           </div>
 
-          <ul className="flex flex-col justify-center gap-2">
+          <ul className="flex flex-col justify-center gap-1">
             {navItems.map((item) => {
               const Icon = item.icon
               return (

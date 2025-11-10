@@ -15,6 +15,8 @@ import Add_Update_Chance from './components/Add/Update/add_update_chance'
 import Category from './components/Categories/category'
 import  AddCategory  from './components/AddCategories/addCategory'
 import Jops from './components/jops/jops'
+import Emails from './components/Emails/emails'
+import SendEmail from './components/SendMsg/send'
 
 
 function App() {
@@ -42,7 +44,10 @@ function App() {
         {path: "chances", element: <Chances/>},
         {path: "jops", element: <Jops/>},
         {path: "category", element: <Category/>},
+        {path: "email", element: <Emails/>},
         {path: "addUser/:resource", element: <AddUser/>},
+        {path: "sendEmail", element: <SendEmail/>},
+        {path: "sendEmail/:id", element: <SendEmail/>},
         {path: "addUser/:resource/:id", element: <AddUser/>},
         {path: "addChance", element: <Add_Update_Chance/>},
         {path: "addChance/:id", element: <Add_Update_Chance/>},

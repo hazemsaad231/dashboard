@@ -4,10 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 
-
-
-
-
 const Sign = ()=>{
 
 
@@ -21,7 +17,6 @@ const onSubmait=async(data:any)=>{
 
     try {
         const response = await axios.post('https://tadbeer.wj.edu.sa/public/api/admin/login',data)
-        console.log('token',response.data.data.token)
         localStorage.setItem('token',response.data.data.token);
         localStorage.setItem('admin',response.data.data.admin);
         toast.success('تم تسجيل الدخول بنجاح',{

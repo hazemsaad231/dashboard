@@ -187,7 +187,7 @@ console.log('rows:', currentData.map((it, i) => ({
   return (
     <>
 
-      <div className="z-0 lg:mr-52 py-20 p-2 md:p-4 lg:p-8 bg-gradient-to-b from-slate-50 to-slate-100">
+      <div className="z-0 lg:mr-52 py-16 px-2 md:px-4 lg:px-8 bg-gradient-to-b from-slate-50 to-slate-100">
         {loading ? (
           <Load />
         ) : (
