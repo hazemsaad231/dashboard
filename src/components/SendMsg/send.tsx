@@ -1,131 +1,3 @@
-// import { useForm } from "react-hook-form";
-// import Box from "@mui/material/Box";
-// import { Toaster, toast } from "react-hot-toast";
-// import axios from "axios";
-// import { api } from "../Api/api";
-// import { useParams } from "react-router-dom";
-
-// type FormValues = {
-//   subject: string;
-//   email: string;
-//   message: string;
-//   send_to_all_active?:boolean
-// };
-
-// export default function Contact() {
-//   const {
-//     register,
-//     handleSubmit,
-//     formState: { errors, isSubmitting },
-//     reset,
-//   } = useForm<FormValues>({
-//     defaultValues: {
-//       subject: "",
-//       email: "",
-//       message: "",
-//       send_to_all_active:true
-//     },
-//   });
-
-//   const { id } = useParams();
-
-//   console.log(id);
-
-//   const onSubmit = async (data: FormValues) => {
-//     try {
-//         if (id) {
-//            const res = await axios.post(`${api}/newsletter-subscribers/${id}/send-email`, data);
-//                 if (res?.data?.success) {
-//         toast.success("تم الارسال بنجاح");
-//         reset();
-//       } else {
-//         toast.error("حصل خطأ. حاول تاني");
-//       }
-//         }else{
-//           const res = await axios.post(`${api}/newsletter-subscribers/bulk/send-email`, data);
-//          if (res?.data?.success) {
-//         toast.success("تم الارسال بنجاح");
-//         reset();
-//       } else {
-//         toast.error("حصل خطأ. حاول تاني");
-//       }
-//         }
-     
-
- 
-//     } catch (err: any) {
-//       console.error("send error:", err);
-//       const serverMsg = err?.response?.data?.message;
-//       toast.error(serverMsg || "فشل الإرسال — شيك الكونسول");
-//     }
-//   };
-
-//   return (
-//     <>
-//       <Toaster />
-//       <div id="contact" className="px-8 pb-8">
-//         <div className="flex flex-col justify-center items-center gap-4">
-//           <div className="text-center w-full my-10">
-//           </div>
-
-//           <Box
-//             component="form"
-//             onSubmit={handleSubmit(onSubmit)}
-//             noValidate
-//             autoComplete="off"
-//             sx={{ width: "100%", maxWidth: 600 }}
-//             className="flex flex-col gap-4 bg-white p-6 rounded-lg shadow-md"
-//           >
-//             <div className="flex flex-col gap-4">
-
-              
-//           {/* 📝 عنوان */}
-//           <div className="mb-4">
-//             <label className="block font-semibold mb-2"> الاسم</label>
-//             <input
-//               {...register("subject", { required: "الاسم مطلوب" })}
-//               placeholder="أدخل العنوان"
-//               className="border p-3 w-full rounded-lg"
-//             />
-//             {errors.subject && (
-//               <p className="text-red-500 text-sm mt-1">
-//                 ⚠️ {errors.subject.message}
-//               </p>
-//             )}
-//           </div>
-
-//                   <div className="mb-4">
-//             <label className="block font-semibold mb-2"> الرسالة</label>
-//             <textarea
-//               {...register("message", {
-//                 required: "الرسالة مطلوبة",
-//                 minLength: { value: 5, message: "اكتب رسالة أطول شوية" },
-//               })}
-//               placeholder="أدخل الرسالة"
-//               className="border p-2 w-full h-40 rounded-lg"
-//             />
-//             {errors.message && (
-//               <p className="text-red-500 text-sm mt-1">
-//                 ⚠️ {errors.message.message}
-//               </p>
-//             )}
-//           </div>
-
-//               <button
-//                 type="submit"
-//                 disabled={isSubmitting}
-//                 className="bg-[#DFC96D] hover:bg-[#face1dcd] text-white py-2 px-4 rounded-full"
-//               >
-//                 {isSubmitting ? " ارسال..." : "ارسال"}
-//               </button>
-//             </div>
-//           </Box>
-//         </div>
-//       </div>
-//     </>
-//   );
-// }
-
 import { useForm } from "react-hook-form";
 import Box from "@mui/material/Box";
 import { Toaster, toast } from "react-hot-toast";
@@ -195,7 +67,7 @@ export default function Contact() {
   return (
     <>
       <Toaster />
-      <div id="contact" className="px-8 pb-8">
+      <div id="contact" className="px-2 md:px-4 lg:px-8 py-8">
         <div className="flex flex-col justify-center items-center h-screen gap-6">
        
 
@@ -207,11 +79,11 @@ export default function Contact() {
             sx={{ width: "100%", maxWidth: 600 }}
             className="flex flex-col gap-6 bg-white p-8 rounded-2xl shadow-lg border border-gray-200"
           >
-               <h2 className="text-2xl font-bold text-slate-900 mb-4">ارسال النشرة البريدية</h2>
+               <h2 className="text-2xl font-bold text-center text-slate-900 mb-4">النشرة البريدية</h2>
             {/* الاسم / العنوان */}
             <div className="flex flex-col gap-2 relative">
               <label className="font-semibold text-slate-700 flex items-center gap-2">
-                <AiOutlineMail size={20} /> العنوان
+                <AiOutlineMail size={20} /> الموضوع
               </label>
               <input
                 {...register("subject", { required: "الاسم مطلوب" })}
@@ -234,7 +106,7 @@ export default function Contact() {
                   minLength: { value: 5, message: "اكتب رسالة أطول شوية" },
                 })}
                 placeholder="أدخل الرسالة"
-                className="border border-gray-300 p-3 h-40 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-500 outline-none transition resize-none"
+                className="border border-gray-300 p-3 h-48 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-500 outline-none transition resize-none"
               />
               {errors.message && (
                 <p className="text-red-500 text-sm mt-1">⚠️ {errors.message.message}</p>

@@ -185,7 +185,7 @@ console.log('rows:', currentData.map((it, i) => ({
           <div>
             <div className="flex justify-between items-start md:items-center gap-4">
               <div className="flex flex-col gap-1">
-                <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl text-slate-900">التصنيفات</h1>
+                <h1 className="font-bold text-3xl md:text-4xl lg:text-4xl text-slate-900">التصنيفات</h1>
                 <p className="text-slate-500 text-sm">إدارة وتنظيم جميع التصنيفات المتاحة</p>
               </div>
               <Link to="/dashboard/addCategory">

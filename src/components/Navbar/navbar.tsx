@@ -41,7 +41,7 @@ const Navbar = () => {
       {/* Desktop Sidebar */}
       <div className="fixed z-10 min-h-screen w-52 bg-gradient-to-b from-slate-50 to-slate-100 border-l border-slate-200 p-5 text-slate-700 hidden sm:hidden md:hidden lg:block xl:block shadow-md">
         <div className="flex flex-col items-center justify-evenly h-full ">
-          <div className="md:mb-4 lg:mb-12 xl:mb-20 mx-auto">
+          <div className="md:mb-12 lg:mb-16 xl:mb-20 mx-auto">
                 <div className="w-24 h-24 mb-3 rounded-full bg-white p-1 shadow-lg">
               <div className="w-full h-full rounded-full bg-slate-200 flex justify-center items-center">
                 <a href="https://tadbeer-nine.vercel.app">

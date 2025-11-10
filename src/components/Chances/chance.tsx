@@ -235,7 +235,6 @@ export default function Chances() {
         await axios.delete(`https://tadbeer.wj.edu.sa/public/api/investors/${realId}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         })
-
         setAll((prevAll) => {
           const newAll = prevAll.map((invest) => ({
             ...invest,
@@ -244,7 +243,6 @@ export default function Chances() {
           setData(investorsParent ? prepareInvestorRows(newAll.filter(a => String(a.id) === String(investorsParent.id))) : prepareInvestorRows(newAll))
           return newAll
         })
-
         toast.success("تم حذف المستثمر بنجاح", { id: "delete" })
         cancelDelete()
       } catch (err) {
@@ -252,7 +250,6 @@ export default function Chances() {
         toast.error("حدث خطأ أثناء حذف المستثمر")
       }
     } else if (String(Id).startsWith("cat-")) {
-      // in this simplified refactor we treat category deletion as invest deletion placeholder
       doDelete(String(Id).replace("cat-", ""))
     } else {
       doDelete(Id)

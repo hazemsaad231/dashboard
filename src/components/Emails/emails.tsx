@@ -1,5 +1,3 @@
-
-
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom';
@@ -21,7 +19,6 @@ export default function Emails() {
 
   const [current, setCurrent] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  // const [selectionModel, setSelectionModel] = useState<(string | number| null)[]>([]);
 
   const lastIndex = current * itemsPerPage;
   const startIndex = lastIndex - itemsPerPage;
@@ -120,14 +117,14 @@ export default function Emails() {
         <div>
           <div className="flex justify-between items-start md:items-center gap-4">
             <div className="flex flex-col gap-1">
-              <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl text-slate-900">النشرة البريدية</h1>
+              <h1 className="font-bold text-3xl md:text-4xl lg:text-4xl text-slate-900">النشرة البريدية</h1>
               <p className="text-slate-500 text-sm">عرض جميع المشتركين في النشرة البريدية</p>
             </div>
           </div>
 
           <Paper className="p-6 mt-8 rounded-2xl shadow-lg border border-gray-200">
             {/* بحث */}
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-200">
+            <div className="flex flex-col md:flex-row items-start md:items-center md:justify-between gap-4 mb-6 pb-4 border-b border-slate-200">
               <div className="relative w-full md:w-80">
                 <CiSearch size={20} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
@@ -152,10 +149,6 @@ export default function Emails() {
                   rowHeight={70}
                   hideFooter
                   checkboxSelection
-                //   selectionModel={selectionModel}
-                //   onSelectionModelChange={(newSelection: any) => {
-                //     setSelectionModel(Array.isArray(newSelection) ? newSelection : [newSelection]);
-                //   }}
                   autoHeight
                   sx={{
                     '& .MuiDataGrid-columnHeader': { backgroundColor: '#f8fafc', borderBottom: '2px solid #e2e8f0', fontWeight: 600, color: '#334155' },
@@ -195,4 +188,3 @@ export default function Emails() {
     </div>
   );
 }
-
