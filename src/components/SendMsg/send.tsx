@@ -117,7 +117,7 @@ export default function Contact() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="bg-[#DFC96D] hover:bg-[#967f26cd] text-white py-3 px-6 rounded-full font-semibold transition-colors"
+              className="bg-[#47369d] hover:bg-[#241a56] text-white py-2 px-4 rounded-full font-semibold transition-colors"
             >
               {isSubmitting ? "ارسال..." : "ارسال"}
             </button>

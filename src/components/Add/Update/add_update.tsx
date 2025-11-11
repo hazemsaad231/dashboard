@@ -174,7 +174,7 @@ const Add_Update: React.FC = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="bg-blue-600 text-white px-6 py-2 rounded-lg disabled:opacity-50"
+              className="bg-[#47369d] hover:bg-[#241a56] text-white px-6 py-2 rounded-lg disabled:opacity-50"
             >
               {isSubmitting
                 ? "⏳ جاري المعالجة..."

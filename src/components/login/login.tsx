@@ -22,7 +22,6 @@ const onSubmait=async(data:any)=>{
         toast.success('تم تسجيل الدخول بنجاح',{
             id:'unique-id'
         });
-         console.log('id',response.data.data.admin.id)
         localStorage.setItem('id',response.data.data.admin.id);
         navigate('/dashboard');
       
@@ -51,7 +50,7 @@ const onSubmait=async(data:any)=>{
     />
 
 <h3 className="text-xl font-semibold">تسجيل الدخول</h3>
-<p className="text-md text-gray-500 font-extralight">من فضلك قم بتسجيل الدخول</p>
+<p className="text-md text-gray-500 font-normal">من فضلك قم بتسجيل الدخول</p>
 <div className="w-2/3 m-auto h-[2px] bg-[#dfc96d] mt-4"></div>
 </div>
 <form onSubmit={handleSubmit(onSubmait)}>

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import Load from '../Load/load';
-import 'react-toastify/dist/ReactToastify.css';
 import { CiSearch } from 'react-icons/ci';
 import { FaEdit} from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
@@ -14,6 +13,8 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import toast from 'react-hot-toast';
 
 export default function Services() {
+
+
   const { resource } = useParams();
   const location = useLocation();
 
@@ -215,9 +216,6 @@ renderCell: (p: any) => (
               </div>
 
               <div className="flex flex-col md:flex-row justify-between items-center gap-2 pt-4 border-t border-slate-200">
-                {/* <div>
-                  <p className="text-sm text-slate-600">عرض {Math.min(lastIndex, data.length)} من أصل {data.length} خدمة</p>
-                </div> */}
 
                 <div className="flex items-center gap-2">
                   <div className="flex items-center gap-2">

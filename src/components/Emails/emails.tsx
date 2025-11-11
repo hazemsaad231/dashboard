@@ -5,14 +5,16 @@ import Load from '../Load/load';
 import 'react-toastify/dist/ReactToastify.css';
 import { CiSearch } from 'react-icons/ci';
 import { api } from '../Api/api';
-import { DataGrid, GridCellParams } from '@mui/x-data-grid'; // إضافة GridCellParams
+import { DataGrid, GridCellParams } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import toast from 'react-hot-toast';
 import { BsFillSendCheckFill } from "react-icons/bs";
-import { MdOutlineMailOutline } from "react-icons/md"; // أيقونة إرسال جديدة
+import { MdOutlineMailOutline } from "react-icons/md";
 
 export default function Emails() {
+
+
   const location = useLocation();
   const navigate = useNavigate();
   const [all, setAll] = useState<any[]>([]);
@@ -76,14 +78,12 @@ export default function Emails() {
     _raw: it,
   }));
 
-  // دالة لتحديد/إلغاء تحديد كل الصفوف في الصفحة الحالية
   const handleSelectAll = (checked: boolean) => {
     const currentPageIds = currentData.map(it => it.id ?? it._id ?? '');
     if (checked) {
-      // إضافة كل IDs الصفحة الحالية إلى القائمة، مع التأكد من عدم التكرار
       setCheckedIds(prev => Array.from(new Set([...prev, ...currentPageIds])));
     } else {
-      // إزالة كل IDs الصفحة الحالية من القائمة
+    
       setCheckedIds(prev => prev.filter(id => !currentPageIds.includes(id)));
     }
   };
@@ -94,7 +94,7 @@ export default function Emails() {
   const columns: any = [
     {
       field: 'checkbox',
-      headerName: ( // تحسين رأس العمود لإتاحة التحديد الجماعي
+      headerName: ( 
         <input
           type="checkbox"
           checked={isAllChecked}
@@ -137,7 +137,7 @@ export default function Emails() {
       disableColumnMenu: true,
       renderCell: (p: any) => (
         <div className="w-full h-full flex items-center justify-start"> {/* تعديل المحاذاة */}
-          <span className="font-bold text-base text-slate-800 transition-colors truncate">
+          <span className="font-medium text-base truncate">
             {p.value}
           </span>
         </div>
@@ -233,14 +233,14 @@ export default function Emails() {
             </div>
 
             <div className="w-full overflow-x-auto">
-              <div className="min-w-[700px]"> {/* زيادة الـ min-width قليلاً */}
+              <div className="min-w-[700px]">
                 <DataGrid
                   rows={rows}
                   columns={columns}
-                  rowHeight={60} // تقليل ارتفاع الصف قليلاً
+                  rowHeight={60}
                   hideFooter
                   autoHeight
-                  getRowClassName={(params) => checkedIds.includes(params.row.id) ? 'bg-blue-50/70' : ''} // إضافة ستايل للصف المحدد
+                  getRowClassName={(params) => checkedIds.includes(params.row.id) ? 'bg-blue-50/70' : ''}
                   sx={{
                     '& .MuiDataGrid-columnHeader': { backgroundColor: '#f8fafc', borderBottom: '2px solid #e2e8f0', fontWeight: 700, color: '#334155' },
                     '& .MuiDataGrid-row': { borderBottom: '1px solid #e2e8f0', transition: 'background-color 0.2s', '&:hover': { backgroundColor: '#f0f4f8' } },

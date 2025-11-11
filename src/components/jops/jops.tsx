@@ -58,10 +58,6 @@ export default function Applicants() {
     setCurrent(1);
   };
 
-//   const openDelete = (id: any) => {
-//     setSel(id);
-//     setOpen(true);
-//   };
   const closeDelete = () => {
     setSel(null);
     setOpen(false);

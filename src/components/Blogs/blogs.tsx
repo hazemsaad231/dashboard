@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import Load from '../Load/load';
-import 'react-toastify/dist/ReactToastify.css';
 import { CiSearch } from 'react-icons/ci';
 import { FaEdit} from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
