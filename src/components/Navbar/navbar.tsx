@@ -23,13 +23,13 @@ const Navbar = () => {
   }
 
   const navItems = [
-    { id: "home", label: "الرئيسية", icon: FaHouse, path: "/dashboard" },
+        { id: "home", label: "الرئيسية", icon: FaHouse, path: "/dashboard" },
+    { id: "chances", label: 'الفرص الاستثمارية', icon: FaBriefcase, path: "/dashboard/chances" },
+     { id: "category", label: 'التصنيفات', icon: BiSolidCategory, path: "/dashboard/category" },
     { id: "services", label: "الخدمات", icon: GrServices, path: "/dashboard/services/services" },
     { id: "blogs", label: "المدونة", icon: TbLogs, path: "/dashboard/blogs/blogs" },
-    { id: "chances", label: 'الفرص الاستثمارية', icon: FaBriefcase, path: "/dashboard/chances" },
-    { id: "category", label: 'التصنيفات', icon: BiSolidCategory, path: "/dashboard/category" },
+        { id: "email", label: 'النشره البريدية', icon: TfiEmail, path: "/dashboard/email" },
     { id: "jops", label: 'المتقدمين للوظائف', icon: PiReadCvLogoFill, path: "/dashboard/jops" },
-    { id: "email", label: 'النشره البريدية', icon: TfiEmail, path: "/dashboard/email" },
     // { id: "profile", label: "الملف الشخصي", icon: FaPerson, path: "/dashboard/profile" },
   ]
 
@@ -42,23 +42,21 @@ const Navbar = () => {
       />
 
       {/* Desktop Sidebar */}
-      <div className="fixed z-10 min-h-screen w-52 bg-gradient-to-b from-slate-50 to-slate-100 border-l border-slate-200 p-5 text-slate-700 hidden sm:hidden md:hidden lg:block xl:block shadow-md">
-        <div className="flex flex-col items-center justify-evenly h-full ">
-          <div className="md:mb-12 lg:mb-16 xl:mb-20 mx-auto">
-                <div className="w-24 h-24 mb-3 rounded-full bg-white p-1 shadow-lg">
-              <div className="w-full h-full rounded-full bg-slate-200 flex justify-center items-center">
-                <a href="https://tadbeer-nine.vercel.app">
-                 <img src='/logo.png' alt="logo" className="w-16 h-16" />
-                 </a>
-              </div>
-                <div className="text-center mt-4">
-<h3 className="font-bold text-lg text-slate-800">المسؤول</h3>
-            <p className="text-xs text-slate-500 mt-1">مدير النظام</p>
-            </div>
-            </div>
-          
-            
-          </div>
+      <div className="fixed z-10 h-full w-52 bg-gradient-to-b from-slate-50 to-slate-100 border-l border-slate-200 p-2 text-slate-700 hidden sm:hidden md:hidden lg:block xl:block shadow-md">
+        <div className="flex flex-col items-center justify-evenly ">
+      
+               <div className="md:mb-4 lg:mb-6 xl:mb-12 border-b pb-4 border-slate-100 text-center">
+               <div className="w-24 h-24 mb-3 mx-auto rounded-full bg-slate-50 p-1 shadow-inner">
+                 <div className="w-full h-full rounded-full bg-white flex justify-center items-center">
+                   <a href="https://tadbeer-nine.vercel.app" target="_blank">
+                     {/* تأكد من وجود صورة اللوجو أو استخدم placeholder */}
+                     <img src='/logo.png' alt="logo" className="w-16 h-16" onError={(e) => (e.currentTarget.style.display = 'none')} />
+                   </a>
+                 </div>
+               </div>
+               <h3 className="font-extrabold text-xl text-slate-900 mt-2">المسؤول</h3>
+               <p className="text-sm text-[#42309f] font-semibold mt-1">مدير النظام</p>
+          </div>
 
           <ul className="flex flex-col justify-center gap-1">
             {navItems.map((item) => {
@@ -75,7 +73,7 @@ const Navbar = () => {
                     }`}
                   >
                     <Icon size={20} />
-                    <span className="text-lg font-medium">{item.label}</span>
+                    <span className="text-md font-medium">{item.label}</span>
                   </Link>
                 </li>
               )
@@ -145,3 +143,4 @@ const Navbar = () => {
 }
 
 export default Navbar
+

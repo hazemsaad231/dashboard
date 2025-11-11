@@ -86,7 +86,7 @@ export default function Contact() {
                 <AiOutlineMail size={20} /> الموضوع
               </label>
               <input
-                {...register("subject", { required: "الاسم مطلوب" })}
+                {...register("subject", { required: "الموضوع مطلوب" })}
                 placeholder="أدخل العنوان"
                 className="border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-500 outline-none transition"
               />
