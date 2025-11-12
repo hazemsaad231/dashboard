@@ -7,10 +7,10 @@ import { FaEdit, FaEye } from "react-icons/fa"
 import { MdDelete } from "react-icons/md"
 import { DataGrid, type GridColDef } from "@mui/x-data-grid"
 import Paper from "@mui/material/Paper"
-import { Dialog } from "@headlessui/react"
 import toast from "react-hot-toast"
 import { Link } from "react-router-dom"
 import PaginationControls from "../Shared/pagination"
+import ConfirmationDialog from "../Shared/ConfirmationDialog"
 
 
 
@@ -425,25 +425,14 @@ export default function Chances() {
          
           </Paper>
 
-          <Dialog open={openDelete} onClose={cancelDelete} className="relative z-50">
-            <div className="fixed inset-0 z-50 w-72 md:w-screen m-auto overflow-y-auto flex items-center justify-center">
-              <Dialog.Panel className="w-max rounded-xl bg-white px-6 py-8 shadow-2xl border border-slate-200 animate-in fade-in zoom-in-95 duration-200">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
-                    <MdDelete className="h-6 w-6 text-red-600" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-slate-900">حذف</h3>
-                    <p className="mt-2 text-sm text-slate-600">هل أنت متأكد من رغبتك في حذف هذه البيانات ؟</p>
-                  </div>
-                </div>
-                <div className="flex gap-3 mt-6 justify-start items-center">
-                  <button onClick={cancelDelete} className="px-4 py-2 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 font-medium transition-colors">إلغاء</button>
-                  <button onClick={handleConfirmDelete} className="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-medium transition-colors shadow-sm">حذف</button>
-                </div>
-              </Dialog.Panel>
-            </div>
-          </Dialog>
+          <ConfirmationDialog
+            open={openDelete}
+            onClose={cancelDelete}
+            onConfirm={handleConfirmDelete}
+            title="حذف"
+            confirmButtonText="حذف"
+            description="هل انت متاكد من رغبتك في حذف هذه البيانات؟"
+          />
 
         </>
       )}
