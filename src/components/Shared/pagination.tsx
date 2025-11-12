@@ -29,7 +29,7 @@ export default function PaginationControls({
   const rowsOptions = [5, 10, 15, 20];
 
   return (
-    <div className="flex flex-col md:flex-row justify-between items-center gap-3 pt-4 border-t border-slate-200 mt-4">
+    <div className="flex justify-between items-center gap-2 pt-4 border-t border-slate-200 mt-4">
       
       {/* التحكم في عدد الصفوف */}
       <div className="flex items-center gap-2">
