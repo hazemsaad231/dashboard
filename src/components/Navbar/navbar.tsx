@@ -102,8 +102,8 @@ const Navbar = () => {
             ✖
           </button>
 
-          <div className="text-center mt-8 mb-8">
-            <div className="w-28 h-28 mx-auto mb-3 rounded-full bg-white p-1 shadow-lg">
+          <div className="text-center mt-8 mb-6">
+            <div className="w-28 h-28 mx-auto mb-2 rounded-full bg-white p-1 shadow-lg">
               <div className="w-full h-full rounded-full bg-slate-200 flex items-center justify-center">
                 <a href="https://tadbeer-nine.vercel.app">
                  <img src='/logo.png' alt="logo" className="w-20 h-20" />
@@ -114,7 +114,7 @@ const Navbar = () => {
             <p className="text-blue-100 text-sm mt-1">مدير النظام</p>
           </div>
 
-          <ul className="flex flex-col gap-1 flex-1">
+          <ul className="flex flex-col gap-0 flex-1">
             {navItems.map((item) => {
               const Icon = item.icon
               return (
@@ -122,7 +122,7 @@ const Navbar = () => {
                   <Link
                     to={item.path}
                     onClick={() => handleNavClick(item.id)}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer transition-all duration-300 ${
+                    className={`flex items-center gap-1 px-2 py-3 rounded-lg cursor-pointer transition-all duration-300 ${
                       activeItem === item.id ? "bg-white text-[#241a56] shadow-md" : "hover:bg-[#241a56] text-white"
                     }`}
                   >
@@ -133,7 +133,7 @@ const Navbar = () => {
               )
             })}
           </ul>
-             <div className="absolute bottom-4 left-2 w-full pt-4 border-t border-slate-200">
+             <div className="absolute bottom-2 left-2 w-full pt-2 border-t border-slate-200">
             <Close />
           </div>
         </div>
