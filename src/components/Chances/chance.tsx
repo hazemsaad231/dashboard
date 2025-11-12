@@ -303,13 +303,13 @@ export default function Chances() {
 
   const allColumns: GridColDef[] = useMemo(
     () => [
-      { field: "name", headerName: "الاسم", headerAlign: "center", align: "center", sortable: false, filterable: false, disableColumnMenu: true, flex: 1, renderCell: (p: any) => <CellCenterText value={p.value} /> },
-      { field: "type", headerName: "النوع", headerAlign: "center", align: "center", sortable: false, filterable: false, disableColumnMenu: true, flex: 1, renderCell: (p: any) => <CellBadge value={p.value} /> },
-      { field: "price", headerName: "السعر", headerAlign: "center", align: "center", sortable: false, filterable: false, disableColumnMenu: true, flex: 1, renderCell: (p: any) => <CellCenterText value={p.value} /> },
+      { field: "name", flex: 1, headerName: "الاسم", headerAlign: "center", align: "center", sortable: false, filterable: false, disableColumnMenu: true, renderCell: (p: any) => <CellCenterText value={p.value} /> },
+      { field: "type", flex: 1, headerName: "النوع", headerAlign: "center", align: "center", sortable: false, filterable: false, disableColumnMenu: true, renderCell: (p: any) => <CellBadge value={p.value} /> },
+      { field: "price", flex: 1, headerName: "السعر", headerAlign: "center", align: "center", sortable: false, filterable: false, disableColumnMenu: true, renderCell: (p: any) => <CellCenterText value={p.value} /> },
       { field: "image", headerName: "صورة", width: 120, sortable: false, filterable: false, disableColumnMenu: true, headerAlign: "center", align: "center", renderCell: (p: any) => <CellImage value={p.value} row={p.row} /> },
       { field: "categories", headerName: "التصنيفات", headerAlign: "center", align: "center", disableColumnMenu: true, sortable: false, filterable: false, renderCell: (p: any) => <div className="w-full h-full flex items-center justify-center"><ViewButton onClick={() => { setData(prepareCategoryRows([p.row])); setViewMode("categories"); setInvestorsParent(null); setCurrent(1); }} /></div> },
       { field: "investors", headerName: "المستثمرين", headerAlign: "center", sortable: false, filterable: false, align: "center", disableColumnMenu: true, renderCell: (p: any) => <div className="w-full h-full flex items-center justify-center"><ViewButton onClick={() => showInvestorsOf(p.row)} /></div> },
-      { field: "actions", headerName: "الإجراءات", width: 160, headerAlign: "center", align: "center", sortable: false, filterable: false, disableColumnMenu: true, renderCell: (p: any) => <ActionsCell onDelete={onDeleteClick} id={p.id} /> },
+      { field: "actions", headerName: "الإجراءات", width: 120, headerAlign: "center", align: "center", sortable: false, filterable: false, disableColumnMenu: true, renderCell: (p: any) => <ActionsCell onDelete={onDeleteClick} id={p.id} /> },
     ],
     []
   )
@@ -398,7 +398,7 @@ export default function Chances() {
                             )}
                           </div>
             <div className="w-full overflow-x-auto">
-              <div className="w-max md:w-full">
+              <div className="min-w-[1200px]">
                 {currentData.length === 0 ? (
                   <div className="p-12 text-center">
                     <div className="text-6xl mb-4">📭</div>

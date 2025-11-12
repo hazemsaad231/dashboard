@@ -47,7 +47,7 @@ const Navbar = () => {
       
                <div className="md:mb-4 lg:mb-6 xl:mb-12 border-b pb-4 border-slate-100 text-center">
                <div className="w-24 h-24 mb-3 mx-auto rounded-full bg-slate-50 p-1 shadow-inner">
-                 <div className="w-full h-full rounded-full bg-white flex justify-center items-center">
+                 <div className="w-full h-full rounded-full bg-white flex justify-center items-center shadow">
                    <a href="https://tadbeer-nine.vercel.app" target="_blank">
                      {/* تأكد من وجود صورة اللوجو أو استخدم placeholder */}
                      <img src='/logo.png' alt="logo" className="w-16 h-16" onError={(e) => (e.currentTarget.style.display = 'none')} />
