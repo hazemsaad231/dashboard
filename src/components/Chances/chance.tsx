@@ -8,11 +8,10 @@ import { MdDelete } from "react-icons/md"
 import { DataGrid, type GridColDef } from "@mui/x-data-grid"
 import Paper from "@mui/material/Paper"
 import { Dialog } from "@headlessui/react"
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io"
 import toast from "react-hot-toast"
 import { Link } from "react-router-dom"
+import PaginationControls from "../Shared/pagination"
 
-// ----------------- helpers (kept in-file for simplicity) -----------------
 
 
 const norm = (s = "") =>
@@ -316,7 +315,7 @@ export default function Chances() {
   )
 
   const categoryColumns: GridColDef[] = useMemo(
-    () => [
+    () => [ 
       { field: "name", headerName: "اسم التصنيف", width: 220, headerAlign: "center", align: "center", sortable: false, filterable: false, disableColumnMenu: true, renderCell: (p: any) => <div className="truncate font-medium text-slate-900">{p.value}</div> },
       { field: "icon_url", headerName: "أيقونة", width: 120, headerAlign: "center", align: "center", sortable: false, filterable: false, disableColumnMenu: true, renderCell: (p: any) => <div className="w-full h-full flex items-center justify-center">{p.value ? <img src={p.value || "/placeholder.svg"} alt="icon" className="w-12 h-8 object-contain" /> : <div className="text-xs text-slate-400">—</div>}</div> },
       { field: "description", headerName: "الوصف", flex: 1, minWidth: 340, headerAlign: "center", align: "left", sortable: false, filterable: false, disableColumnMenu: true, renderCell: (p: any) => {
@@ -344,7 +343,7 @@ export default function Chances() {
           const val = p.value || "—"
           return (
             <div className="w-full">
-              <div className="whitespace-normal text-center break-words text-slate-600" style={{ maxHeight: 96, paddingRight: 8, lineHeight: 1.4, fontSize: 14 }} title={val}>{val}</div>
+              <div className="whitespace-normal text-center break-words text-slate-600" style={{ maxHeight: 96, overflow: "auto", paddingRight: 8, lineHeight: 1.4, fontSize: 14 }} title={val}>{val}</div>
               <button onClick={(e) => { e.stopPropagation(); window.dispatchEvent(new CustomEvent("openFullDescription", { detail: { text: val } })) }} className="mt-1 text-xs px-2 py-1 rounded-md bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition-colors">عرض كامل</button>
             </div>
           )
@@ -377,47 +376,41 @@ export default function Chances() {
               <Link to="/dashboard/addChance"><button className="bg-[#2d2265] text-white px-2 py-2.5 rounded-lg font-medium transition-colors shadow-sm hover:shadow-md">+ إضافة فرصة</button></Link>
             </div>
 
-            <div className="flex items-center justify-between gap-4 mb-1">
-              <div className="relative max-w-md w-full">
-                <CiSearch size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-                <input onChange={(e) => search(e.target.value)} placeholder={"ابحث عن فرصة..."} className="w-full h-11 pr-12 pl-4 rounded-lg border-2 border-slate-200 bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none transition-all" />
-              </div>
-            </div>
           </div>
 
-          <Paper className="rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
+          <Paper className="rounded-2xl shadow-lg border border-slate-200 overflow-hidden mt-8 p-4">
+                <div className="flex flex-col md:flex-row items-start md:items-center gap-4 mb-6 pb-6 border-b border-slate-200">
+                            <div className="relative w-full md:w-auto">
+                              <CiSearch size={20} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                              <input type="text" placeholder="ابحث عن فرصة..." onChange={(e) => search(e.target.value)} className="w-full md:w-80 h-11 rounded-lg pl-4 pr-10 bg-slate-50 border border-slate-200 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all outline-none" />
+                            </div>
+                          </div>
             <div className="w-full overflow-x-auto">
-              <div className="min-w-[850px]">
+              <div className="min-w-[900px]">
                 {currentData.length === 0 ? (
                   <div className="p-12 text-center">
                     <div className="text-6xl mb-4">📭</div>
                     <h3 className="text-2xl font-semibold text-slate-900 mb-2">لا توجد بيانات</h3>
-                    {viewMode !== "all" && (<button onClick={() => switchView("all")} className="bg-[#2d2265] text-white px-2 py-2.5 rounded-lg font-medium transition-all">عوده</button>)}
+                    {viewMode !== "all" && (
+                      <button onClick={() => switchView("all")} className="bg-[#2d2265] text-white px-2 py-2.5 rounded-lg font-medium transition-all">عوده</button>)}
                   </div>
                 ) : (
-                  <DataGrid rows={currentData} columns={columns} rowHeight={viewMode === "all" ? 140 : 80} hideFooter autoHeight sx={{ "& .MuiDataGrid-columnHeader": { backgroundColor: "#f8fafc", borderBottom: "2px solid #e2e8f0", fontWeight: 700, color: "#334155", fontSize: "0.875rem" }, "& .MuiDataGrid-row": { borderBottom: "1px solid #e2e8f0", "&:hover": { backgroundColor: "#f0f4ff" } } }} />
+                  <DataGrid rows={currentData} columns={columns} rowHeight={viewMode === "all" ? 140 : 80} hideFooter autoHeight 
+                  sx={{ "& .MuiDataGrid-columnHeader": { backgroundColor: "#f8fafc", borderBottom: "2px solid #e2e8f0", fontWeight: 700,
+                     color: "#334155", fontSize: "0.875rem" },
+                   "& .MuiDataGrid-row": { borderBottom: "1px solid #e2e8f0", "&:hover": { backgroundColor: "#f0f4ff" } } }} />
                 )}
               </div>
             </div>
-
-            {currentData.length > 0 && (
-              <div className="flex items-center justify-between p-6 border-t border-slate-200 bg-slate-50">
-                <div className="flex items-center gap-3">
-                  <label className="text-sm font-medium text-slate-700">عدد الصفوف:</label>
-                  <select value={itemsPerPage} onChange={(e) => { setItemsPerPage(Number(e.target.value)); setCurrent(1) }} className="border-2 border-slate-200 rounded-lg p-2 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none transition-all">
-                    {[5, 10, 15, 20].map((n) => (<option key={n} value={n}>{n}</option>))}
-                  </select>
-                </div>
-
-                {viewMode !== "all" && (<button onClick={() => switchView("all")} className="bg-[#2d2265] text-white px-2 py-2.5 rounded-lg font-medium transition-all">عوده</button>)}
-
-                <div className="flex items-center gap-3">
-                  <button onClick={() => setCurrent(current > 1 ? current - 1 : current)} disabled={current === 1} className="p-2 rounded-lg border-2 border-slate-200 hover:border-indigo-500 hover:bg-indigo-50 disabled:opacity-50 transition-all"><IoIosArrowForward className="text-slate-600" /></button>
-                  <div className="text-sm font-medium text-slate-700 min-w-[60px] text-center">{current} / {totalPages}</div>
-                  <button onClick={() => setCurrent(current < totalPages ? current + 1 : current)} disabled={current === totalPages} className="p-2 rounded-lg border-2 border-slate-200 hover:border-indigo-500 hover:bg-indigo-50 disabled:opacity-50 transition-all"><IoIosArrowBack className="text-slate-600" /></button>
-                </div>
-              </div>
-            )}
+  
+            <PaginationControls
+              current={current}
+              totalPages={totalPages}
+              itemsPerPage={itemsPerPage}
+              setCurrent={setCurrent}
+              setItemsPerPage={setItemsPerPage}
+            />
+         
           </Paper>
 
           <Dialog open={openDelete} onClose={cancelDelete} className="relative z-50">

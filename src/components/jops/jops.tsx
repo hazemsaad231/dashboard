@@ -7,8 +7,8 @@ import { api } from "../Api/api";
 import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 import { Dialog } from "@headlessui/react";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import toast from "react-hot-toast";
+import PaginationControls from "../Shared/pagination";
 
 export default function Applicants() {
   const [all, setAll] = useState<any[]>([]);
@@ -231,55 +231,13 @@ export default function Applicants() {
             </div>
 
             {/* التحكم في الصفحات */}
-            <div className="flex justify-between items-center gap-3 pt-4 border-t border-slate-200 mt-4">
-              <div className="flex items-center gap-2">
-                <label className="text-sm text-slate-600">
-                  عدد الصفوف : 
-                </label>
-                <select
-                  value={itemsPerPage}
-                  onChange={(e) => {
-                    setItemsPerPage(Number(e.target.value));
-                    setCurrent(1);
-                  }}
-                  className="border border-slate-200 rounded-lg p-2 text-sm bg-white hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all outline-none"
-                >
-                  {[5, 10, 15, 20].map((num) => (
-                    <option key={num} value={num}>
-                      {num}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() =>
-                    setCurrent(current > 1 ? current - 1 : current)
-                  }
-                  disabled={current === 1}
-                  className="p-2 rounded-lg border border-slate-200 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                  title="السابق"
-                >
-                  <IoIosArrowForward size={20} className="text-slate-600" />
-                </button>
-
-                <span className="text-sm text-slate-600 font-medium min-w-[40px] text-center">
-                  {current} / {totalPages}
-                </span>
-
-                <button
-                  onClick={() =>
-                    setCurrent(current < totalPages ? current + 1 : current)
-                  }
-                  disabled={current === totalPages}
-                  className="p-2 rounded-lg border border-slate-200 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                  title="التالي"
-                >
-                  <IoIosArrowBack size={20} className="text-slate-600" />
-                </button>
-              </div>
-            </div>
+            <PaginationControls
+              current={current}
+              totalPages={totalPages}
+              itemsPerPage={itemsPerPage}
+              setCurrent={setCurrent}
+              setItemsPerPage={setItemsPerPage}
+            />
           </Paper>
 
           {/* نافذة الحذف */}

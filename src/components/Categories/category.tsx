@@ -10,8 +10,8 @@ import { api } from '../Api/api';
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
 import { Dialog } from '@headlessui/react';
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import toast from 'react-hot-toast';
+import PaginationControls from '../Shared/pagination';
 
 export default function Category() {
   const location = useLocation();
@@ -207,33 +207,14 @@ console.log('rows:', currentData.map((it, i) => ({
                   <DataGrid rows={rows} columns={columns} rowHeight={100} hideFooter autoHeight sx={{ '& .MuiDataGrid-columnHeader': { backgroundColor: '#f8fafc', borderBottom: '2px solid #e2e8f0', fontWeight: 600, color: '#334155' }, '& .MuiDataGrid-row': { borderBottom: '1px solid #e2e8f0', '&:hover': { backgroundColor: '#f8fafc' } }, '& .MuiDataGrid-scrollbarContent': { width: '100% !important', boxSizing: 'border-box' }, '& .MuiDataGrid-virtualScroller': { overflowY: 'auto', willChange: 'transform' } }} />
                 </div>
               </div>
-
-              <div className="flex flex-col md:flex-row justify-between items-center gap-3 pt-4 border-t border-slate-200">
-                {/* <div>
-                  <p className="text-sm text-slate-600">عرض {Math.min(lastIndex, data.length)} من أصل {data.length} خدمة</p>
-                </div> */}
-
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-2">
-                    <label className="text-sm text-slate-600">عدد الصفوف :</label>
-                    <select value={itemsPerPage} onChange={(e) => { setItemsPerPage(Number(e.target.value)); setCurrent(1); }} className="border border-slate-200 rounded-lg p-2 text-sm bg-white hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all outline-none">
-                      {[5, 10, 15, 20].map(num => <option key={num} value={num}>{num}</option>)}
-                    </select>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <button onClick={() => setCurrent(current > 1 ? current - 1 : current)} disabled={current === 1} className="p-2 rounded-lg border border-slate-200 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" title="السابق">
-                      <IoIosArrowForward size={20} className="text-slate-600" />
-                    </button>
-
-                    <span className="text-sm text-slate-600 font-medium min-w-[40px] text-center">{current} / {totalPages}</span>
-
-                    <button onClick={() => setCurrent(current < totalPages ? current + 1 : current)} disabled={current === totalPages} className="p-2 rounded-lg border border-slate-200 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" title="التالي">
-                      <IoIosArrowBack size={20} className="text-slate-600" />
-                    </button>
-                  </div>
-                </div>
-              </div>
+<PaginationControls
+              current={current}
+              totalPages={totalPages}
+              itemsPerPage={itemsPerPage}
+              setCurrent={setCurrent}
+              setItemsPerPage={setItemsPerPage}
+            />
+             
             </Paper>
 
     <Dialog open={open} onClose={closeDelete} className="relative z-50">

@@ -7,10 +7,10 @@ import { CiSearch } from 'react-icons/ci';
 import { api } from '../Api/api';
 import { DataGrid, GridCellParams } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import toast from 'react-hot-toast';
 import { BsFillSendCheckFill } from "react-icons/bs";
 import { MdOutlineMailOutline } from "react-icons/md";
+import PaginationControls from '../Shared/pagination';
 
 export default function Emails() {
 
@@ -53,7 +53,6 @@ export default function Emails() {
   };
 
   useEffect(() => {
-    // ... (بقية الـ useEffect بدون تغيير)
     (async () => {
       await fetchData();
       const newItem = (location as any).state?.newItem;
@@ -253,29 +252,19 @@ export default function Emails() {
             </div>
 
             {/* التنقل في الصفحات */}
-            <div className="flex flex-col md:flex-row justify-between items-center gap-3 pt-4 border-t border-slate-200 mt-4">
-              <div className="flex items-center gap-2">
-                <label className="text-sm text-slate-600">عدد الصفوف :</label>
-                <select value={itemsPerPage} onChange={(e) => { setItemsPerPage(Number(e.target.value)); setCurrent(1); }} className="border border-gray-300 rounded-lg p-2 text-sm bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all outline-none">
-                  {[5, 10, 15, 20].map(num => <option key={num} value={num}>{num}</option>)}
-                </select>
-              </div>
+<PaginationControls
+current={current}
+totalPages={totalPages}
+itemsPerPage={itemsPerPage}
+setCurrent={setCurrent}
+setItemsPerPage={setItemsPerPage}
+/>
 
-              <div className="flex items-center gap-2">
-                <button onClick={() => setCurrent(current > 1 ? current - 1 : current)} disabled={current === 1} className="p-2 rounded-lg border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" title="السابق">
-                  <IoIosArrowForward size={20} className="text-slate-600" />
-                </button>
-
-                <span className="text-sm text-slate-600 font-medium min-w-[40px] text-center">{current} / {totalPages}</span>
-
-                <button onClick={() => setCurrent(current < totalPages ? current + 1 : current)} disabled={current === totalPages} className="p-2 rounded-lg border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" title="التالي">
-                  <IoIosArrowBack size={20} className="text-slate-600" />
-                </button>
-              </div>
-            </div>
           </Paper>
         </div>
       )}
     </div>
+
+
   );
 }
