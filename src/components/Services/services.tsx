@@ -192,12 +192,12 @@ renderCell: (p: any) => (
           <>
             <div className="flex justify-between items-start md:items-center">
               <div className="flex flex-col gap-1">
-                <h1 className="font-bold text-3xl md:text-4xl lg:text-4xl text-slate-900">الخدمات</h1>
+                <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-4xl text-slate-900">الخدمات</h1>
                 <p className="text-slate-500 text-sm">إدارة وتنظيم جميع الخدمات المتاحة</p>
               </div>
-              <Link to="/dashboard/addUser/services">
-                <button className="bg-[#2d2265] text-white px-2 py-2.5 rounded-lg font-medium transition-colors shadow-sm hover:shadow-md">+ إضافة خدمة</button>
-              </Link>
+              <Link to="/dashboard/addUser/services" 
+                             className="bg-[#2d2265] hover:rounded-2xl hover:bg-[#241a56] transition-all duration-500  text-white px-2 py-2 md:py-2.5 rounded-lg font-medium text-center">
+                        + إضافة خدمة</Link>
             </div>
 
             <Paper sx={{ backgroundColor: 'white', borderRadius: '16px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', border: '1px solid #e2e8f0', overflowY: 'hidden' }} className="p-4 mt-8">

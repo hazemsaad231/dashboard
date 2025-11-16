@@ -369,11 +369,13 @@ export default function Chances() {
           <div className="mb-8">
             <div className="flex justify-between items-start md:items-center gap-6 mb-6">
               <div>
-                <h1 className="text-2xl md:text-3xl font-bold text-slate-900">الفرص الاستثمارية</h1>
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-900">الفرص الاستثمارية</h1>
                 <p className="text-sm text-slate-500 mt-1">إدارة وتتبع الفرص والمستثمرين والتصنيفات</p>
               </div>
 
-              <Link to="/dashboard/addChance"><button className="bg-[#2d2265] text-white px-2 py-2.5 rounded-lg font-medium transition-colors shadow-sm hover:shadow-md">+ إضافة فرصة</button></Link>
+              <Link to="/dashboard/addChance" 
+               className="bg-[#2d2265] hover:rounded-2xl hover:bg-[#241a56] transition-all duration-500  text-white px-2 py-2 md:py-2.5 rounded-lg font-medium text-center">
+                + إضافة فرصة</Link>
             </div>
 
           </div>
@@ -398,7 +400,7 @@ export default function Chances() {
                             )}
                           </div>
             <div className="w-full overflow-x-auto">
-              <div className="min-w-[1200px]">
+              <div className="min-w-[1000px]">
                 {currentData.length === 0 ? (
                   <div className="p-12 text-center">
                     <div className="text-6xl mb-4">📭</div>

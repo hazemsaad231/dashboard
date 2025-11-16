@@ -178,7 +178,7 @@ export default function Emails() {
         <div>
           <div className="flex justify-between items-start md:items-center gap-4">
             <div className="flex flex-col gap-1">
-              <h1 className="font-bold text-3xl md:text-4xl lg:text-4xl text-slate-900">النشرة البريدية</h1>
+              <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-4xl text-slate-900">النشرة البريدية</h1>
               <p className="text-slate-500 text-sm">عرض جميع المشتركين في النشرة البريدية</p>
             </div>
           </div>
