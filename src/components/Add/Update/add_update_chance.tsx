@@ -23,7 +23,7 @@ type FormValues = {
   type: string;
   price?: number | "";
   description?: string;
-  icon?: FileList | null;
+  icon?: string | null;
   site_link?: string;
 };
 
@@ -43,7 +43,7 @@ const Add_Update_Chance: React.FC = () => {
       type: "",
       price: "",
       description: "",
-      icon: null,
+      icon: "",
       site_link: "",
     },
   });
@@ -202,7 +202,7 @@ const Add_Update_Chance: React.FC = () => {
       fd.append("description", values.description ?? "");
       fd.append("site_link", values.site_link ?? "");
 
-      if (values.icon) fd.append("icon", values.icon[0]);
+      if (values.icon) fd.append("icon", values.icon);
 
        socialLinks.forEach((social, index) => {
         fd.append(`socials[${index}][name]`, social.name);
@@ -266,8 +266,8 @@ const Add_Update_Chance: React.FC = () => {
           <div className="mb-4">
             <label className="block font-semibold mb-2">📷 اختر ايقونه</label>
             <input
-              type="file"
-              accept="image/*"
+              // type="file"
+              // accept="image/*"
               className="border p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
               {...register("icon")}
             />
