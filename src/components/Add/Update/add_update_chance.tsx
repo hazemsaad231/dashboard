@@ -275,22 +275,11 @@ const Add_Update_Chance: React.FC = () => {
           </div>
 
           {/* بيانات الفرصة */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <label className="block font-medium mb-1">الاسم</label>
-              <input
-                {...register("title", { required: "العنوان مطلوب" })}
-                className="w-full border p-3 rounded-lg"
-              />
-              {errors.title && (
-                <p className="text-red-500 text-sm mt-1">
-                  <span>⚠️</span> {errors.title.message}
-                </p>
-              )}
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
 
             <div>
-              <label className="block font-medium mb-1">النوع</label>
+              <label className="block font-medium mb-1">نوع الفرصة</label>
               <input
                 {...register("type", { required: "النوع مطلوب" })}
                 className="w-full border p-3 rounded-lg"
@@ -303,7 +292,7 @@ const Add_Update_Chance: React.FC = () => {
             </div>
 
             <div>
-              <label className="block font-medium mb-1">السعر</label>
+              <label className="block font-medium mb-1">سعر الفرصة</label>
               <input
                 type="number"
                 {...register("price", { required: "السعر مطلوب" })}
@@ -316,6 +305,19 @@ const Add_Update_Chance: React.FC = () => {
               )}
             </div>
           </div>
+
+            <div>
+              <label className="block font-medium mb-1">اسم الشركه </label>
+              <input
+                {...register("title", { required: "العنوان مطلوب" })}
+                className="w-full border p-3 rounded-lg"
+              />
+              {errors.title && (
+                <p className="text-red-500 text-sm mt-1">
+                  <span>⚠️</span> {errors.title.message}
+                </p>
+              )}
+            </div>
 
           <div>
             <label className="block font-medium mb-1">معلومات عن الشركه</label>
