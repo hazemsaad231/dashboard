@@ -28,7 +28,12 @@ const prepareAllRows = (items: any[] = []) =>
   items.map((it: any, i: number) => {
     const cats: any[] = Array.isArray(it.categories) ? it.categories : []
     const invs: any[] = Array.isArray(it.investors) ? it.investors : []
-    const gallery = Array.isArray(it.gallery) && it.gallery[0] ? it.gallery[0].photo_url : ""
+
+
+    const TypePhoto = Array.isArray(it.gallery) ? it.gallery.find((g: any) => g.type_photo === 'default') : null;
+
+
+    const gallery = Array.isArray(it.gallery) && TypePhoto ? TypePhoto.photo_url : null
 
     return {
       id: it.id ?? it._id ?? String(i + 1),
@@ -306,7 +311,8 @@ export default function Chances() {
       { field: "name", flex: 1, headerName: "الاسم", headerAlign: "center", align: "center", sortable: false, filterable: false, disableColumnMenu: true, renderCell: (p: any) => <CellCenterText value={p.value} /> },
       { field: "type", flex: 1, headerName: "النوع", headerAlign: "center", align: "center", sortable: false, filterable: false, disableColumnMenu: true, renderCell: (p: any) => <CellBadge value={p.value} /> },
       { field: "price", flex: 1, headerName: "السعر", headerAlign: "center", align: "center", sortable: false, filterable: false, disableColumnMenu: true, renderCell: (p: any) => <CellCenterText value={p.value} /> },
-      { field: "image", headerName: "صورة", width: 120, sortable: false, filterable: false, disableColumnMenu: true, headerAlign: "center", align: "center", renderCell: (p: any) => <CellImage value={p.value} row={p.row} /> },
+      { field: "image", headerName: "صورة", width: 120, sortable: false, filterable: false, disableColumnMenu: true, headerAlign: "center", align: "center",
+         renderCell: (p: any) => <CellImage value={p.value} row={p.row} /> },
       { field: "categories", headerName: "التصنيفات", headerAlign: "center", align: "center", disableColumnMenu: true, sortable: false, filterable: false, renderCell: (p: any) => <div className="w-full h-full flex items-center justify-center"><ViewButton onClick={() => { setData(prepareCategoryRows([p.row])); setViewMode("categories"); setInvestorsParent(null); setCurrent(1); }} /></div> },
       { field: "investors", headerName: "المستثمرين", headerAlign: "center", sortable: false, filterable: false, align: "center", disableColumnMenu: true, renderCell: (p: any) => <div className="w-full h-full flex items-center justify-center"><ViewButton onClick={() => showInvestorsOf(p.row)} /></div> },
       { field: "actions", headerName: "الإجراءات", width: 120, headerAlign: "center", align: "center", sortable: false, filterable: false, disableColumnMenu: true, renderCell: (p: any) => <ActionsCell onDelete={onDeleteClick} id={p.id} /> },
