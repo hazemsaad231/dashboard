@@ -93,12 +93,14 @@ export default function Emails() {
   const columns: any = [
     {
       field: 'checkbox',
-      headerName: ( 
+      headerName: '',
+      renderHeader: () => ( 
         <input
           type="checkbox"
           checked={isAllChecked}
           onChange={(e) => handleSelectAll(e.target.checked)}
           title="تحديد/إلغاء تحديد الكل في هذه الصفحة"
+
         />
       ),
       width: 60,
