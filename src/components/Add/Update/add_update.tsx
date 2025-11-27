@@ -19,21 +19,9 @@ const Add_Update: React.FC = () => {
   const { id, resource } = useParams();
   const navigate = useNavigate();
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    reset,
-    formState: { errors, isSubmitting },
-  } = useForm<FormValues>({
-    defaultValues: {
-      title: "",
-      description: "",
-      image: null,
-      type: resource ?? "",
-    },
-  });
+  const {register,handleSubmit,setValue,watch,reset,formState: { errors, isSubmitting }} =
+   useForm<FormValues>({
+    defaultValues: { title: "", description: "", image: null, type: resource ?? ""}});
 
   // لو تعديل
   useEffect(() => {
@@ -135,21 +123,6 @@ const Add_Update: React.FC = () => {
               </p>
             )}
           </div>
-
-          {/* 📄 وصف */}
-          {/* <div className="mb-4">
-            <label className="block font-semibold mb-2">📄 الوصف</label>
-            <textarea
-              {...register("description", { required: "الوصف مطلوب" })}
-              placeholder="أدخل الوصف التفصيلي"
-              className="border p-3 w-full h-[24rem] md:h-60 rounded-lg"
-            />
-            {errors.description && (
-              <p className="text-red-500 text-sm mt-1">
-                ⚠️ {errors.description.message}
-              </p>
-            )}
-          </div> */}
 {/* 📄 الوصف */}
 <div className="mb-6 relative">
   <label className="block font-semibold mb-2 text-gray-700">📄 الوصف</label>

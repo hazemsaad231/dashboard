@@ -79,11 +79,10 @@ const Add_Update_Chance: React.FC = () => {
     if (!id) return;
     (async () => {
       try {
-        const resp = await axios.get(`${api}/invests/${id}`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        });
+        const resp = await axios.get(`${api}/invests/${id}`)
         const item = resp.data.data ?? resp.data;
-        setValue("title", item.title ?? item.name ?? "");
+        // تعبئة الحقول
+        setValue("title", item.name ?? "");
         setValue("type", item.type ?? "");
         setValue("price", item.price ?? "");
         setValue("description", item.description ?? "");
