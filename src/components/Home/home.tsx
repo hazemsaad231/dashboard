@@ -1,5 +1,9 @@
 import { PieChart, Pie, Cell, ResponsiveContainer as PieResponsiveContainer } from "recharts";
-import { Data } from "../Home/data";
+import { api } from "../Api/api";
+import { useEffect, useState } from "react";
+import { FaBriefcase, FaUsers, FaBuilding, FaEnvelope, FaCoins } from "react-icons/fa";
+import CountUp from 'react-countup';
+
 
 const COLORS = ["#D4AF37", "#241a56", "#00C49F", "#FF8042"];
 const RADIAN = Math.PI / 180;
@@ -10,6 +14,8 @@ const pieData = [
   { name: "منصات اجتماعية", value: 180 },
   { name: "شركاء ومواقع خارجية", value: 90 },
 ];
+
+
 
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: any) => {
   const radius = innerRadius + (outerRadius - innerRadius) / 2;
@@ -23,6 +29,59 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 };
 
 export default function Home() {
+
+  const [data, setData] = useState<any>()
+  const FetchData = async () => {
+
+    const response = await fetch(`${api}/stats/dashboard`);
+    const result = await response.json();
+    setData(result)
+  }
+
+  useEffect(() => {
+    FetchData();
+  }, []);
+console.log(data);
+
+const Data = [
+  { 
+    title: "عدد الخدمات", 
+    count: data ? `${data.total_services}+` : "0+", 
+    icon: FaBriefcase, 
+    sub: "خدمات متنوعة في المشاريع التقنية والتسويقية" 
+  },
+  
+  { 
+    title: "عدد المدونات", 
+    count: data ? `${data.total_blogs}+` : "0+", 
+    icon: FaBriefcase, 
+    sub: "مقالات ومحتوى غني في مجالات متعددة"
+  },
+  { 
+    title: "عدد المتقدمين للوظائف", 
+    count: data ? `${data.total_applicants}+` : "0+", 
+    icon: FaUsers, 
+    sub: "متقدمين من مختلف القطاعات" 
+  },
+  { 
+    title: "عدد المستثمرين", 
+    count: data ? `${data.total_investors}+` : "0+", 
+    icon: FaBuilding, 
+    sub: "مستثمرين داعمين للمشاريع" 
+  },
+  { 
+    title: "عدد المشتركين في النشرة البريدية", 
+    count: data ? `${data.total_newsletter_subscribers}+` : "0+", 
+    icon: FaEnvelope, 
+    sub: "متابعين يهتمون بكل جديد" 
+  },
+  { 
+    title: "عدد الفرص الاستثمارية", 
+    count: data ? `${data.total_invests}+` : "0+", 
+    icon: FaCoins, 
+    sub: "فرص استثمارية متنوعة وجذابة" 
+  },
+];
 
 
   return (
@@ -41,7 +100,9 @@ export default function Home() {
               <div className="flex items-center justify-between">
                 <div className="text-right">
                   <h2 className="text-sm font-medium text-muted-foreground mb-1">{item.title}</h2>
-                  <p className="text-2xl font-bold text-card-foreground">{item.count}</p>
+                  <p className="text-2xl font-bold text-card-foreground">
+                    <CountUp end={parseInt(item.count)} duration={2} separator="," />
+                  </p>
                   {item.sub && <p className="text-xs text-slate-400 mt-1">{item.sub}</p>}
                 </div>
                 <div className="w-12 h-12 rounded-md bg-[#241a56] flex items-center justify-center">
